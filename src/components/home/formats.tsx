@@ -19,7 +19,7 @@ export function Formats() {
       </SplitHeading>
       <Reveal className="grid gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {formats.map((format) => (
-          <Link key={format.name} href={format.href} data-reveal className="flex flex-col gap-3.5">
+          <Link key={format.name} href={format.href} data-reveal className="group flex flex-col gap-3.5">
             <div className="tile reel aspect-[16/10] bg-fog">
               {format.photos.map((photo, i) => (
                 <Image
@@ -33,7 +33,11 @@ export function Formats() {
               ))}
             </div>
             <span className="px-2 text-[21px] leading-[1.3] tracking-[-0.015em]">
-              <span className="font-medium">{format.name}</span> <span className="text-muted">{format.desc}</span>
+              {/* The name eases to blue while the card is hovered or focused, and back after. */}
+              <span className="font-medium transition-colors duration-150 ease-out group-hover:text-electric group-focus-visible:text-electric">
+                {format.name}
+              </span>{" "}
+              <span className="text-muted">{format.desc}</span>
             </span>
           </Link>
         ))}

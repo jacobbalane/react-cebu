@@ -90,7 +90,7 @@ export function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_74%_34%,transparent_18%,rgba(0,0,0,0.35)_42%,rgba(0,0,0,0.7)_72%,rgba(0,0,0,0.9)_100%)]"
       />
-      <div aria-hidden="true" className="grain opacity-10" />
+      <div aria-hidden="true" className="grain opacity-20" />
       {/* Darkens the corner behind the copy so white text stays readable over bright photos. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_0%_100%,rgba(0,0,0,0.75),transparent_70%)]" />
 

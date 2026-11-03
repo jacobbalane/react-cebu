@@ -58,7 +58,7 @@ export function JoinCta() {
             </g>
             <circle r="3.5" fill="#1e4dff" />
           </svg>
-          <SplitHeading id="join-title" className="relative m-0 max-w-[13ch] text-[clamp(44px,6.6vw,108px)] font-normal leading-[0.94] tracking-[-0.05em]">
+          <SplitHeading id="join-title" by="word" className="relative m-0 max-w-[13ch] text-[clamp(44px,6.6vw,108px)] font-normal leading-[0.94] tracking-[-0.05em]">
             Build what’s next with React Cebu. <span className="text-soft">Free, friendly, and open to every level.</span>
           </SplitHeading>
           <div className="relative flex flex-wrap items-center gap-4">
