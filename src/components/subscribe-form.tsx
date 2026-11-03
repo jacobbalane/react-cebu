@@ -10,7 +10,7 @@ export function SubscribeForm({ buttonClass = "btn-primary", doneClass = "text-s
   if (done) {
     return (
       <p role="status" className={`text-xl ${doneClass}`}>
-        Consectetur adipiscing elit sed do eiusmod.
+        Subscribed. Check your inbox to confirm.
       </p>
     );
   }
@@ -23,16 +23,16 @@ export function SubscribeForm({ buttonClass = "btn-primary", doneClass = "text-s
       }}
       className="flex flex-wrap gap-1.5"
     >
-      <label htmlFor={id} className="sr-only">Tempor incididunt</label>
+      <label htmlFor={id} className="sr-only">Email address</label>
       <input
         id={id}
         type="email"
         required
         autoComplete="email"
-        placeholder="ut"
+        placeholder="you@example.com"
         className="min-h-12 flex-[1_1_240px] rounded-full bg-white px-5 text-base text-black placeholder:text-muted"
       />
-      <button type="submit" className={`btn ${buttonClass}`}>Labore</button>
+      <button type="submit" className={`btn ${buttonClass}`}>Subscribe</button>
     </form>
   );
 }

@@ -60,9 +60,11 @@ export function SplitHeading({
           mask: "lines",
           linesClass: "split-line",
           autoSplit: true,
+          // Lines start 150% down: the mask keeps room under each line for descenders,
+          // and any less lets the tops of tall letters peek through that gap.
           onSplit: (self) =>
             gsap.from(self.lines, {
-              yPercent: 105,
+              yPercent: 150,
               duration: 1,
               ease: "power4.out",
               stagger: 0.08,

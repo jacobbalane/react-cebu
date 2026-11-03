@@ -18,7 +18,7 @@ export function CopyLink({ path }: { path: string }) {
         }
       }}
     >
-      {copied ? "Anim id" : "Est laborum"}
+      {copied ? "Link copied" : "Copy link"}
     </button>
   );
 }

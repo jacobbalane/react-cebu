@@ -4,10 +4,10 @@ import { useRef } from "react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 
 const milestones = [
-  { month: "Occaecat cupidatat non", year: "2019", title: "Proident sunt culpa", text: "Qui officia deserunt mollit anim id est laborum lorem ipsum dolor sit amet consectetur adipiscing.", tone: "bg-sky text-black" },
-  { month: "Elit", year: "2019", title: "Sed do", text: "Eiusmod tempor incididunt ut labore et dolore magna aliqua enim.", tone: "bg-fog text-black" },
-  { month: "Ad", year: "2025", title: "Minim veniam", text: "Quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure in reprehenderit.", tone: "bg-black text-white" },
-  { month: "Voluptate", year: "2026", title: "Velit esse cillum fugiat", text: "Nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa.", tone: "bg-electric text-white" },
+  { month: "Where it started", year: "2019", title: "The first meetup", text: "More than 50 developers came to The Company Cebu for the first React Cebu meetup.", tone: "bg-sky text-black" },
+  { month: "October", year: "2019", title: "Gatsby workshop", text: "A hands-on workshop at the Go Negosyo Center, UP Cebu.", tone: "bg-fog text-black" },
+  { month: "October", year: "2025", title: "Cebu Hacktoberfest", text: "Co-led by JavaScript Cebu with PizzaPy and Ethereum Philippines: talks, workshops and hack nights all month.", tone: "bg-black text-white" },
+  { month: "Now", year: "2026", title: "A new home online", text: "The site you’re looking at, built by members with Next.js.", tone: "bg-electric text-white" },
 ];
 
 /**
@@ -43,10 +43,10 @@ export function Timeline() {
 
   return (
     <section ref={ref} aria-labelledby="history-title" className="overflow-hidden px-2 pb-28 lg:flex lg:min-h-svh lg:flex-col lg:justify-center lg:pb-0">
-      <h2 id="history-title" className="display mb-8 px-4 text-[clamp(40px,4.2vw,60px)]">Qui officia deserunt mollit</h2>
+      <h2 id="history-title" className="display mb-8 px-4 text-[clamp(40px,4.2vw,60px)]">How we got here</h2>
       <ol
         ref={track}
-        aria-label="Aliqua enim ad"
+        aria-label="React Cebu timeline"
         className="motion-safe:lg:flex motion-safe:lg:w-max grid gap-2 sm:grid-cols-2 lg:grid-cols-4"
       >
         {milestones.map((m) => (

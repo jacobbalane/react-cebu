@@ -13,11 +13,11 @@ const hostGrotesk = Host_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL("https://react.jscebu.org"),
   title: {
-    default: "Dolore magna aliqua enim ad minim veniam quis nostrud",
+    default: "React Cebu — a free React community in Cebu",
     template: "%s — React Cebu",
   },
   description:
-    "Exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure in reprehenderit voluptate velit esse cillum fugiat nulla.",
+    "Free meetups, workshops and code camps for developers building with React in Cebu, Philippines. Part of JavaScript Cebu since 2019.",
   openGraph: {
     siteName: "React Cebu",
     type: "website",

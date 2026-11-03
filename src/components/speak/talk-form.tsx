@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 const formats = [
-  { id: "lightning", length: "5 min", name: "Dolor sit", text: "Amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore." },
-  { id: "talk", length: "20 min", name: "Magna", text: "Aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip." },
-  { id: "workshop", length: "2 h", name: "Ex", text: "Ea commodo consequat duis aute irure in reprehenderit voluptate velit esse cillum fugiat nulla." },
+  { id: "lightning", length: "5 min", name: "Lightning talk", text: "One idea, one demo, done. The easiest way to give your first talk." },
+  { id: "talk", length: "20 min", name: "Talk", text: "A proper story: the problem, what you tried, what worked. Slides optional." },
+  { id: "workshop", length: "2 h", name: "Workshop", text: "Teach a room to build something. We help with the starter repo and mentors." },
 ];
 
 const field = "flex flex-col gap-2 text-[15px] font-medium";
@@ -19,8 +19,8 @@ export function TalkSection() {
   return (
     <>
       <section aria-labelledby="formats-title" className="px-2 pb-28">
-        <h2 id="formats-title" className="display mb-8 px-4 text-[clamp(40px,4.2vw,60px)]">Pariatur excepteur sint</h2>
-        <div role="radiogroup" aria-label="Minim veniam" className="grid gap-2 md:grid-cols-3">
+        <h2 id="formats-title" className="display mb-8 px-4 text-[clamp(40px,4.2vw,60px)]">Pick a format</h2>
+        <div role="radiogroup" aria-label="Talk format" className="grid gap-2 md:grid-cols-3">
           {formats.map((f) => {
             const active = f.id === format;
             return (
@@ -45,16 +45,16 @@ export function TalkSection() {
 
       <section id="submit" aria-labelledby="submit-title" className="grid scroll-mt-24 gap-10 px-6 pb-28 lg:grid-cols-2">
         <div className="flex flex-col gap-5">
-          <h2 id="submit-title" className="display text-[clamp(40px,4.2vw,60px)]">Occaecat cupidatat non proident</h2>
+          <h2 id="submit-title" className="display text-[clamp(40px,4.2vw,60px)]">Send a talk idea</h2>
           <p className="max-w-[42ch] text-lg leading-normal text-[#4d4d4d]">
-            Sunt culpa qui officia deserunt mollit anim id est laborum lorem ipsum dolor sit amet consectetur adipiscing elit.
+            A title and a couple of sentences is enough. An organizer replies by email, usually within a week.
           </p>
         </div>
         {sent ? (
           <div role="status" className="tile flex flex-col gap-4 bg-sky p-8">
-            <span className="text-[40px] leading-none tracking-[-0.04em]">Sed do eiusmod.</span>
-            <span className="text-lg leading-normal">Tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris.</span>
-            <button type="button" onClick={() => setSent(false)} className="btn btn-white self-start">Nisi aliquip ex</button>
+            <span className="text-[40px] leading-none tracking-[-0.04em]">Talk idea sent.</span>
+            <span className="text-lg leading-normal">We’ll reply by email within a week. In the meantime, come to a meetup and say hi.</span>
+            <button type="button" onClick={() => setSent(false)} className="btn btn-white self-start">Send another idea</button>
           </div>
         ) : (
           <form
@@ -65,15 +65,15 @@ export function TalkSection() {
             className="flex flex-col gap-[18px]"
           >
             <div className="grid gap-[18px] sm:grid-cols-2">
-              <label className={field}>Ea commodo<input className={input} type="text" name="name" required autoComplete="name" /></label>
-              <label className={field}>Consequat<input className={input} type="email" name="email" required autoComplete="email" /></label>
+              <label className={field}>Your name<input className={input} type="text" name="name" required autoComplete="name" /></label>
+              <label className={field}>Email<input className={input} type="email" name="email" required autoComplete="email" /></label>
             </div>
             <label className={field}>
-              Duis aute
-              <input className={input} type="text" name="title" required placeholder="Irure in reprehenderit voluptate velit esse cillum fugiat nulla" />
+              Talk title
+              <input className={input} type="text" name="title" required placeholder="What I learned moving our app to Server Components" />
             </label>
             <label className={field}>
-              Pariatur
+              Format
               <select className={input} name="format" value={format} onChange={(e) => setFormat(e.target.value)}>
                 {formats.map((f) => (
                   <option key={f.id} value={f.id}>{f.name}, {f.length.replace("min", "minutes").replace("h", "hours")}</option>
@@ -81,14 +81,14 @@ export function TalkSection() {
               </select>
             </label>
             <label className={field}>
-              Excepteur sint occaecat?
-              <textarea className={`${input} min-h-[140px] resize-y`} name="about" placeholder="Cupidatat non proident sunt culpa qui." />
+              What’s it about?
+              <textarea className={`${input} min-h-[140px] resize-y`} name="about" placeholder="Two or three sentences is plenty." />
             </label>
             <label className="flex cursor-pointer items-center gap-3 text-[17px]">
               <input type="checkbox" name="mentor" className="size-[22px] accent-electric" />
-              Officia deserunt mollit anim id est laborum lorem ipsum
+              Pair me with a mentor who has spoken before
             </label>
-            <button type="submit" className="btn btn-primary self-start">Dolor sit amet</button>
+            <button type="submit" className="btn btn-primary self-start">Send talk idea</button>
           </form>
         )}
       </section>

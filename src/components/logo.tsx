@@ -1,17 +1,14 @@
-export function Logo({ size = 44 }: { size?: number }) {
+import Image from "next/image";
+
+// The React Cebu mark from react.jscebu.org: a black atom over "CEBU", 646×729.
+const RATIO = 646 / 729;
+
+/** The logo on a fog disc like the nav pills, so the black mark reads on dark and light pages alike. */
+export function Logo({ size = 48 }: { size?: number }) {
+  const height = Math.round(size * 0.64);
   return (
-    <span
-      className="inline-flex items-center justify-center rounded-full bg-black"
-      style={{ width: size, height: size }}
-    >
-      <svg width={size * 0.68} height={size * 0.68} viewBox="-50 -50 100 100" aria-hidden="true">
-        <g fill="none" stroke="#ffffff" strokeWidth="6">
-          <ellipse rx="42" ry="16" />
-          <ellipse rx="42" ry="16" transform="rotate(60)" />
-          <ellipse rx="42" ry="16" transform="rotate(120)" />
-        </g>
-        <circle r="9" fill="#61dafb" />
-      </svg>
+    <span className="inline-flex items-center justify-center rounded-full bg-fog" style={{ width: size, height: size }}>
+      <Image src="/images/react-cebu-logo.webp" alt="" width={Math.round(height * RATIO)} height={height} preload />
     </span>
   );
 }

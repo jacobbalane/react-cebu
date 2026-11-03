@@ -59,14 +59,14 @@ export function JoinCta() {
             <circle r="3.5" fill="#1e4dff" />
           </svg>
           <SplitHeading id="join-title" className="relative m-0 max-w-[13ch] text-[clamp(44px,6.6vw,108px)] font-normal leading-[0.94] tracking-[-0.05em]">
-            Aute irure in reprehenderit voluptate velit. <span className="text-soft">Esse cillum fugiat nulla pariatur excepteur sint.</span>
+            Build what’s next with React Cebu. <span className="text-soft">Free, friendly, and open to every level.</span>
           </SplitHeading>
           <div className="relative flex flex-wrap items-center gap-4">
             <span className="flex">
               {[1, 2, 3, 4].map((n, i) => (
                 <Image
                   key={n}
-                  src={"/images/placeholder.png"}
+                  src={`/images/portrait-${n}.jpg`}
                   alt=""
                   width={52}
                   height={52}
@@ -75,17 +75,17 @@ export function JoinCta() {
               ))}
             </span>
             <span className="max-w-[30ch] text-base leading-snug text-[#bdbdbd]">
-              Occaecat cupidatat non proident sunt culpa qui officia deserunt mollit.
+              Students, career-shifters and working engineers already meet here every month.
             </span>
           </div>
         </div>
 
         <a href="#facebook" data-reveal className="tile group flex flex-col justify-between gap-6 bg-electric p-7 text-white transition-colors duration-300 hover:bg-midnight lg:col-span-4">
           <span className="flex items-start justify-between gap-4">
-            <span className="text-[clamp(32px,3vw,44px)] leading-[1.02] tracking-[-0.04em]">Anim id est laborum</span>
+            <span className="text-[clamp(32px,3vw,44px)] leading-[1.02] tracking-[-0.04em]">Join the Facebook group</span>
             <Arrow />
           </span>
-          <span className="text-base leading-snug text-on-electric">Lorem ipsum dolor sit amet consectetur adipiscing elit sed.</span>
+          <span className="text-base leading-snug text-on-electric">Event announcements, questions, job posts and the occasional meme.</span>
         </a>
 
         <Link href={`/events/${next.slug}`} data-reveal className="tile group flex flex-col justify-between gap-6 bg-sky p-7 text-black lg:col-span-4">
@@ -94,7 +94,7 @@ export function JoinCta() {
             <Arrow className="bg-black text-white" />
           </span>
           <span className="flex flex-col gap-1">
-            <span className="text-[15px]">Do eiusmod tempor</span>
+            <span className="text-[15px]">Next event, free</span>
             <span className="text-xl leading-tight tracking-[-0.02em]">{next.title}</span>
           </span>
         </Link>
@@ -102,8 +102,8 @@ export function JoinCta() {
         <Link href="/speak" data-reveal className="tile group flex flex-col justify-between gap-6 bg-fog p-7 text-black transition-colors duration-300 hover:bg-[#e0e0e0] lg:col-span-4">
           <Arrow className="bg-black text-white" />
           <span className="flex flex-col gap-1">
-            <span className="text-[28px] leading-none tracking-[-0.035em]">Incididunt ut labore</span>
-            <span className="text-[15px] text-[#555]">Et dolore</span>
+            <span className="text-[28px] leading-none tracking-[-0.035em]">Give a talk</span>
+            <span className="text-[15px] text-[#555]">First-timers welcome</span>
           </span>
         </Link>
       </Reveal>

@@ -3,19 +3,19 @@ import Link from "next/link";
 import { Reveal, SplitHeading } from "@/components/motion";
 
 const formats = [
-  { name: "Exercitation", desc: "ullamco laboris nisi aliquip ex", href: "/events", photos: ["presenter", "speaker", "audience"], alt: "Ea commodo consequat duis aute irure" },
-  { name: "In", desc: "reprehenderit voluptate velit esse cillum fugiat", href: "/events", photos: ["workshop", "laptops", "coder"], alt: "Nulla pariatur excepteur sint occaecat cupidatat" },
-  { name: "Non proident", desc: "sunt culpa qui officia deserunt mollit", href: "/events", photos: ["students", "react-code", "laptops"], alt: "Anim id est laborum lorem ipsum dolor" },
-  { name: "Sit amet", desc: "consectetur adipiscing elit sed do", href: "/recaps", photos: ["crowd", "panel", "students"], alt: "Eiusmod tempor incididunt ut labore et" },
-  { name: "Dolore magna", desc: "aliqua enim ad minim veniam quis", href: "/speak", photos: ["speaker", "presenter", "panel"], alt: "Nostrud exercitation ullamco laboris nisi aliquip" },
-  { name: "Ex", desc: "ea commodo consequat duis aute irure", href: "/events", photos: ["laptops", "coder", "workshop"], alt: "In reprehenderit voluptate velit esse" },
+  { name: "Meetups", desc: "that end in new friendships", href: "/events", photos: ["presenter", "speaker", "audience"], alt: "A speaker presenting at a meetup" },
+  { name: "Workshops", desc: "where you build instead of watching", href: "/events", photos: ["workshop", "laptops", "coder"], alt: "Developers working together at a workshop" },
+  { name: "Code camps", desc: "that take a whole Saturday, happily", href: "/events", photos: ["students", "react-code", "laptops"], alt: "Students coding together at a code camp" },
+  { name: "Hacktoberfest nights", desc: "that ship real open source", href: "/recaps", photos: ["crowd", "panel", "students"], alt: "A full room at Cebu Hacktoberfest" },
+  { name: "Lightning talks", desc: "five minutes, any topic, any level", href: "/speak", photos: ["speaker", "presenter", "panel"], alt: "A speaker giving a short talk" },
+  { name: "Training", desc: "for students writing their first component", href: "/events", photos: ["laptops", "coder", "workshop"], alt: "People learning React on laptops" },
 ];
 
 export function Formats() {
   return (
     <section id="learn" aria-labelledby="formats-title" className="px-2 pb-32 pt-28">
       <SplitHeading id="formats-title" className="display mb-10 px-4 text-[clamp(40px,4.2vw,60px)]">
-        Cillum fugiat nulla pariatur excepteur
+        What happens at React Cebu
       </SplitHeading>
       <Reveal className="grid gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {formats.map((format) => (
@@ -24,7 +24,7 @@ export function Formats() {
               {format.photos.map((photo, i) => (
                 <Image
                   key={photo + i}
-                  src={"/images/placeholder.png"}
+                  src={`/images/${photo}.jpg`}
                   alt={i === 0 ? format.alt : ""}
                   fill
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"

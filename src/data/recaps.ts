@@ -11,13 +11,13 @@ export type Recap = {
 
 // Sample recaps, except the 2019 and Hacktoberfest entries which reflect real events.
 export const recaps: Recap[] = [
-  { title: "Nisi aliquip ex ea", note: "Commodo consequat duis aute irure in reprehenderit voluptate velit.", tag: "Meetups", image: "/images/placeholder.png", alt: "Esse cillum fugiat nulla pariatur excepteur sint occaecat", has: ["Cupidatat"] },
-  { title: "Non proident sunt culpa", note: "Qui officia deserunt mollit anim id.", tag: "Workshops", image: "/images/placeholder.png", alt: "Est laborum lorem ipsum dolor sit amet", has: ["Consectetur", "Adipiscing"] },
-  { title: "Elit sed do eiusmod tempor", note: "Incididunt ut labore et dolore magna aliqua.", tag: "Meetups", image: "/images/placeholder.png", alt: "Enim ad minim veniam quis nostrud", has: ["Exercitation", "Ullamco"] },
-  { title: "Laboris nisi aliquip", note: "Ex ea commodo consequat duis aute irure.", tag: "Code camps", image: "/images/placeholder.png", alt: "In reprehenderit voluptate velit", has: ["Esse", "Cillum"] },
-  { title: "Fugiat nulla pariatur", note: "Excepteur sint occaecat cupidatat non proident.", tag: "Workshops", image: "/images/placeholder.png", alt: "Sunt culpa qui officia deserunt", has: ["Mollit"] },
-  { title: "Anim id est laborum", note: "Lorem ipsum dolor sit amet consectetur adipiscing.", tag: "Hacktoberfest", image: "/images/placeholder.png", alt: "Elit sed do eiusmod tempor incididunt", has: ["Ut"] },
-  { title: "Labore et", note: "Dolore magna aliqua enim ad.", tag: "Workshops", image: "/images/placeholder.png", alt: "Minim veniam quis nostrud exercitation", has: ["Ullamco"] },
-  { title: "Laboris nisi aliquip ex ea", note: "commodo consequat duis aute irure in reprehenderit voluptate.", tag: "Meetups", image: "/images/placeholder.png", alt: "Velit esse cillum fugiat nulla", has: ["Pariatur"] },
-  { title: "Excepteur sint", note: "Occaecat cupidatat non proident sunt.", tag: "Hacktoberfest", image: "/images/placeholder.png", alt: "Culpa qui officia deserunt", has: ["Mollit", "Anim"] },
+  { title: "Panel: careers in frontend", note: "August 2026. Four engineers on getting hired in Cebu.", tag: "Meetups", image: "/images/panel.jpg", alt: "A panel discussion with the audience on steps", has: ["Recording"] },
+  { title: "Hooks from first principles", note: "June 2026. Build useState from scratch.", tag: "Workshops", image: "/images/coder.jpg", alt: "A developer coding in a dim room", has: ["Slides", "Code"] },
+  { title: "What’s new in React 19", note: "May 2026. Actions, use, and the compiler.", tag: "Meetups", image: "/images/speaker.jpg", alt: "A speaker presenting to a room", has: ["Slides", "Recording"] },
+  { title: "Student code camp", note: "March 2026. A Saturday of React basics.", tag: "Code camps", image: "/images/students.jpg", alt: "Students working on laptops", has: ["Slides", "Code"] },
+  { title: "Testing React apps", note: "February 2026. Testing Library without tears.", tag: "Workshops", image: "/images/react-code.jpg", alt: "React code on a screen", has: ["Code"] },
+  { title: "Hack night, week one", note: "October 2025. First pull requests of Hacktoberfest.", tag: "Hacktoberfest", image: "/images/crowd.jpg", alt: "A crowd at a hack night", has: ["Photos"] },
+  { title: "Gatsby workshop", note: "October 2019 at UP Cebu.", tag: "Workshops", image: "/images/workshop.jpg", alt: "Developers at a workshop table", has: ["Photos"] },
+  { title: "The first React Cebu meetup", note: "2019 at The Company Cebu, with 50+ developers.", tag: "Meetups", image: "/images/audience.jpg", alt: "An audience watching a talk", has: ["Photos"] },
+  { title: "Hacktoberfest wrap-up", note: "October 2025. What got merged.", tag: "Hacktoberfest", image: "/images/laptops.jpg", alt: "People working on laptops", has: ["Photos", "Slides"] },
 ];

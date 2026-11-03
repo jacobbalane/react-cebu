@@ -38,7 +38,8 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <div className="pointer-events-auto flex gap-1 justify-self-end">
+        {/* Pinned to the last column: below lg the nav is hidden and would otherwise leave this in the middle. */}
+        <div className="pointer-events-auto col-start-3 flex gap-1 justify-self-end">
           <Link
             href="/partners"
             className="navpill hidden sm:inline-flex"

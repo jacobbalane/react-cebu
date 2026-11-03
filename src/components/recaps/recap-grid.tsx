@@ -24,8 +24,8 @@ export function RecapGrid({ recaps }: { recaps: Recap[] }) {
   return (
     <section aria-labelledby="all-title" className="px-2 pb-28">
       <div className="flex flex-wrap items-end justify-between gap-4 px-4 pb-8">
-        <h2 id="all-title" className="display text-[clamp(40px,4.2vw,60px)]">Non proident</h2>
-        <div role="group" aria-label="Tempor incididunt" className="flex flex-wrap gap-1">
+        <h2 id="all-title" className="display text-[clamp(40px,4.2vw,60px)]">All recaps</h2>
+        <div role="group" aria-label="Filter recaps" className="flex flex-wrap gap-1">
           {tags.map((t) => (
             <button
               key={t}

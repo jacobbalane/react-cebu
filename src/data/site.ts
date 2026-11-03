@@ -54,17 +54,17 @@ export const footerColumns = [
 ];
 
 export const friends = [
-  { name: "Id est", weight: 700 },
-  { name: "Laborum lorem", weight: 500 },
-  { name: "Ipsum dolor", weight: 400 },
-  { name: "Sit", weight: 800 },
-  { name: "Amet consectetur", weight: 300 },
-  { name: "Adipiscing elit", weight: 700 },
-  { name: "Sed do", weight: 500 },
+  { name: "JavaScript Cebu", weight: 700 },
+  { name: "Vue.js Cebu", weight: 500 },
+  { name: "Angular Cebu", weight: 400 },
+  { name: "PizzaPy", weight: 800 },
+  { name: "Ethereum Philippines", weight: 300 },
+  { name: "DEVCON Cebu", weight: 700 },
+  { name: "PWA Pilipinas", weight: 500 },
 ];
 
 // Places that have hosted React Cebu events.
 export const venues = [
-  { name: "Eiusmod tempor incididunt", weight: 500 },
-  { name: "Ut labore et dolore magna", weight: 400 },
+  { name: "The Company Cebu", weight: 500 },
+  { name: "Go Negosyo Center, UP Cebu", weight: 400 },
 ];

@@ -60,8 +60,8 @@ export function EventList({ events }: { events: CommunityEvent[] }) {
   return (
     <section aria-labelledby="upcoming-title" className="px-2 pb-28">
       <div className="flex flex-wrap items-end justify-between gap-4 px-4 pb-6">
-        <h2 id="upcoming-title" className="display text-[clamp(40px,4.2vw,60px)]">Dolor</h2>
-        <div role="group" aria-label="Sed do eiusmod" className="flex flex-wrap gap-1">
+        <h2 id="upcoming-title" className="display text-[clamp(40px,4.2vw,60px)]">Upcoming</h2>
+        <div role="group" aria-label="Filter events by type" className="flex flex-wrap gap-1">
           {filters.map((f) => (
             <button
               key={f.label}
@@ -103,11 +103,11 @@ export function EventList({ events }: { events: CommunityEvent[] }) {
                 </span>
                 <span className="text-[32px] leading-[1.05] tracking-[-0.035em]">{event.title}</span>
                 <span className="text-base leading-normal text-muted">
-                  {event.kind} sit {event.venue}
+                  {event.kind} at {event.venue}
                   <br />
                   {event.timeLabel}
                 </span>
-                <span className="btn btn-primary min-h-11 justify-self-start px-[18px] text-[15px]">Amet</span>
+                <span className="btn btn-primary min-h-11 justify-self-start px-[18px] text-[15px]">RSVP</span>
               </Link>
             ))}
           </div>
@@ -116,9 +116,9 @@ export function EventList({ events }: { events: CommunityEvent[] }) {
         {groups.length === 0 && (
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-[10px] bg-fog px-6 py-10">
             <span className="max-w-[640px] text-[28px] leading-[1.15] tracking-[-0.03em]">
-              Consectetur {filter.toLowerCase()} adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna.
+              No {filter.toLowerCase()} events scheduled yet. Subscribe and you’ll hear about the next one first.
             </span>
-            <a href="#subscribe" className="btn btn-primary">Aliqua enim ad</a>
+            <a href="#subscribe" className="btn btn-primary">Subscribe by email</a>
           </div>
         )}
 

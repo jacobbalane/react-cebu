@@ -17,8 +17,8 @@ export function SiteFooter() {
         ))}
       </div>
       <div className="mt-14 flex flex-wrap justify-between gap-3 border-t border-[#262626] pt-5 text-sm text-soft">
-        <span>sunt culpa qui officia deserunt mollit anim id</span>
-        <span>Est laborum lorem ipsum</span>
+        <span>© 2026 React Cebu, a JavaScript Cebu community</span>
+        <span>Sample photos from Unsplash</span>
       </div>
     </footer>
   );

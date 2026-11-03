@@ -68,7 +68,7 @@ export function Friends() {
   return (
     <section ref={ref} aria-labelledby="friends-title" className="overflow-hidden pb-32">
       <h2 id="friends-title" className="mb-6 px-6 text-center text-[15px] font-normal text-muted">
-        Sint occaecat cupidatat
+        Friends and co-hosts
       </h2>
 
       <div className="flex flex-col gap-2">
@@ -96,7 +96,7 @@ export function Friends() {
                         tabIndex={copy === 1 ? -1 : undefined}
                         className="tile flex h-[120px] items-center gap-4 bg-electric px-10 text-[clamp(28px,3vw,44px)] tracking-[-0.035em] text-white transition-colors duration-300 hover:bg-midnight sm:h-[150px]"
                       >
-                        Non proident sunt
+                        Your team here
                         <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-full bg-white text-black">
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M5 12h14M13 6l6 6-6 6" />

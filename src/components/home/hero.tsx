@@ -1,109 +1,42 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
-import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "@/lib/gsap";
+import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
+import { TiltedTiles, type Tile } from "@/components/tilted-tiles";
 
-type Tile =
-  | { type: "photo"; src: string; h: number }
-  | { type: "block"; h: number; node: React.ReactNode; className: string };
+const photo = (name: string): Tile => ({ kind: "photo", src: `/images/${name}.jpg` });
 
-const columns: { dir: "up" | "down"; duration: number; tiles: Tile[]; className?: string }[] = [
-  {
-    dir: "up",
-    duration: 90,
-    tiles: [
-      { type: "photo", src: "/images/placeholder.png", h: 520 },
-      {
-        type: "block",
-        h: 300,
-        className: "border border-[#e0e0e0] bg-white font-mono text-[13px] leading-[1.35] justify-between md:text-[22px]",
-        node: (
-          <>
-            <span>culpa qui {"{"}</span>
-            <span className="pl-7 text-electric">officia</span>
-            <span>{"}"}, [])</span>
-          </>
-        ),
-      },
-      { type: "photo", src: "/images/placeholder.png", h: 420 },
-    ],
-  },
-  {
-    dir: "down",
-    duration: 110,
-    tiles: [
-      {
-        type: "block",
-        h: 380,
-        className: "bg-electric text-white justify-between",
-        node: (
-          <>
-            <span className="text-base">Deserunt mollit anim</span>
-            <span className="text-[28px] leading-[0.95] tracking-[-0.045em] md:text-[clamp(36px,3.9vw,56px)]">Id est laborum</span>
-          </>
-        ),
-      },
-      { type: "photo", src: "/images/placeholder.png", h: 460 },
-      {
-        type: "block",
-        h: 300,
-        className: "bg-sky justify-between",
-        node: (
-          <>
-            <span className="text-base">Lorem ipsum</span>
-            <span className="text-[64px] leading-[0.8] tracking-[-0.06em] md:text-[clamp(80px,8.3vw,120px)]">2019</span>
-          </>
-        ),
-      },
-    ],
-  },
-  {
-    dir: "up",
-    duration: 75,
-    className: "hidden md:block",
-    tiles: [
-      { type: "photo", src: "/images/placeholder.png", h: 400 },
-      {
-        type: "block",
-        h: 340,
-        className: "bg-black text-white font-mono text-[17px] leading-[1.6]",
-        node: (
-          <pre className="m-0 font-mono">
-            <span className="text-sky">dolor sit amet</span> Consectetur {"{"}
-            {"\n  "}
-            <span className="text-soft">{"// lorem ipsum dolor"}</span>
-            {"\n  return <>\n    <Lorem />\n    <Ipsum />\n    <Dolor />\n  </>\n}"}
-          </pre>
-        ),
-      },
-      { type: "photo", src: "/images/placeholder.png", h: 380 },
-    ],
-  },
-  {
-    dir: "down",
-    duration: 95,
-    className: "hidden md:block",
-    tiles: [
-      { type: "photo", src: "/images/placeholder.png", h: 460 },
-      {
-        type: "block",
-        h: 320,
-        className: "bg-midnight text-white justify-end text-[44px] leading-none tracking-[-0.04em]",
-        node: (
-          <>
-            <span>Adipiscing</span>
-            <span className="text-sky">Elit</span>
-            <span>Sed do</span>
-            <span className="text-sky">Eiusmod</span>
-          </>
-        ),
-      },
-      { type: "photo", src: "/images/placeholder.png", h: 400 },
-    ],
-  },
-];
+/**
+ * One headline phrase in its own mask, so it slides up from below on load. The
+ * breaks are set by hand: automatic line splitting re-wrapped them by width.
+ * `inline` phrases share a line from tablet up and stack on phones.
+ */
+function Line({ children, inline = false }: { children: React.ReactNode; inline?: boolean }) {
+  return (
+    <span className={`split-line-mask block overflow-clip ${inline ? "md:inline-block md:align-top" : ""}`}>
+      <span data-hero-line className="block">
+        {children}
+      </span>
+    </span>
+  );
+}
+
+// Photos only: flat text tiles read as stray gray boxes once the wall is muted.
+const tiles: Tile[] = [
+  "speaker",
+  "crowd",
+  "workshop",
+  "panel",
+  "students",
+  "presenter",
+  "laptops",
+  "audience",
+  "react-code",
+  "coder",
+  "cebu-skyline",
+  "cebu-bridge",
+].map(photo);
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -112,37 +45,20 @@ export function Hero() {
     () => {
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
-        // Each column drifts forever; scrolling briefly speeds every column up.
-        const loops = gsap.utils.toArray<HTMLElement>("[data-column]").map((column) => {
-          const up = column.dataset.column === "up";
-          return gsap.fromTo(
-            column,
-            { yPercent: up ? 0 : -50 },
-            { yPercent: up ? -50 : 0, duration: Number(column.dataset.duration), ease: "none", repeat: -1 },
-          );
+        // As you scroll away, the wall sinks slower than the page while the copy scrolls
+        // normally. The wall grows more than it moves, so its top edge never comes into view.
+        gsap.to("[data-hero-wall]", {
+          scale: 1.2,
+          yPercent: 8,
+          ease: "none",
+          scrollTrigger: { trigger: ref.current, start: "top top", end: "bottom top", scrub: true },
         });
 
-        ScrollTrigger.create({
-          trigger: ref.current,
-          start: "top top",
-          end: "bottom top",
-          onUpdate: (self) => {
-            const boost = 1 + Math.min(Math.abs(self.getVelocity()) / 250, 8);
-            loops.forEach((loop) => {
-              gsap.killTweensOf(loop, "timeScale");
-              loop.timeScale(boost);
-              gsap.to(loop, { timeScale: 1, duration: 1.2, ease: "power2.out" });
-            });
-          },
-        });
-
-        // As you scroll away, the card lifts and the collage moves slower behind it.
-        gsap
-          .timeline({ scrollTrigger: { trigger: ref.current, start: "top top", end: "bottom top", scrub: true } })
-          .to("[data-hero-card]", { yPercent: -40, scale: 0.94, ease: "none" }, 0)
-          .to("[data-hero-grid]", { yPercent: 18, ease: "none" }, 0);
-
-        gsap.from("[data-hero-card]", { y: 60, autoAlpha: 0, duration: 1.1, ease: "power3.out", delay: 0.15 });
+        // The headline rises line by line, then the rest follows it in. Lines start 150% down:
+        // the mask keeps room under each line for descenders, and at 105% the tops of tall
+        // letters peeked through that gap while waiting.
+        gsap.from("[data-hero-line]", { yPercent: 150, duration: 1, ease: "power4.out", stagger: 0.08 });
+        gsap.from("[data-hero-fade]", { y: 30, autoAlpha: 0, duration: 1, ease: "power3.out", stagger: 0.1, delay: 0.45 });
       });
       return () => mm.revert();
     },
@@ -150,50 +66,50 @@ export function Hero() {
   );
 
   return (
-    <section ref={ref} aria-labelledby="hero-title" className="relative h-[max(720px,100svh)] overflow-hidden">
-      <div data-hero-grid aria-hidden="true" className="grid h-full grid-cols-2 gap-2 md:grid-cols-4">
-        {columns.map((column, i) => (
-          <div key={i} className={`overflow-hidden ${column.className ?? ""}`}>
-            <div data-column={column.dir} data-duration={column.duration} className="flex flex-col gap-2">
-              {[0, 1].map((copy) =>
-                column.tiles.map((tile, j) =>
-                  tile.type === "photo" ? (
-                    // Eager: the columns move with transforms, so lazy loading would leave
-                    // tiles blank as they drift into view. The second copy reuses the cached files.
-                    <div key={`${copy}-${j}`} className="relative w-full shrink-0 bg-fog" style={{ height: tile.h }}>
-                      <Image
-                        src={tile.src}
-                        alt=""
-                        fill
-                        sizes="(min-width: 768px) 25vw, 50vw"
-                        className="object-cover"
-                        loading="eager"
-                        preload={copy === 0 && j === 0}
-                      />
-                    </div>
-                  ) : (
-                    <div key={`${copy}-${j}`} className={`flex shrink-0 flex-col p-6 ${tile.className}`} style={{ height: tile.h }}>
-                      {tile.node}
-                    </div>
-                  ),
-                ),
-              )}
-            </div>
-          </div>
-        ))}
+    <section
+      ref={ref}
+      aria-labelledby="hero-title"
+      className="relative h-[max(720px,100svh)] overflow-hidden bg-black"
+    >
+      <div data-hero-wall className="absolute inset-0">
+        <TiltedTiles tiles={tiles} />
       </div>
-
+      {/* Mutes the wall to gray texture everywhere except a soft window on the right,
+          where photos drifting through regain their colour and fade back as they leave.
+          Blend layers rather than a backdrop filter, which Chrome redraws in bands while scrolling. */}
       <div
-        data-hero-card
-        className="absolute bottom-2 left-2 right-2 flex flex-col gap-6 rounded-[12px] bg-white p-5 md:bottom-auto md:left-1/2 md:right-auto md:top-[54%] md:w-[min(640px,calc(100%-32px))] md:-translate-x-1/2 md:-translate-y-1/2 md:gap-7 md:p-9"
-      >
-        <h1 id="hero-title" className="m-0 text-[clamp(28px,3.4vw,48px)] font-normal leading-[1.04] tracking-[-0.04em]">
-          Tempor incididunt ut labore et dolore magna aliqua enim.{" "}
-          <span className="text-soft">Ad minim veniam quis nostrud exercitation ullamco laboris nisi.</span>
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[#808080] mix-blend-saturation [mask-image:radial-gradient(ellipse_36%_50%_at_74%_34%,transparent_40%,black_100%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-black/55 [mask-image:radial-gradient(ellipse_36%_50%_at_74%_34%,transparent_40%,black_100%)]"
+      />
+      {/* Darkens steadily with distance from the colour window, deepest in the far corner. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_74%_34%,transparent_18%,rgba(0,0,0,0.35)_42%,rgba(0,0,0,0.7)_72%,rgba(0,0,0,0.9)_100%)]"
+      />
+      <div aria-hidden="true" className="grain opacity-10" />
+      {/* Darkens the corner behind the copy so white text stays readable over bright photos. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_0%_100%,rgba(0,0,0,0.75),transparent_70%)]" />
+
+      <div className="absolute inset-x-4 bottom-6 flex flex-col items-start gap-6 text-white md:inset-x-10 md:bottom-10 md:gap-8">
+        {/* Broken by phrase rather than by width, so no line ends mid-thought. */}
+        <h1 id="hero-title" className="display m-0 text-[clamp(48px,8.4vw,140px)] leading-[0.92]">
+          <Line>Build the web</Line>{" "}
+          <Line>with React,</Line>{" "}
+          <span className="block">
+            <Line inline>right here</Line>{" "}
+            <Line inline>in Cebu.</Line>
+          </span>
         </h1>
-        <div className="flex flex-wrap gap-1.5">
-          <Link href="#join" className="btn btn-primary">Aliquip ex ea</Link>
-          <Link href="/events" className="btn btn-quiet">Commodo consequat duis</Link>
+        <p data-hero-fade className="m-0 max-w-[34ch] text-[clamp(18px,1.5vw,22px)] leading-snug text-[#b5b5b5]">
+          A free community for developers, by developers, since 2019.
+        </p>
+        <div data-hero-fade className="flex flex-wrap gap-1.5">
+          <Link href="#join" className="btn btn-primary">Join React Cebu</Link>
+          <Link href="/events" className="btn btn-quiet">See upcoming events</Link>
         </div>
       </div>
     </section>

@@ -4,12 +4,12 @@ import { useRef } from "react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 
 const lines = [
-  <><span className="text-sky">magna</span> {"{ useState }"}</>,
-  <><span className="text-sky">aliqua enim ad</span> Minim {"{"}</>,
-  <>{"  "}<span className="text-sky">veniam</span> quis nostrud exercitation ullamco</>,
-  <>{"  "}<span className="text-sky">laboris</span> nisi aliquip<span className="text-[#9db5ff]">ex ea</span>commodo</>,
-  <>{"    "}consequat duis{"{rsvp}"}aute{"{n}"}irure</>,
-  <>{"  "}in</>,
+  <><span className="text-sky">import</span> {"{ useState }"}</>,
+  <><span className="text-sky">export default function</span> Meetup() {"{"}</>,
+  <>{"  "}<span className="text-sky">const</span> [n, setN] = useState(41)</>,
+  <>{"  "}<span className="text-sky">return</span> &lt;Card title=<span className="text-[#9db5ff]">&quot;Hello, Cebu!&quot;</span>&gt;</>,
+  <>{"    "}&lt;button onClick={"{rsvp}"}&gt;{"{n}"}&lt;/button&gt;</>,
+  <>{"  "}&lt;/Card&gt;</>,
   <>{"}"}</>,
 ];
 
@@ -43,16 +43,16 @@ export function LiveCoding() {
   return (
     <section ref={ref} aria-labelledby="demo-title" className="flex min-h-svh flex-col justify-center bg-black px-2 py-24 text-white">
       <h2 id="demo-title" className="mx-auto mb-12 max-w-[760px] text-center text-[clamp(30px,2.8vw,40px)] font-normal leading-[1.1] tracking-[-0.03em]">
-        Reprehenderit voluptate velit esse cillum fugiat nulla pariatur excepteur.
+        Come with a question. Leave with something you built.
       </h2>
       <div className="mx-auto w-full max-w-[1240px] overflow-hidden rounded-[12px] bg-electric p-3 sm:p-6">
         <div className="grid gap-2 lg:grid-cols-[1.15fr_1fr]">
           <div className="flex flex-col rounded-lg bg-black">
             <div className="flex gap-1.5 border-b border-[#262626] px-3.5 py-3 text-sm">
-              <span className="rounded-md bg-[#262626] px-3 py-1.5">Sint</span>
-              <span className="px-3 py-1.5 text-soft">occaecat</span>
+              <span className="rounded-md bg-[#262626] px-3 py-1.5">Meetup.jsx</span>
+              <span className="px-3 py-1.5 text-soft">page.jsx</span>
             </div>
-            <pre aria-label="Lorem ipsum dolor sit amet" className="m-0 overflow-x-auto p-5 font-mono text-[13px] leading-[1.9] sm:text-[17px]">
+            <pre aria-label="A Meetup component with an RSVP counter" className="m-0 overflow-x-auto p-5 font-mono text-[13px] leading-[1.9] sm:text-[17px]">
               {lines.map((line, i) => (
                 <span key={i} data-line className="block whitespace-pre">
                   {line}
@@ -62,17 +62,17 @@ export function LiveCoding() {
           </div>
           <div className="flex flex-col rounded-lg bg-white text-black">
             <div className="border-b border-[#e0e0e0] px-3.5 py-3 text-sm text-muted">
-              <span className="block rounded-md bg-fog px-3 py-1.5">cupidatat</span>
+              <span className="block rounded-md bg-fog px-3 py-1.5">localhost:3000</span>
             </div>
             <div className="flex flex-1 items-center justify-center p-8">
               <div data-card className="flex w-full max-w-[380px] flex-col gap-5 rounded-[12px] border border-[#e0e0e0] p-7">
-                <span className="text-[44px] leading-none tracking-[-0.04em]">Non proident!</span>
+                <span className="text-[44px] leading-none tracking-[-0.04em]">Hello, Cebu!</span>
                 <span data-button className="inline-flex min-h-12 items-center gap-2.5 self-start rounded-full bg-electric px-5 font-medium text-white">
-                  Sunt
+                  RSVPs
                   <span className="relative inline-block w-[2ch]">
                     <span data-count="41" className="absolute left-0">41</span>
                     <span data-count="42" className="invisible absolute left-0">42</span>
-                    culpa
+                    &nbsp;
                   </span>
                 </span>
               </div>
@@ -80,7 +80,7 @@ export function LiveCoding() {
           </div>
         </div>
       </div>
-      <p className="mt-6 text-center text-base text-soft">Qui officia deserunt mollit anim id</p>
+      <p className="mt-6 text-center text-base text-soft">What a workshop afternoon looks like</p>
     </section>
   );
 }
