@@ -1,0 +1,116 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+@theme {
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-fog: #ececec;
+  --color-electric: #1e4dff;
+  --color-electric-deep: #1a3fd6;
+  --color-sky: #61dafb;
+  --color-midnight: #0b1f4d;
+  --color-line: #d4d4d4;
+  --color-muted: #6b6b6b;
+  --color-soft: #8a8a8a;
+  --color-on-electric: #dce6ff;
+  --color-on-midnight: #c9d5f2;
+
+  --font-sans: var(--font-host), system-ui, sans-serif;
+  --font-mono: Consolas, Menlo, monospace;
+
+  --radius-tile: 10px;
+  --radius-card: 12px;
+
+  --tracking-display: -0.045em;
+  --tracking-title: -0.035em;
+}
+
+html {
+  background: var(--color-white);
+  color: var(--color-black);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-electric);
+  outline-offset: 3px;
+}
+
+@layer components {
+  .tile {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-tile);
+  }
+
+  .navpill {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: var(--color-fog);
+    color: var(--color-black);
+    font-size: 15px;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .navpill:hover,
+  .navpill[aria-current="page"] {
+    background: var(--color-black);
+    color: var(--color-white);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .btn-primary { background: var(--color-electric); color: var(--color-white); }
+  .btn-primary:hover { background: var(--color-midnight); }
+  .btn-quiet { background: var(--color-fog); color: var(--color-black); }
+  .btn-quiet:hover { background: var(--color-black); color: var(--color-white); }
+  .btn-white { background: var(--color-white); color: var(--color-black); }
+  .btn-white:hover { background: var(--color-fog); }
+  .btn-black { background: var(--color-black); color: var(--color-white); }
+  .btn-black:hover { background: var(--color-midnight); }
+
+  /* Photo tiles that flip through three photos while hovered */
+  .reel > img:nth-of-type(2),
+  .reel > img:nth-of-type(3) { opacity: 0; }
+  .reel:hover > img:nth-of-type(2) { animation: reel-2 2.1s steps(1) infinite; }
+  .reel:hover > img:nth-of-type(3) { animation: reel-3 2.1s steps(1) infinite; }
+
+  .display { letter-spacing: var(--tracking-display); line-height: 1; font-weight: 400; }
+  .title { letter-spacing: var(--tracking-title); line-height: 1.02; font-weight: 400; }
+}
+
+/*
+ * SplitText wraps each heading line in a clipping mask the height of the line box.
+ * Our tight line-heights would cut off descenders (g, y, p) and tall accents, so the
+ * mask gets extra room above and below, cancelled out by negative margins.
+ */
+.split-line-mask {
+  padding: 0.1em 0 0.18em;
+  margin: -0.1em 0 -0.18em;
+}
+
+@keyframes reel-2 { 0% { opacity: 0 } 33% { opacity: 1 } 66% { opacity: 0 } }
+@keyframes reel-3 { 0% { opacity: 0 } 66% { opacity: 1 } 100% { opacity: 1 } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
