@@ -1,0 +1,66 @@
+"use client";
+
+import Image from "next/image";
+import { useRef } from "react";
+import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
+
+/**
+ * Photos that swipe on their own, left or up, one every few seconds, each new photo
+ * pushing the last one out like a carousel. Every slider runs on the same cycle from
+ * page load, so a `delay` keeps a set of them swiping in order. Reduced motion keeps
+ * the first photo.
+ */
+export function PhotoSlides({
+  photos,
+  alt,
+  direction = "left",
+  delay = 0,
+  sizes,
+}: {
+  photos: string[];
+  alt: string;
+  direction?: "left" | "up";
+  /** Seconds this slider swipes after the others on the same cycle. */
+  delay?: number;
+  sizes: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const slides = gsap.utils.toArray<HTMLElement>("img", ref.current);
+      const axis = direction === "up" ? "yPercent" : "xPercent";
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        gsap.set(slides, { [axis]: (i: number) => (i === 0 ? 0 : 100), opacity: 1 });
+        const swipe = { duration: 1, ease: "power3.inOut", immediateRender: false };
+        const tl = gsap.timeline({ repeat: -1, delay });
+        slides.forEach((slide, i) => {
+          const next = slides[(i + 1) % slides.length];
+          tl.to({}, { duration: 2.6 })
+            .fromTo(slide, { [axis]: 0 }, { [axis]: -100, ...swipe })
+            .fromTo(next, { [axis]: 100 }, { [axis]: 0, ...swipe }, "<");
+        });
+        return () => tl.kill();
+      });
+      return () => mm.revert();
+    },
+    { scope: ref },
+  );
+
+  return (
+    <div ref={ref} className="tile aspect-[16/10] bg-fog">
+      {photos.map((photo, i) => (
+        <Image
+          key={photo + i}
+          src={`/images/${photo}.jpg`}
+          alt={i === 0 ? alt : ""}
+          fill
+          sizes={sizes}
+          // Only the first photo shows until the slider takes over the rest.
+          className={`object-cover ${i === 0 ? "" : "opacity-0"}`}
+        />
+      ))}
+    </div>
+  );
+}
