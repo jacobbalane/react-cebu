@@ -57,17 +57,17 @@ export default function PartnersPage() {
               <span className="text-[17px] leading-[1.45] text-[#4d4d4d]">A room for 40 to 80 people, a projector and Wi-Fi, one evening a month.</span>
             </span>
           </a>
-          <div data-reveal className="tile flex flex-col justify-between bg-sky p-6 lg:col-span-3">
+          <div data-reveal className="tile flex flex-col justify-between bg-react p-6 lg:col-span-3">
             <span className="text-4xl tracking-[-0.035em]">Feed the room</span>
             <span className="text-base leading-[1.45]">Snacks and drinks for one meetup or workshop.</span>
           </div>
-          <div data-reveal className="tile flex flex-col justify-between bg-electric p-6 text-white lg:col-span-3">
+          <div data-reveal className="tile flex flex-col justify-between bg-azure p-6 text-white lg:col-span-3">
             <span className="text-4xl tracking-[-0.035em]">Prizes and swag</span>
-            <span className="text-base leading-[1.45] text-on-electric">Stickers, shirts and course credits for Hacktoberfest and code camps.</span>
+            <span className="text-base leading-[1.45] text-on-azure">Stickers, shirts and course credits for Hacktoberfest and code camps.</span>
           </div>
-          <div data-reveal className="tile flex flex-col justify-between bg-midnight p-6 text-white lg:col-span-3">
+          <div data-reveal className="tile flex flex-col justify-between bg-fog p-6 lg:col-span-3">
             <span className="text-4xl tracking-[-0.035em]">Lend your engineers</span>
-            <span className="text-base leading-[1.45] text-on-midnight">Send a speaker or a mentor for a workshop afternoon.</span>
+            <span className="text-base leading-[1.45] text-[#555]">Send a speaker or a mentor for a workshop afternoon.</span>
           </div>
           <div data-reveal className="tile flex flex-col justify-between bg-fog p-6 lg:col-span-3">
             <span className="text-4xl tracking-[-0.035em]">Back a student</span>
@@ -105,7 +105,7 @@ export default function PartnersPage() {
             <h2 id="contact-title" className="display text-[clamp(40px,4.2vw,60px)]">Let’s talk</h2>
             <p className="max-w-[40ch] text-lg leading-normal text-[#4d4d4d]">
               Tell us a little about your team and how you’d like to help. Or email{" "}
-              <a href="mailto:react@jscebu.org" className="text-electric">react@jscebu.org</a> directly.
+              <a href="mailto:react@jscebu.org" className="text-azure-deep">react@jscebu.org</a> directly.
             </p>
           </div>
           <PartnerForm />

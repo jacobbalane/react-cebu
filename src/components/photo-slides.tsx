@@ -16,6 +16,7 @@ export function PhotoSlides({
   direction = "left",
   delay = 0,
   sizes,
+  className = "aspect-[16/10]",
 }: {
   photos: string[];
   alt: string;
@@ -23,6 +24,8 @@ export function PhotoSlides({
   /** Seconds this slider swipes after the others on the same cycle. */
   delay?: number;
   sizes: string;
+  /** Sizing for the frame: a 16:10 card by default, or e.g. `absolute inset-0` to fill a grid tile. */
+  className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -49,7 +52,7 @@ export function PhotoSlides({
   );
 
   return (
-    <div ref={ref} className="tile aspect-[16/10] bg-fog">
+    <div ref={ref} className={`tile bg-fog ${className}`}>
       {photos.map((photo, i) => (
         <Image
           key={photo + i}

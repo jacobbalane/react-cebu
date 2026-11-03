@@ -11,9 +11,9 @@ export function PartnerForm() {
 
   if (sent) {
     return (
-      <div role="status" className="tile flex flex-col gap-3.5 bg-electric p-7 text-white">
+      <div role="status" className="tile flex flex-col gap-3.5 bg-azure p-7 text-white">
         <span className="text-4xl tracking-[-0.035em]">Message sent.</span>
-        <span className="text-lg leading-normal text-on-electric">An organizer will reply by email. Thank you for keeping it free.</span>
+        <span className="text-lg leading-normal text-on-azure">An organizer will reply by email. Thank you for keeping it free.</span>
       </div>
     );
   }

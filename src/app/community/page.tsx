@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { TransitionLink } from "@/components/page-transition";
 import { PageIntro } from "@/components/page-intro";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { Timeline } from "@/components/community/timeline";
@@ -51,7 +51,7 @@ export default function CommunityPage() {
               </div>
             </div>
           ))}
-          <a href="#volunteer" data-reveal className="tile flex min-h-[420px] flex-col justify-between bg-electric p-7 text-white">
+          <a href="#volunteer" data-reveal className="tile flex min-h-[420px] flex-col justify-between bg-azure p-7 text-white">
             <span className="text-[44px] leading-none tracking-[-0.045em]">Help us run the next one</span>
             <span className="btn btn-white self-start">Volunteer</span>
           </a>
@@ -61,21 +61,21 @@ export default function CommunityPage() {
       <section aria-labelledby="values-title" className="px-2 pb-28">
         <SplitHeading id="values-title" className="display mb-8 px-4 text-[clamp(40px,4.2vw,60px)]">How we run things</SplitHeading>
         <Reveal className="grid auto-rows-[minmax(220px,auto)] gap-2 lg:grid-cols-12 lg:auto-rows-[200px]">
-          <div data-reveal className="tile flex flex-col justify-between bg-electric p-8 text-white lg:col-span-6 lg:row-span-2">
+          <div data-reveal className="tile flex flex-col justify-between bg-azure p-8 text-white lg:col-span-6 lg:row-span-2">
             <span className="text-[clamp(64px,7vw,112px)] leading-[0.85] tracking-[-0.06em]">Free, always</span>
-            <span className="max-w-[34ch] text-xl leading-[1.45] text-on-electric">Every event is free to attend. Partners cover the room, the snacks and the occasional pizza.</span>
+            <span className="max-w-[34ch] text-xl leading-[1.45] text-on-azure">Every event is free to attend. Partners cover the room, the snacks and the occasional pizza.</span>
           </div>
           <div data-reveal className="tile flex flex-col justify-between bg-fog p-6 lg:col-span-3">
             <span className="text-4xl tracking-[-0.035em]">Every level</span>
             <span className="text-base leading-[1.45] text-[#555]">First component or fiftieth, you belong in the room.</span>
           </div>
-          <div data-reveal className="tile flex flex-col justify-between bg-sky p-6 lg:col-span-3">
+          <div data-reveal className="tile flex flex-col justify-between bg-react p-6 lg:col-span-3">
             <span className="text-4xl tracking-[-0.035em]">Anyone can speak</span>
             <span className="text-base leading-[1.45]">Every talk comes from a member. First-timers get a mentor.</span>
           </div>
-          <div data-reveal className="tile flex flex-col justify-between bg-midnight p-6 text-white lg:col-span-6">
+          <div data-reveal className="tile flex flex-col justify-between bg-fog p-6 lg:col-span-6">
             <span className="text-5xl tracking-[-0.04em]">Kind by default</span>
-            <span className="text-base leading-[1.45] text-on-midnight">The same code of conduct applies at every event, in the Facebook group, and anywhere else we meet.</span>
+            <span className="text-base leading-[1.45] text-[#555]">The same code of conduct applies at every event, in the Facebook group, and anywhere else we meet.</span>
           </div>
         </Reveal>
       </section>
@@ -110,19 +110,19 @@ export default function CommunityPage() {
         <Reveal className="grid gap-2 md:grid-cols-3">
           <div data-reveal className="tile flex min-h-[300px] flex-col justify-between bg-fog p-7">
             <span className="text-5xl tracking-[-0.045em]">Angular Cebu</span>
-            <a href="#angular-cebu" className="text-base font-medium text-electric">Visit Angular Cebu</a>
+            <a href="#angular-cebu" className="text-base font-medium text-azure-deep">Visit Angular Cebu</a>
           </div>
-          <div data-reveal className="tile flex min-h-[300px] flex-col justify-between bg-electric p-7 text-white">
+          <div data-reveal className="tile flex min-h-[300px] flex-col justify-between bg-azure p-7 text-white">
             <span className="text-5xl tracking-[-0.045em]">React Cebu</span>
-            <span className="text-base text-on-electric">You are here</span>
+            <span className="text-base text-on-azure">You are here</span>
           </div>
           <div data-reveal className="tile flex min-h-[300px] flex-col justify-between bg-fog p-7">
             <span className="text-5xl tracking-[-0.045em]">Vue.js Cebu</span>
-            <a href="#vuejs-cebu" className="text-base font-medium text-electric">Visit Vue.js Cebu</a>
+            <a href="#vuejs-cebu" className="text-base font-medium text-azure-deep">Visit Vue.js Cebu</a>
           </div>
         </Reveal>
         <p className="px-4 pt-6 text-[15px] text-muted">
-          Want to help organize? <Link href="/partners" className="text-electric">Partners</Link> and volunteers keep every event free.
+          Want to help organize? <TransitionLink href="/partners" className="text-azure">Partners</TransitionLink> and volunteers keep every event free.
         </p>
       </section>
     </>

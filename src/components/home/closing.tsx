@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { TransitionLink } from "@/components/page-transition";
 import { Reveal } from "@/components/motion";
 
 export function Magazine() {
@@ -9,7 +9,7 @@ export function Magazine() {
         <div className="flex flex-col gap-7 px-4 py-7 sm:px-6">
           <h2 id="bigger-title" className="title text-[clamp(28px,2.8vw,40px)]">Made in Cebu, part of a bigger community</h2>
           <div className="relative h-[340px] sm:h-[420px]">
-            <div data-reveal className="absolute left-0 top-[70px] flex h-[240px] w-[48%] -rotate-2 flex-col justify-between bg-electric p-5 text-white sm:h-[300px] sm:w-[38%]">
+            <div data-reveal className="absolute left-0 top-[70px] flex h-[240px] w-[48%] -rotate-2 flex-col justify-between bg-azure p-5 text-white sm:h-[300px] sm:w-[38%]">
               <span className="text-[15px]">Workshop recap</span>
               <span className="text-[clamp(28px,3vw,44px)] leading-[0.95] tracking-[-0.045em]">Server Components, hands-on</span>
             </div>
@@ -19,23 +19,23 @@ export function Magazine() {
             </div>
             <div data-reveal className="absolute right-0 top-[170px] z-20 h-[170px] w-[52%] -rotate-1 overflow-hidden sm:top-[150px] sm:h-[260px] sm:w-[40%]">
               <Image src="/images/students.jpg" alt="Students at a React Native code camp" fill sizes="40vw" className="object-cover" />
-              <span className="absolute bottom-3 left-3 bg-sky px-3 py-2 text-lg tracking-[-0.02em] text-black sm:text-[22px]">React Native code camp</span>
+              <span className="absolute bottom-3 left-3 bg-react px-3 py-2 text-lg tracking-[-0.02em] text-black sm:text-[22px]">React Native code camp</span>
             </div>
           </div>
           <div className="flex flex-wrap items-end justify-between gap-4">
             <p className="max-w-[560px] text-lg leading-normal text-[#333]">
               <span className="font-medium text-black">Recaps, slides and photos from every event since 2019.</span> Read what happened, grab the code, and see who to ask next time.
             </p>
-            <Link href="/recaps" className="btn btn-white">Read the recaps</Link>
+            <TransitionLink href="/events#recaps" className="btn btn-white">Read the recaps</TransitionLink>
           </div>
         </div>
         <div data-reveal className="flex flex-col justify-between gap-6 rounded-[10px] bg-black p-6 text-white">
           <span className="text-lg leading-snug">React Cebu is one of three communities under JavaScript Cebu, alongside Angular Cebu and Vue.js Cebu.</span>
           <div className="flex flex-col gap-2">
-            <span className="-rotate-2 bg-sky p-[18px] text-[40px] leading-[0.95] tracking-[-0.045em] text-black">JavaScript Cebu</span>
+            <span className="-rotate-2 bg-react p-[18px] text-[40px] leading-[0.95] tracking-[-0.045em] text-black">JavaScript Cebu</span>
             <span className="rotate-[1.5deg] bg-white p-[18px] text-[28px] leading-none tracking-[-0.03em] text-black">Angular, React and Vue.js, one family</span>
           </div>
-          <Link href="/community#family" className="btn btn-white self-start">Meet the family</Link>
+          <TransitionLink href="/community#family" className="btn btn-white self-start">Meet the family</TransitionLink>
         </div>
       </Reveal>
     </section>

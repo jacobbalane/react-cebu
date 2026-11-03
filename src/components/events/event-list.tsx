@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { eventDay, eventMonth, eventWeekday, type CommunityEvent } from "@/data/events";
+import { FACEBOOK_URL } from "@/data/site";
 
 const filters = [
   { label: "All", match: () => true },
@@ -91,9 +91,11 @@ export function EventList({ events }: { events: CommunityEvent[] }) {
           <div key={group.month} className="mt-6">
             <h3 className="border-b border-black px-4 pb-3 text-2xl tracking-[-0.02em] text-muted">{group.month}</h3>
             {group.items.map((event) => (
-              <Link
+              <a
                 key={event.slug}
-                href={`/events/${event.slug}`}
+                href={FACEBOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 onPointerEnter={() => setHovered(event)}
                 className="grid items-center gap-x-8 gap-y-3 rounded-[10px] border-b border-line px-4 py-6 transition-colors hover:bg-fog lg:grid-cols-[140px_1fr_300px_auto]"
               >
@@ -108,7 +110,7 @@ export function EventList({ events }: { events: CommunityEvent[] }) {
                   {event.timeLabel}
                 </span>
                 <span className="btn btn-primary min-h-11 justify-self-start px-[18px] text-[15px]">RSVP</span>
-              </Link>
+              </a>
             ))}
           </div>
         ))}

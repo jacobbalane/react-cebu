@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import { TransitionLink } from "@/components/page-transition";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { navLinks } from "@/data/site";
+import { FACEBOOK_URL, navLinks } from "@/data/site";
 import { useLenis } from "@/components/smooth-scroll";
 import { Logo } from "@/components/logo";
 
@@ -18,38 +18,44 @@ export function SiteHeader() {
     else lenis.current?.start();
   }, [open, lenis]);
 
-  const isActive = (href: string) => !href.includes("#") && pathname.startsWith(href);
+  // Every path starts with "/", so Home only counts as current on the home page itself.
+  const isActive = (href: string) => !href.includes("#") && (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
     <>
       <header className="pointer-events-none fixed inset-x-0 top-0 z-40 grid grid-cols-[1fr_auto_1fr] items-center gap-3 px-3 py-3 sm:px-4">
-        <Link href="/" aria-label="React Cebu home" className="pointer-events-auto justify-self-start">
+        <TransitionLink href="/" aria-label="React Cebu home" className="pointer-events-auto justify-self-start">
           <Logo />
-        </Link>
+        </TransitionLink>
         <nav aria-label="Main" className="pointer-events-auto hidden gap-1 lg:flex">
           {navLinks.map((link) => (
-            <Link
+            <TransitionLink
               key={link.href}
               href={link.href}
               className="navpill"
               aria-current={isActive(link.href) ? "page" : undefined}
             >
               {link.label}
-            </Link>
+            </TransitionLink>
           ))}
         </nav>
         {/* Pinned to the last column: below lg the nav is hidden and would otherwise leave this in the middle. */}
         <div className="pointer-events-auto col-start-3 flex gap-1 justify-self-end">
-          <Link
+          <TransitionLink
             href="/partners"
             className="navpill hidden sm:inline-flex"
             aria-current={isActive("/partners") ? "page" : undefined}
           >
             Partner with us
-          </Link>
-          <Link href="/#join" className="navpill !bg-react !text-ink hover:!bg-ink hover:!text-react">
+          </TransitionLink>
+          <a
+            href={FACEBOOK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="navpill !bg-react !text-ink hover:!bg-ink hover:!text-react"
+          >
             Join
-          </Link>
+          </a>
           <button
             type="button"
             className="navpill w-10 justify-center !px-0 lg:hidden"
@@ -88,19 +94,25 @@ export function SiteHeader() {
           </div>
           <nav aria-label="Main" className="flex flex-col border-t border-black">
             {[...navLinks, { href: "/partners", label: "Partner with us" }].map((link) => (
-              <Link
+              <TransitionLink
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className="border-b border-line px-1 py-4 text-[40px] tracking-[-0.04em]"
               >
                 {link.label}
-              </Link>
+              </TransitionLink>
             ))}
           </nav>
-          <Link href="/#join" onClick={() => setOpen(false)} className="btn btn-primary self-start">
+          <a
+            href={FACEBOOK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
+            className="btn btn-primary self-start"
+          >
             Join React Cebu
-          </Link>
+          </a>
         </div>
       )}
     </>

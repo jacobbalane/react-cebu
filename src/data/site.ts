@@ -1,12 +1,16 @@
-/** The public address, used for share links and calendar files. */
+/** The public address, used in calendar files. */
 export const SITE_URL = "https://react.jscebu.org";
 
+/** The React Cebu Facebook page: where people join, and where events are announced and RSVPed. */
+export const FACEBOOK_URL = "https://www.facebook.com/reactcebu/";
+
+/** Talk ideas come in by email now that there's no Speak page. */
+export const TALK_EMAIL = "mailto:react@jscebu.org?subject=Talk%20idea";
+
 export const navLinks = [
-  { href: "/events", label: "Events" },
-  { href: "/#learn", label: "Learn" },
+  { href: "/", label: "Home" },
   { href: "/community", label: "Community" },
-  { href: "/speak", label: "Speak" },
-  { href: "/recaps", label: "Recaps" },
+  { href: "/events", label: "Events" },
 ];
 
 export const footerColumns = [
@@ -22,31 +26,22 @@ export const footerColumns = [
     title: "Events",
     links: [
       { href: "/events", label: "Upcoming" },
-      { href: "/events#past", label: "Past events" },
+      { href: "/events#recaps", label: "Recaps" },
       { href: "/partners", label: "Host an event" },
     ],
   },
   {
     title: "Get involved",
     links: [
-      { href: "/speak", label: "Speak" },
+      { href: TALK_EMAIL, label: "Give a talk" },
       { href: "/community#organizers", label: "Volunteer" },
       { href: "/partners", label: "Partner with us" },
     ],
   },
   {
-    title: "Resources",
-    links: [
-      { href: "/recaps", label: "Recaps" },
-      { href: "/recaps", label: "Slides" },
-      { href: "/recaps", label: "Recordings" },
-    ],
-  },
-  {
     title: "Follow",
     links: [
-      // TODO: replace with the real React Cebu Facebook group URL
-      { href: "#facebook", label: "Facebook" },
+      { href: FACEBOOK_URL, label: "Facebook" },
       { href: "https://github.com/reactcebu", label: "GitHub" },
       { href: "mailto:react@jscebu.org", label: "react@jscebu.org" },
     ],

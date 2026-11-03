@@ -1,9 +1,10 @@
 "use client";
 
-import Link from "next/link";
+import { TransitionLink } from "@/components/page-transition";
 import { useRef } from "react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 import { TiltedTiles, type Tile } from "@/components/tilted-tiles";
+import { FACEBOOK_URL } from "@/data/site";
 
 const photo = (name: string): Tile => ({ kind: "photo", src: `/images/${name}.jpg` });
 
@@ -108,8 +109,8 @@ export function Hero() {
           A free community for developers, by developers, since 2019.
         </p>
         <div data-hero-fade className="flex flex-wrap gap-1.5">
-          <Link href="#join" className="btn btn-primary">Join React Cebu</Link>
-          <Link href="/events" className="btn btn-quiet">See upcoming events</Link>
+          <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Join React Cebu</a>
+          <TransitionLink href="/events" className="btn btn-quiet">See upcoming events</TransitionLink>
         </div>
       </div>
     </section>

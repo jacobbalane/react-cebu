@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Host_Grotesk } from "next/font/google";
+import { PageTransition } from "@/components/page-transition";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -30,9 +31,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${hostGrotesk.variable} antialiased`}>
       <body className="min-h-full overflow-x-hidden">
         <SmoothScroll>
-          <SiteHeader />
-          <main>{children}</main>
-          <SiteFooter />
+          <PageTransition>
+            <SiteHeader />
+            <main>{children}</main>
+            <SiteFooter />
+          </PageTransition>
         </SmoothScroll>
       </body>
     </html>

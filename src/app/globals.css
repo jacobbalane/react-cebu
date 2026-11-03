@@ -5,17 +5,17 @@
   --color-black: #000000;
   --color-white: #ffffff;
   --color-fog: #ececec;
-  --color-electric: #1e4dff;
-  --color-electric-deep: #1a3fd6;
-  --color-sky: #61dafb;
-  --color-midnight: #0b1f4d;
+  /* Azure, the third colour beside React cyan, ink and white: tiles that carry white
+     text, and links on white. On fog, links need the deeper shade to stay readable. */
+  --color-azure: #0070f3;
+  --color-azure-deep: #0057bd;
   --color-line: #d4d4d4;
   --color-muted: #6b6b6b;
   --color-soft: #8a8a8a;
-  --color-on-electric: #dce6ff;
-  --color-on-midnight: #c9d5f2;
-  /* React's own palette, for primary controls: buttons, the nav's Join, filter pills.
-     Cyan is too light for white text, so it always carries ink. */
+  /* Only white is readable on azure; a tint would fall under 4.5:1. */
+  --color-on-azure: #ffffff;
+  /* React's own palette, for primary controls (buttons, the nav's Join, filter pills)
+     and light tiles. Cyan is too light for white text, so it always carries ink. */
   --color-react: #00d8ff;
   --color-ink: #222222;
   --color-ink-soft: #3a3a3a;
@@ -41,7 +41,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-electric);
+  outline: 2px solid var(--color-react);
   outline-offset: 3px;
 }
 

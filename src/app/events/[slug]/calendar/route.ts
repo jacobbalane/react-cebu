@@ -37,7 +37,8 @@ export async function GET(_request: Request, ctx: RouteContext<"/events/[slug]/c
   const event = getEvent(slug);
   if (!event) return new Response("Event not found", { status: 404 });
 
-  const url = `${SITE_URL}/events/${event.slug}`;
+  // Events no longer have pages of their own, so point back to the list.
+  const url = `${SITE_URL}/events`;
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",

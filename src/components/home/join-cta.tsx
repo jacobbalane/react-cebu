@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { TransitionLink } from "@/components/page-transition";
 import { useRef } from "react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { eventShortDate, upcomingEvents } from "@/data/events";
+import { FACEBOOK_URL, TALK_EMAIL } from "@/data/site";
 
 function Arrow({ className = "bg-white text-black" }: { className?: string }) {
   return (
@@ -56,7 +57,7 @@ export function JoinCta() {
               <ellipse rx="44" ry="17" transform="rotate(60)" />
               <ellipse rx="44" ry="17" transform="rotate(120)" />
             </g>
-            <circle r="3.5" fill="#1e4dff" />
+            <circle r="3.5" className="fill-azure" />
           </svg>
           <SplitHeading id="join-title" by="word" className="relative m-0 max-w-[13ch] text-[clamp(44px,6.6vw,108px)] font-normal leading-[0.94] tracking-[-0.05em]">
             Build what’s next with React Cebu. <span className="text-soft">Free, friendly, and open to every level.</span>
@@ -80,15 +81,15 @@ export function JoinCta() {
           </div>
         </div>
 
-        <a href="#facebook" data-reveal className="tile group flex flex-col justify-between gap-6 bg-electric p-7 text-white transition-colors duration-300 hover:bg-midnight lg:col-span-4">
+        <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" data-reveal className="tile group flex flex-col justify-between gap-6 bg-azure p-7 text-white transition-colors duration-300 hover:bg-ink lg:col-span-4">
           <span className="flex items-start justify-between gap-4">
             <span className="text-[clamp(32px,3vw,44px)] leading-[1.02] tracking-[-0.04em]">Join the Facebook group</span>
             <Arrow />
           </span>
-          <span className="text-base leading-snug text-on-electric">Event announcements, questions, job posts and the occasional meme.</span>
+          <span className="text-base leading-snug text-on-azure">Event announcements, questions, job posts and the occasional meme.</span>
         </a>
 
-        <Link href={`/events/${next.slug}`} data-reveal className="tile group flex flex-col justify-between gap-6 bg-sky p-7 text-black lg:col-span-4">
+        <TransitionLink href="/events" data-reveal className="tile group flex flex-col justify-between gap-6 bg-react p-7 text-black lg:col-span-4">
           <span className="flex items-start justify-between gap-4">
             <span className="text-[clamp(44px,4vw,64px)] leading-[0.85] tracking-[-0.06em]">{eventShortDate(next.start)}</span>
             <Arrow className="bg-ink text-white" />
@@ -97,15 +98,15 @@ export function JoinCta() {
             <span className="text-[15px]">Next event, free</span>
             <span className="text-xl leading-tight tracking-[-0.02em]">{next.title}</span>
           </span>
-        </Link>
+        </TransitionLink>
 
-        <Link href="/speak" data-reveal className="tile group flex flex-col justify-between gap-6 bg-fog p-7 text-black transition-colors duration-300 hover:bg-[#e0e0e0] lg:col-span-4">
+        <a href={TALK_EMAIL} data-reveal className="tile group flex flex-col justify-between gap-6 bg-fog p-7 text-black transition-colors duration-300 hover:bg-[#e0e0e0] lg:col-span-4">
           <Arrow className="bg-ink text-white" />
           <span className="flex flex-col gap-1">
             <span className="text-[28px] leading-none tracking-[-0.035em]">Give a talk</span>
-            <span className="text-[15px] text-[#555]">First-timers welcome</span>
+            <span className="text-[15px] text-[#555]">First-timers welcome. Email us the idea.</span>
           </span>
-        </Link>
+        </a>
       </Reveal>
     </section>
   );

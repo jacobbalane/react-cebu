@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { TransitionLink } from "@/components/page-transition";
 import { useRef } from "react";
 import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "@/lib/gsap";
 import { friends, venues } from "@/data/site";
@@ -84,17 +84,17 @@ export function Friends() {
                     <li
                       key={`${copy}-${item.name}`}
                       aria-hidden={copy === 1}
-                      className={`tile mr-2 flex h-[120px] shrink-0 items-center px-10 motion-reduce:mr-0 text-[clamp(28px,3vw,44px)] tracking-[-0.035em] transition-colors duration-300 hover:bg-electric hover:text-white sm:h-[150px] ${row.tone} ${copy === 1 ? "motion-reduce:hidden" : ""}`}
+                      className={`tile mr-2 flex h-[120px] shrink-0 items-center px-10 motion-reduce:mr-0 text-[clamp(28px,3vw,44px)] tracking-[-0.035em] transition-colors duration-300 hover:bg-azure hover:text-white sm:h-[150px] ${row.tone} ${copy === 1 ? "motion-reduce:hidden" : ""}`}
                       style={{ fontWeight: item.weight }}
                     >
                       {item.name}
                     </li>
                   ) : (
                     <li key={`${copy}-you-${i}`} aria-hidden={copy === 1} className={`mr-2 shrink-0 motion-reduce:mr-0 ${copy === 1 ? "motion-reduce:hidden" : ""}`}>
-                      <Link
+                      <TransitionLink
                         href="/partners"
                         tabIndex={copy === 1 ? -1 : undefined}
-                        className="tile flex h-[120px] items-center gap-4 bg-electric px-10 text-[clamp(28px,3vw,44px)] tracking-[-0.035em] text-white transition-colors duration-300 hover:bg-midnight sm:h-[150px]"
+                        className="tile flex h-[120px] items-center gap-4 bg-azure px-10 text-[clamp(28px,3vw,44px)] tracking-[-0.035em] text-white transition-colors duration-300 hover:bg-ink sm:h-[150px]"
                       >
                         Your team here
                         <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-full bg-white text-black">
@@ -102,7 +102,7 @@ export function Friends() {
                             <path d="M5 12h14M13 6l6 6-6 6" />
                           </svg>
                         </span>
-                      </Link>
+                      </TransitionLink>
                     </li>
                   ),
                 ),

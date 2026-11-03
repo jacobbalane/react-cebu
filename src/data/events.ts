@@ -1,8 +1,5 @@
 export type EventKind = "Meetup" | "Workshop" | "Code camp" | "Online";
 
-export type AgendaItem = { time: string; title: string; who: string };
-export type Person = { name: string; role: string; image: string };
-
 export type CommunityEvent = {
   slug: string;
   title: string;
@@ -19,11 +16,6 @@ export type CommunityEvent = {
   seats: number;
   taken: number;
   summary: string;
-  build?: string;
-  bring?: string[];
-  audience?: string;
-  agenda?: AgendaItem[];
-  teachers?: Person[];
 };
 
 // Sample content. Replace with real events before launch.
@@ -43,23 +35,6 @@ export const upcomingEvents: CommunityEvent[] = [
     taken: 22,
     summary:
       "Server Components change where your React code runs and how fast your app feels. In four hours you’ll fetch data on the server, stream a slow list with Suspense, handle a form with Actions, and leave with a small app online.",
-    build:
-      "A small event board: data fetched on the server, a list that streams in, and an RSVP form that works without client-side JavaScript.",
-    bring: ["A laptop and charger", "Node 20 or newer", "A GitHub account"],
-    audience:
-      "You’ve built a few components and used useState. Next.js experience helps but isn’t needed; the starter project is ready to go.",
-    agenda: [
-      { time: "1:00", title: "Doors open, coffee and setup help", who: "Everyone" },
-      { time: "1:20", title: "Why Server Components? A 30-minute tour", who: "Paolo Cruz" },
-      { time: "2:00", title: "Hands-on, part one: fetch data on the server", who: "Mentors at every table" },
-      { time: "3:15", title: "Break", who: "Snacks from our venue host" },
-      { time: "3:30", title: "Hands-on, part two: forms with Actions", who: "Andrea Villanueva" },
-      { time: "4:30", title: "Show what you built, then the group photo", who: "You" },
-    ],
-    teachers: [
-      { name: "Paolo Cruz", role: "Full-stack developer. Gives the opening talk.", image: "/images/portrait-3.jpg" },
-      { name: "Andrea Villanueva", role: "Frontend engineer. Runs the forms and Actions session.", image: "/images/portrait-2.jpg" },
-    ],
   },
   {
     slug: "year-end-meetup",
@@ -138,26 +113,15 @@ export const upcomingEvents: CommunityEvent[] = [
   },
 ];
 
-export const pastEvents = [
-  { title: "Cebu Hacktoberfest", note: "October 2025, with JavaScript Cebu, PizzaPy and Ethereum Philippines", image: "/images/crowd.jpg", alt: "A full room at Cebu Hacktoberfest" },
-  { title: "Panel: careers in frontend", note: "August 2026, four engineers on getting hired", image: "/images/panel.jpg", alt: "A panel discussion with the audience on steps" },
-  { title: "Student code camp", note: "March 2026, a full Saturday of React basics", image: "/images/students.jpg", alt: "Students working on laptops" },
-  { title: "Hooks from first principles", note: "June 2026, workshop", image: "/images/coder.jpg", alt: "A developer coding in a dim room" },
-  { title: "Gatsby workshop", note: "October 2019 at UP Cebu", image: "/images/laptops.jpg", alt: "People learning on laptops" },
-  { title: "The first React Cebu meetup", note: "2019 at The Company Cebu, with 50+ developers", image: "/images/audience.jpg", alt: "An audience watching a talk" },
-];
-
 export function getEvent(slug: string) {
   return upcomingEvents.find((event) => event.slug === slug);
 }
 
-const dateFmt = new Intl.DateTimeFormat("en-PH", { day: "numeric", month: "long", weekday: "long", timeZone: "Asia/Manila" });
 const monthFmt = new Intl.DateTimeFormat("en-PH", { month: "long", timeZone: "Asia/Manila" });
 const dayFmt = new Intl.DateTimeFormat("en-PH", { day: "numeric", timeZone: "Asia/Manila" });
 const weekdayFmt = new Intl.DateTimeFormat("en-PH", { weekday: "long", timeZone: "Asia/Manila" });
 const shortFmt = new Intl.DateTimeFormat("en-PH", { day: "numeric", month: "short", timeZone: "Asia/Manila" });
 
-export const formatEventDate = (iso: string) => dateFmt.format(new Date(iso));
 export const eventMonth = (iso: string) => monthFmt.format(new Date(iso));
 export const eventDay = (iso: string) => dayFmt.format(new Date(iso));
 export const eventWeekday = (iso: string) => weekdayFmt.format(new Date(iso));

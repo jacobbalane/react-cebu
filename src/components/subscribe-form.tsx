@@ -3,7 +3,7 @@
 import { useId, useState } from "react";
 
 // Front-end only for now: wire this to the mailing list provider before launch.
-export function SubscribeForm({ buttonClass = "btn-primary", doneClass = "text-sky" }: { buttonClass?: string; doneClass?: string }) {
+export function SubscribeForm({ buttonClass = "btn-primary", doneClass = "text-react" }: { buttonClass?: string; doneClass?: string }) {
   const id = useId();
   const [done, setDone] = useState(false);
 

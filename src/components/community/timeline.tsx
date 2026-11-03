@@ -4,10 +4,10 @@ import { useRef } from "react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 
 const milestones = [
-  { month: "Where it started", year: "2019", title: "The first meetup", text: "More than 50 developers came to The Company Cebu for the first React Cebu meetup.", tone: "bg-sky text-black" },
+  { month: "Where it started", year: "2019", title: "The first meetup", text: "More than 50 developers came to The Company Cebu for the first React Cebu meetup.", tone: "bg-react text-black" },
   { month: "October", year: "2019", title: "Gatsby workshop", text: "A hands-on workshop at the Go Negosyo Center, UP Cebu.", tone: "bg-fog text-black" },
   { month: "October", year: "2025", title: "Cebu Hacktoberfest", text: "Co-led by JavaScript Cebu with PizzaPy and Ethereum Philippines: talks, workshops and hack nights all month.", tone: "bg-black text-white" },
-  { month: "Now", year: "2026", title: "A new home online", text: "The site you’re looking at, built by members with Next.js.", tone: "bg-electric text-white" },
+  { month: "Now", year: "2026", title: "A new home online", text: "The site you’re looking at, built by members with Next.js.", tone: "bg-azure text-white" },
 ];
 
 /**
