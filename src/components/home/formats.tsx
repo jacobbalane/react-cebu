@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Highlighter } from "@/components/highlighter";
 import { Reveal, SplitHeading } from "@/components/motion";
 
 const formats = [
@@ -33,9 +34,9 @@ export function Formats() {
               ))}
             </div>
             <span className="px-2 text-[21px] leading-[1.3] tracking-[-0.015em]">
-              {/* The name eases to blue while the card is hovered or focused, and back after. */}
-              <span className="font-medium transition-colors duration-150 ease-out group-hover:text-electric group-focus-visible:text-electric">
-                {format.name}
+              {/* A hand-drawn React-cyan underline draws under the name while the card is hovered or focused. */}
+              <span className="font-medium text-ink">
+                <Highlighter action="underline" strokeWidth={2}>{format.name}</Highlighter>
               </span>{" "}
               <span className="text-muted">{format.desc}</span>
             </span>

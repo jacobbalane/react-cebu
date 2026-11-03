@@ -91,7 +91,7 @@ export function JoinCta() {
         <Link href={`/events/${next.slug}`} data-reveal className="tile group flex flex-col justify-between gap-6 bg-sky p-7 text-black lg:col-span-4">
           <span className="flex items-start justify-between gap-4">
             <span className="text-[clamp(44px,4vw,64px)] leading-[0.85] tracking-[-0.06em]">{eventShortDate(next.start)}</span>
-            <Arrow className="bg-black text-white" />
+            <Arrow className="bg-ink text-white" />
           </span>
           <span className="flex flex-col gap-1">
             <span className="text-[15px]">Next event, free</span>
@@ -100,7 +100,7 @@ export function JoinCta() {
         </Link>
 
         <Link href="/speak" data-reveal className="tile group flex flex-col justify-between gap-6 bg-fog p-7 text-black transition-colors duration-300 hover:bg-[#e0e0e0] lg:col-span-4">
-          <Arrow className="bg-black text-white" />
+          <Arrow className="bg-ink text-white" />
           <span className="flex flex-col gap-1">
             <span className="text-[28px] leading-none tracking-[-0.035em]">Give a talk</span>
             <span className="text-[15px] text-[#555]">First-timers welcome</span>

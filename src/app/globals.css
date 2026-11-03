@@ -14,6 +14,11 @@
   --color-soft: #8a8a8a;
   --color-on-electric: #dce6ff;
   --color-on-midnight: #c9d5f2;
+  /* React's own palette, for primary controls: buttons, the nav's Join, filter pills.
+     Cyan is too light for white text, so it always carries ink. */
+  --color-react: #00d8ff;
+  --color-ink: #222222;
+  --color-ink-soft: #3a3a3a;
 
   --font-sans: var(--font-host), system-ui, sans-serif;
   --font-mono: Consolas, Menlo, monospace;
@@ -54,14 +59,14 @@ body {
     padding: 0 16px;
     border-radius: 999px;
     background: var(--color-fog);
-    color: var(--color-black);
+    color: var(--color-ink);
     font-size: 15px;
     font-weight: 500;
     transition: background-color 0.2s, color 0.2s;
   }
   .navpill:hover,
   .navpill[aria-current="page"] {
-    background: var(--color-black);
+    background: var(--color-ink);
     color: var(--color-white);
   }
 
@@ -76,14 +81,15 @@ body {
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
   }
-  .btn-primary { background: var(--color-electric); color: var(--color-white); }
-  .btn-primary:hover { background: var(--color-midnight); }
-  .btn-quiet { background: var(--color-fog); color: var(--color-black); }
-  .btn-quiet:hover { background: var(--color-black); color: var(--color-white); }
-  .btn-white { background: var(--color-white); color: var(--color-black); }
+  /* Primary: React cyan with ink text, flipping to ink with cyan text on hover. */
+  .btn-primary { background: var(--color-react); color: var(--color-ink); }
+  .btn-primary:hover { background: var(--color-ink); color: var(--color-react); }
+  .btn-quiet { background: var(--color-fog); color: var(--color-ink); }
+  .btn-quiet:hover { background: var(--color-ink); color: var(--color-white); }
+  .btn-white { background: var(--color-white); color: var(--color-ink); }
   .btn-white:hover { background: var(--color-fog); }
-  .btn-black { background: var(--color-black); color: var(--color-white); }
-  .btn-black:hover { background: var(--color-midnight); }
+  .btn-black { background: var(--color-ink); color: var(--color-white); }
+  .btn-black:hover { background: var(--color-ink-soft); }
 
   /* Photo tiles that flip through three photos while hovered */
   .reel > img:nth-of-type(2),

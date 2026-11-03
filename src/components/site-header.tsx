@@ -47,7 +47,7 @@ export function SiteHeader() {
           >
             Partner with us
           </Link>
-          <Link href="/#join" className="navpill !bg-electric !text-white hover:!bg-midnight">
+          <Link href="/#join" className="navpill !bg-react !text-ink hover:!bg-ink hover:!text-react">
             Join
           </Link>
           <button
@@ -77,7 +77,7 @@ export function SiteHeader() {
             <Logo />
             <button
               type="button"
-              className="inline-flex size-11 items-center justify-center rounded-full bg-black text-white"
+              className="inline-flex size-11 items-center justify-center rounded-full bg-ink text-white"
               aria-label="Close menu"
               onClick={() => setOpen(false)}
             >

@@ -68,7 +68,7 @@ export function EventList({ events }: { events: CommunityEvent[] }) {
               type="button"
               aria-pressed={filter === f.label}
               onClick={() => setFilter(f.label)}
-              className={`btn min-h-11 px-[18px] text-[15px] ${filter === f.label ? "bg-black text-white" : "bg-fog text-black hover:bg-black hover:text-white"}`}
+              className={`btn min-h-11 px-[18px] text-[15px] ${filter === f.label ? "bg-ink text-white" : "bg-fog text-ink hover:bg-ink hover:text-white"}`}
             >
               {f.label}
             </button>

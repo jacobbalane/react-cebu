@@ -32,7 +32,7 @@ export function RecapGrid({ recaps }: { recaps: Recap[] }) {
               type="button"
               aria-pressed={tag === t}
               onClick={() => setTag(t)}
-              className={`btn min-h-11 px-[18px] text-[15px] ${tag === t ? "bg-black text-white" : "bg-fog text-black hover:bg-black hover:text-white"}`}
+              className={`btn min-h-11 px-[18px] text-[15px] ${tag === t ? "bg-ink text-white" : "bg-fog text-ink hover:bg-ink hover:text-white"}`}
             >
               {t}
             </button>
