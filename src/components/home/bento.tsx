@@ -646,7 +646,7 @@ export function Bento() {
 
         <TalkTile />
 
-        <TransitionLink href="/community#organizers" data-reveal className="tile col-span-2 flex flex-col justify-between gap-3 bg-azure p-5 text-white lg:col-span-4">
+        <TransitionLink href="/community#volunteer" data-reveal className="tile col-span-2 flex flex-col justify-between gap-3 bg-azure p-5 text-white lg:col-span-4">
           <span className="text-2xl leading-tight tracking-[-0.02em]">Volunteer</span>
           <span className="text-[15px] leading-snug">Set up chairs, run the stream or welcome first-timers</span>
         </TransitionLink>

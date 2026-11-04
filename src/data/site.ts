@@ -6,6 +6,7 @@ export const FACEBOOK_URL = "https://www.facebook.com/reactcebu/";
 
 /** Talk ideas come in by email now that there's no Speak page. */
 export const TALK_EMAIL = "mailto:react@jscebu.org?subject=Talk%20idea";
+export const VOLUNTEER_EMAIL = "mailto:react@jscebu.org?subject=Volunteering";
 
 export const navLinks = [
   { href: "/", label: "Home" },
@@ -34,7 +35,7 @@ export const footerColumns = [
     title: "Get involved",
     links: [
       { href: TALK_EMAIL, label: "Give a talk" },
-      { href: "/community#organizers", label: "Volunteer" },
+      { href: "/community#volunteer", label: "Volunteer" },
       { href: "/partners", label: "Partner with us" },
     ],
   },

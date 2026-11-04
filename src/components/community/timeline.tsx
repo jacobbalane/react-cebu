@@ -6,8 +6,8 @@ import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 const milestones = [
   { month: "Where it started", year: "2019", title: "The first meetup", text: "More than 50 developers came to The Company Cebu for the first React Cebu meetup.", tone: "bg-react text-black" },
   { month: "October", year: "2019", title: "Gatsby workshop", text: "A hands-on workshop at the Go Negosyo Center, UP Cebu.", tone: "bg-fog text-black" },
-  { month: "October", year: "2025", title: "Cebu Hacktoberfest", text: "Co-led by JavaScript Cebu with PizzaPy and Ethereum Philippines: talks, workshops and hack nights all month.", tone: "bg-black text-white" },
-  { month: "Now", year: "2026", title: "A new home online", text: "The site you’re looking at, built by members with Next.js.", tone: "bg-azure text-white" },
+  { month: "October", year: "2025", title: "Cebu Hacktoberfest", text: "Co-led by JavaScript Cebu with PizzaPy and Ethereum Philippines: talks, workshops and hack nights all month.", tone: "bg-azure text-white" },
+  { month: "Now", year: "2026", title: "A new home online", text: "The site you’re looking at, built by members with Next.js.", tone: "bg-fog text-black" },
 ];
 
 /**
@@ -42,8 +42,14 @@ export function Timeline() {
   );
 
   return (
-    <section ref={ref} aria-labelledby="history-title" className="overflow-hidden px-2 pb-28 lg:flex lg:min-h-svh lg:flex-col lg:justify-center lg:pb-0">
-      <h2 id="history-title" className="display mb-8 px-4 text-[clamp(40px,4.2vw,60px)]">How we got here</h2>
+    <section ref={ref} aria-labelledby="history-title" className="overflow-hidden px-2 pb-32 lg:flex lg:min-h-svh lg:flex-col lg:justify-center lg:pb-0">
+      {/* Where the community comes from, ahead of the dated milestones. */}
+      <div className="mb-10 flex flex-col gap-3 px-4">
+        <h2 id="history-title" className="display m-0 text-[clamp(40px,4.2vw,60px)]">How we got here</h2>
+        <p className="m-0 max-w-[60ch] text-base text-muted">
+          React Cebu is part of JavaScript Cebu, which grew out of the Laravel Cebu and Vue.js Cebu communities.
+        </p>
+      </div>
       <ol
         ref={track}
         aria-label="React Cebu timeline"
