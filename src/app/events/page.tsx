@@ -20,7 +20,7 @@ export default function EventsPage() {
 
   return (
     <>
-      <PageIntro lead="Events." rest="Free meetups, workshops and code camps around Cebu. Everyone is welcome, whatever your level.">
+      <PageIntro title="Events." description="Free meetups, workshops and code camps around Cebu. Everyone is welcome, whatever your level.">
         <a href="#recaps" className="btn btn-quiet">See the recaps</a>
         <a href="#subscribe" className="btn btn-quiet">Get events by email</a>
       </PageIntro>

@@ -1,21 +1,27 @@
 import { SplitHeading } from "@/components/motion";
 
-/** The two-part page headline: a black statement followed by a grey continuation. */
+/**
+ * A page's opening: the title in one colour on the left, with a short muted description and
+ * any actions sitting on its baseline to the right. They stack on phones.
+ */
 export function PageIntro({
-  lead,
-  rest,
+  title,
+  description,
   children,
 }: {
-  lead: string;
-  rest: string;
+  title: string;
+  description: string;
   children?: React.ReactNode;
 }) {
   return (
-    <section className="flex flex-wrap items-end justify-between gap-6 px-6 pb-12 pt-32 sm:pt-36">
-      <SplitHeading as="h1" className="display max-w-[1100px] text-[clamp(40px,4.4vw,64px)]">
-        {lead} <span className="text-soft">{rest}</span>
+    <section className="grid gap-6 px-6 pb-12 pt-32 sm:pt-36 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-x-16">
+      <SplitHeading as="h1" className="display m-0 text-balance text-[clamp(44px,5.6vw,96px)] leading-[0.95]">
+        {title}
       </SplitHeading>
-      {children && <div className="flex flex-wrap gap-1.5">{children}</div>}
+      <div className="flex flex-col gap-5 lg:pb-1.5">
+        <p className="m-0 max-w-[34ch] text-[clamp(18px,1.5vw,22px)] leading-snug text-muted">{description}</p>
+        {children && <div className="flex flex-wrap gap-1.5">{children}</div>}
+      </div>
     </section>
   );
 }

@@ -30,7 +30,7 @@ const hosts = [
 export default function PartnersPage() {
   return (
     <>
-      <PageIntro lead="Help keep React Cebu free." rest="Every event runs on a borrowed room, donated snacks and volunteer time.">
+      <PageIntro title="Help keep React Cebu free." description="Every event runs on a borrowed room, donated snacks and volunteer time.">
         <a href="#contact" className="btn btn-primary">Get in touch</a>
         <a href="#perks" className="btn btn-quiet">What partners get</a>
       </PageIntro>

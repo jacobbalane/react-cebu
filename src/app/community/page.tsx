@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { TransitionLink } from "@/components/page-transition";
-import { PageIntro } from "@/components/page-intro";
+import { PhotoIntro } from "@/components/photo-intro";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { Timeline } from "@/components/community/timeline";
 import { organizers } from "@/data/people";
@@ -21,17 +21,12 @@ const rules = [
 export default function CommunityPage() {
   return (
     <>
-      <PageIntro
-        lead="We’re a community, not an audience."
-        rest="Students, career-shifters and working engineers in Cebu, learning React together since 2019."
+      <PhotoIntro
+        title="We’re a community, not an audience."
+        description="Students, career-shifters and working engineers in Cebu, learning React together since 2019."
+        src="/images/crowd.jpg"
+        alt="A full room of developers at a community event in Cebu"
       />
-
-      <section className="px-2 pb-28">
-        <div className="tile h-[420px] bg-black lg:h-[640px]">
-          <Image src="/images/crowd.jpg" alt="A full room of developers at a community event in Cebu" fill preload sizes="100vw" className="object-cover" />
-          <span className="absolute bottom-4 left-4 rounded-lg bg-black px-3.5 py-2.5 text-base text-white">Cebu Hacktoberfest, October 2025</span>
-        </div>
-      </section>
 
       <Timeline />
 
