@@ -1,5 +1,18 @@
+import { cacheLife } from "next/cache";
+import Image from "next/image";
 import { TransitionLink } from "@/components/page-transition";
 import { footerColumns } from "@/data/site";
+
+/**
+ * This year in Manila, so the copyright rolls over at local midnight on New Year's Day. Reading
+ * the clock while a page prerenders fails the build under Cache Components, so it's worked out
+ * in a cached scope instead, refreshed hourly.
+ */
+async function CurrentYear() {
+  "use cache";
+  cacheLife("hours");
+  return new Intl.DateTimeFormat("en-PH", { year: "numeric", timeZone: "Asia/Manila" }).format(new Date());
+}
 
 export function SiteFooter() {
   return (
@@ -26,9 +39,24 @@ export function SiteFooter() {
           </nav>
         ))}
       </div>
-      <div className="mt-14 flex flex-wrap justify-between gap-3 border-t border-[#262626] pt-5 text-sm text-soft">
-        <span>© 2026 React Cebu, a JavaScript Cebu community</span>
-        <span>Sample photos from Unsplash</span>
+      {/* The logo signs off on the left, as it opens the page in the header; the copyright
+          sits across from it. */}
+      <div className="mt-14 flex flex-wrap items-center justify-between gap-3 border-t border-[#262626] pt-5 text-sm text-soft">
+        <TransitionLink href="/" aria-label="React Cebu home">
+          {/* The black mark, turned white for the black footer, with no disc behind it. Sized in
+              CSS too, so the global img height:auto doesn't re-derive a rounded height. */}
+          <Image
+            src="/images/react-cebu-logo.webp"
+            alt=""
+            width={36}
+            height={40}
+            className="block brightness-0 invert"
+            style={{ width: 36, height: 40 }}
+          />
+        </TransitionLink>
+        <span>
+          © <CurrentYear /> React Cebu, a JavaScript Cebu community
+        </span>
       </div>
     </footer>
   );
