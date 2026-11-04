@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PhotoIntro } from "@/components/photo-intro";
 import { Reveal, SplitHeading } from "@/components/motion";
+import { Principles } from "@/components/community/principles";
 import { Timeline } from "@/components/community/timeline";
 import { ClosingCard, closingButton } from "@/components/closing-card";
 import { organizers } from "@/data/people";
@@ -34,32 +35,7 @@ export default function CommunityPage() {
       />
 
       {/* Right after the claim, what backs it up. */}
-      <section aria-labelledby="values-title" className="px-2 pb-32 pt-28">
-        <SplitHeading id="values-title" className="display mb-10 px-4 text-[clamp(40px,4.2vw,60px)]">How we run things</SplitHeading>
-        <Reveal className="grid auto-rows-[minmax(220px,auto)] gap-2 lg:grid-cols-12 lg:auto-rows-[200px]">
-          <div data-reveal className="tile flex flex-col justify-between bg-azure p-8 text-white lg:col-span-6 lg:row-span-2">
-            <span className="text-[clamp(64px,7vw,112px)] leading-[0.85] tracking-[-0.06em]">Free, always</span>
-            <span className="max-w-[34ch] text-xl leading-[1.45] text-on-azure">Every event is free to attend. Partners cover the room, the snacks and the occasional pizza.</span>
-          </div>
-          <div data-reveal className="tile flex flex-col justify-between bg-fog p-6 lg:col-span-3">
-            <span className="text-4xl tracking-[-0.035em]">Every level</span>
-            <span className="text-base leading-[1.45] text-[#555]">First component or fiftieth, you belong in the room.</span>
-          </div>
-          <div data-reveal className="tile flex flex-col justify-between bg-react p-6 lg:col-span-3">
-            <span className="text-4xl tracking-[-0.035em]">Anyone can speak</span>
-            <span className="text-base leading-[1.45]">Every talk comes from a member. First-timers get a mentor.</span>
-          </div>
-          <div data-reveal className="tile flex flex-col justify-between gap-4 bg-fog p-6 lg:col-span-6">
-            <span className="text-5xl tracking-[-0.04em]">Kind by default</span>
-            <span className="flex flex-col gap-2 text-base leading-[1.45]">
-              <span className="text-[#555]">The same code of conduct applies at every event, in the Facebook group, and anywhere else we meet.</span>
-              <a href="#code-of-conduct" className="self-start font-medium text-azure-deep transition-colors duration-300 hover:text-ink">
-                Read the code of conduct
-              </a>
-            </span>
-          </div>
-        </Reveal>
-      </section>
+      <Principles rules={rules} />
 
       <Timeline />
 
