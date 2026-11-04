@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { LoopVideo } from "@/components/loop-video";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { TransitionLink } from "@/components/page-transition";
 import { TALK_EMAIL } from "@/data/site";
@@ -11,7 +12,8 @@ const calm = () => !window.matchMedia(MOTION_OK).matches;
 // The three cards under the slider share six rows, so on a wide screen each row lines up across
 // them however long its text runs: the promise, a control to test it with, the control's label,
 // what that means in practice, the detail, then somewhere to go next.
-const card = "tile flex flex-col gap-4 p-6 lg:row-span-6 lg:grid lg:grid-rows-subgrid";
+const cardBase = "tile flex flex-col gap-4 p-6";
+const card = `${cardBase} lg:row-span-6 lg:grid lg:grid-rows-subgrid`;
 const cardTitle = "title m-0 text-[clamp(28px,3vw,40px)]";
 const controlRow = "mt-2 h-32";
 const labelRow = "flex min-h-12 items-center";
@@ -166,7 +168,7 @@ function PriceSlider() {
       ref={track}
       className="relative h-[76px] cursor-grab touch-pan-y select-none overflow-hidden rounded-full bg-ink active:cursor-grabbing lg:h-[92px]"
     >
-      <span className="absolute inset-y-0 right-7 flex items-center text-lg text-white lg:right-9 lg:text-xl">
+      <span className="absolute inset-y-0 right-7 flex items-center text-base text-white lg:right-9">
         <Swap lines={priceLines} shown={line} className="text-right" />
       </span>
       <div
@@ -359,7 +361,7 @@ function ComponentRuler() {
         ))}
       </div>
 
-      <div role="group" aria-label="Your experience with React" className={`${labelRow} justify-between gap-2 text-[13px] sm:text-[15px] lg:text-[13px] xl:text-[15px]`}>
+      <div role="group" aria-label="Your experience with React" className={`${labelRow} justify-between gap-2 text-[13px] sm:text-base lg:text-[13px] xl:text-base`}>
         {stages.map((item, i) => (
           <button
             key={item.name}
@@ -606,7 +608,7 @@ function KindSwitch({ rules }: { rules: string[] }) {
         </button>
       </div>
 
-      <div className={`${labelRow} text-lg`}>
+      <div className={`${labelRow} text-base`}>
         <Swap lines={switchLines} shown={line} />
       </div>
 
@@ -633,29 +635,34 @@ export function Principles({ rules }: { rules: string[] }) {
       </div>
 
       <Reveal className="grid gap-2 sm:grid-cols-2 lg:grid-cols-12">
-        <div data-reveal className="tile flex flex-col gap-10 bg-react p-6 text-ink sm:col-span-2 sm:p-8 lg:col-span-12">
-          <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
-            <div className="flex flex-col justify-between gap-6">
-              <h3 className="m-0 text-[clamp(64px,7vw,112px)] font-normal leading-[0.85] tracking-[-0.06em]">Free, always</h3>
-              <div className="flex flex-col items-start gap-3">
-                <p className="m-0 max-w-[34ch] text-xl leading-[1.45]">
-                  Every event is free to attend. Partners cover the room, the snacks and the occasional pizza.
-                </p>
-                <TransitionLink href="/partners" className="btn btn-black mt-2 focus-visible:outline-ink!">
-                  Partner with us
-                </TransitionLink>
-              </div>
+        <div data-reveal className={`${cardBase} bg-react text-ink sm:col-span-2 lg:col-span-7`}>
+          <h3 className={cardTitle}>Free, always</h3>
+          <div className="mt-2">
+            <PriceSlider />
+          </div>
+          <div className="grid gap-x-8 gap-y-6 lg:grid-cols-2 xl:gap-x-16">
+            <div className="flex flex-col gap-4">
+              <p className={lead}>Every event is free to attend.</p>
+              <p className={detail}>Partners cover the room, the snacks and the occasional pizza.</p>
+              <TransitionLink href="/partners" className={`${action} btn-black focus-visible:outline-ink!`}>
+                Partner with us
+              </TransitionLink>
             </div>
-            <ul className="m-0 list-none self-end p-0">
+            <ul className="m-0 list-none self-start p-0">
               {bill.map((item) => (
-                <li key={item} className="flex justify-between gap-6 border-t border-ink/25 py-2.5 text-lg last:border-b">
+                <li key={item} className="flex justify-between gap-6 border-t border-ink/25 py-2 text-base last:border-b">
                   <span>{item}</span>
                   <span className="tabular-nums">₱0</span>
                 </li>
               ))}
             </ul>
           </div>
-          <PriceSlider />
+        </div>
+
+        {/* Shares the top row, so the slider doesn't run the whole width of the page. */}
+        <div data-reveal className="tile min-h-[260px] bg-fog sm:col-span-2 lg:col-span-5">
+          <LoopVideo src="/videos/workshop.mp4" label="Developers working together at a workshop" />
+          <span className="absolute bottom-4 left-4 rounded-lg bg-black px-3.5 py-2.5 text-base text-white">Every seat, free</span>
         </div>
 
         {/* Equal thirds until the last card has room for its button on one line. */}
