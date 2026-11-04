@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { TransitionLink } from "@/components/page-transition";
 import { useRef, useState } from "react";
-import { Draggable, gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
+import Matter from "matter-js";
+import { Draggable, gsap, ScrollTrigger, useGSAP, MOTION_OK } from "@/lib/gsap";
 import { LoopVideo } from "@/components/loop-video";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { PhotoSlides } from "@/components/photo-slides";
@@ -41,7 +42,21 @@ const levels = [
   },
 ];
 
-const topics = ["Hooks", "Server Components", "Next.js", "TypeScript", "React Native", "Testing", "Accessibility", "Animation", "Careers"];
+const topics = [
+  "Hooks",
+  "Server Components",
+  "Next.js",
+  "TypeScript",
+  "React Native",
+  "Testing",
+  "Accessibility",
+  "Animation",
+  "Careers",
+  "State",
+  "Performance",
+  "Forms",
+  "Open source",
+];
 
 const rules = [
   { id: "kind", label: "Be kind" },
@@ -49,13 +64,15 @@ const rules = [
   { id: "beginner", label: "Help a beginner" },
 ] as const;
 
+// Each with a photo from that kind of night; the Gatsby workshop and the first meetup use the
+// same photos as their recaps.
 const past = [
-  { title: "Cebu Hacktoberfest", image: "/images/crowd.jpg", tone: "bg-black text-white" },
-  { title: "Server Components, hands-on", tone: "bg-azure text-white" },
-  { title: "Panel: careers in frontend", image: "/images/panel.jpg", tone: "bg-black text-white" },
-  { title: "Gatsby workshop, 2019", tone: "bg-react text-black" },
-  { title: "Student code camp", image: "/images/students.jpg", tone: "bg-black text-white" },
-  { title: "The first meetup, 2019", tone: "bg-white text-black" },
+  { title: "Cebu Hacktoberfest", image: "/images/crowd.jpg" },
+  { title: "Server Components, hands-on", image: "/images/presenter.jpg" },
+  { title: "Panel: careers in frontend", image: "/images/panel.jpg" },
+  { title: "Gatsby workshop, 2019", image: "/images/workshop.jpg" },
+  { title: "Student code camp", image: "/images/students.jpg" },
+  { title: "The first meetup, 2019", image: "/images/audience.jpg" },
 ];
 
 /** Past events in a strip you drag sideways: it glides to a stop after a flick and resists at either end. */
@@ -88,12 +105,390 @@ function PastStrip() {
     <div ref={frame} className="overflow-hidden rounded-lg">
       <ul ref={strip} aria-label="Past events" className="flex w-max cursor-grab gap-2 active:cursor-grabbing">
         {past.map((item) => (
-          <li key={item.title} className={`relative h-[200px] w-[180px] shrink-0 overflow-hidden rounded-lg lg:h-[290px] lg:w-[240px] ${item.tone}`}>
-            {item.image && <Image src={item.image} alt="" fill sizes="240px" draggable={false} className="pointer-events-none object-cover" />}
+          <li key={item.title} className="relative h-[200px] w-[180px] shrink-0 overflow-hidden rounded-lg bg-black text-white lg:h-[290px] lg:w-[240px]">
+            <Image src={item.image} alt="" fill sizes="240px" draggable={false} className="pointer-events-none object-cover" />
+            {/* Darkens the bottom of the photo so the title reads on any of them. */}
+            <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-3/5 bg-linear-to-t from-black/85 via-black/40 to-transparent" />
             <span className="absolute inset-x-3 bottom-3 select-none text-[22px] leading-[1.05] tracking-[-0.03em]">{item.title}</span>
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+const { Bodies, Body, Composite, Engine, Sleeping } = Matter;
+
+// The physics runs in fixed steps of a sixtieth of a second, whatever the screen's frame rate.
+const STEP = 1000 / 60;
+// Gravity, well above Matter's default, which makes pills this small drift down like balloons.
+const GRAVITY = 0.0028;
+// Each pill's body is a capsule this many pixels wider and taller than the pill, so pills at
+// rest keep a small gap between them instead of looking glued together.
+const GAP = 6;
+// A held pill closes this share of the distance to the pointer each step: close enough to feel
+// in hand, eased enough not to jitter.
+const FOLLOW = 0.35;
+// How much of its speed a pill keeps when let go, so a flick tosses it rather than flinging it.
+const THROW = 0.6;
+// The fastest a pill may move in a step, so nothing can be flung through a wall.
+const TOP_SPEED = 20;
+
+/**
+ * The topics as pills in a small physics world. A held pill follows the pointer, shoving
+ * whatever is in the way, so lifting a pill from the bottom lifts the ones resting on it. Let go
+ * and it falls, tumbles and comes to rest where it lands, tipping off any edge it can't balance
+ * on; a flick tosses it. The pills drop into the tile the first time it scrolls into view, and
+ * the world only runs while the tile is on screen. Without motion they stay a list.
+ */
+function TopicPile() {
+  const tile = useRef<HTMLDivElement>(null);
+  const list = useRef<HTMLUListElement>(null);
+
+  useGSAP(
+    () => {
+      const box = tile.current;
+      const ul = list.current;
+      if (!box || !ul) return;
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        const pad = parseFloat(getComputedStyle(box).paddingLeft);
+        const engine = Engine.create({ positionIterations: 10, velocityIterations: 8, enableSleeping: true, gravity: { x: 0, y: 1, scale: GRAVITY } });
+
+        // Take the pills out of the flow where the list laid them out, keeping the list's height
+        // so the tile doesn't change size, and give each a body of its own.
+        const pills = gsap.utils.toArray<HTMLElement>("li", ul).map((el) => {
+          const w = el.offsetWidth;
+          const h = el.offsetHeight;
+          const body = Bodies.rectangle(el.offsetLeft + w / 2, el.offsetTop + h / 2, w + GAP, h + GAP, {
+            chamfer: { radius: (h + GAP) / 2 },
+            friction: 0.3,
+            frictionStatic: 0.5,
+            restitution: 0.1,
+            frictionAir: 0.02,
+          });
+          return { el, w, h, body };
+        });
+        ul.style.height = `${ul.offsetHeight}px`;
+        gsap.set(
+          pills.map(({ el }) => el),
+          { position: "absolute", left: 0, top: 0, cursor: "grab", touchAction: "none" },
+        );
+        Composite.add(
+          engine.world,
+          pills.map(({ body }) => body),
+        );
+        const wake = () => pills.forEach(({ body }) => Sleeping.set(body, false));
+        const draw = () =>
+          pills.forEach(({ el, w, h, body }) => {
+            el.style.transform = `translate(${body.position.x - w / 2}px, ${body.position.y - h / 2}px) rotate(${body.angle}rad)`;
+          });
+
+        // A floor and two side walls just inside the tile's padding. The walls reach far above the
+        // tile for the drop in; once every pill is below the heading, a ceiling closes just under
+        // it, so a pill thrown up bounces back down and the heading always stays clear. They are
+        // rebuilt when the tile resizes, and any pill left outside is brought back in.
+        const heading = box.querySelector("h3");
+        const ceiling = () => (heading ? heading.offsetTop + heading.offsetHeight + 10 : 0);
+        let walls: Matter.Body[] = [];
+        let closed = false;
+        const build = () => {
+          const width = box.clientWidth;
+          const height = box.clientHeight;
+          const thick = 400;
+          Composite.remove(engine.world, walls);
+          walls = [
+            Bodies.rectangle(width / 2, height - pad + thick / 2, width + 2 * thick, thick, { isStatic: true }),
+            Bodies.rectangle(pad - thick / 2, -height / 2, thick, height * 4, { isStatic: true }),
+            Bodies.rectangle(width - pad + thick / 2, -height / 2, thick, height * 4, { isStatic: true }),
+            ...(closed ? [Bodies.rectangle(width / 2, ceiling() - thick / 2, width + 2 * thick, thick, { isStatic: true })] : []),
+          ];
+          Composite.add(engine.world, walls);
+          pills.forEach(({ w, h, body }) => {
+            const x = gsap.utils.clamp(pad + w / 2, width - pad - w / 2, body.position.x);
+            const y = Math.min(body.position.y, height - pad - h / 2);
+            if (x !== body.position.x || y !== body.position.y) Body.setPosition(body, { x, y });
+          });
+          wake();
+        };
+        build();
+        const resize = new ResizeObserver(build);
+        resize.observe(box);
+
+        // Until the drop, the pills wait above the tile, out of sight, in the rows the list laid
+        // them out in, each row a little further apart and each pill a little askew. Falling as
+        // rows, they land almost as compactly as the list, with a tumble here and there.
+        const lift = box.clientHeight;
+        pills.forEach(({ h, body }) => {
+          const row = Math.round(body.position.y / (h + GAP));
+          Body.setPosition(body, { x: body.position.x, y: body.position.y - lift - row * 14 });
+          Body.setAngle(body, gsap.utils.random(-0.15, 0.15));
+        });
+        draw();
+
+        // Steps the world in fixed steps for the time that has passed, then draws the pills.
+        let pending = 0;
+        let held: { pill: (typeof pills)[number]; offset: Matter.Vector; target: Matter.Vector } | undefined;
+        const tick = (_time: number, delta: number) => {
+          pending = Math.min(pending + delta, STEP * 4);
+          while (pending >= STEP) {
+            if (held) {
+              // While a pill is held, everything stays awake, so a pill whose support is pulled
+              // away falls instead of sleeping in mid-air. The held pill heads for the pointer,
+              // kept inside the tile, and barely spins.
+              wake();
+              const { body, w, h } = held.pill;
+              const x = gsap.utils.clamp(pad + w / 2, box.clientWidth - pad - w / 2, held.target.x - held.offset.x);
+              const y = gsap.utils.clamp(ceiling() + h / 2, box.clientHeight - pad - h / 2, held.target.y - held.offset.y);
+              Body.setVelocity(body, { x: (x - body.position.x) * FOLLOW, y: (y - body.position.y) * FOLLOW });
+              Body.setAngularVelocity(body, body.angularVelocity * 0.85);
+            }
+            Engine.update(engine, STEP);
+            pills.forEach(({ body }) => {
+              const speed = Math.hypot(body.velocity.x, body.velocity.y);
+              if (speed > TOP_SPEED) Body.setVelocity(body, { x: (body.velocity.x / speed) * TOP_SPEED, y: (body.velocity.y / speed) * TOP_SPEED });
+            });
+            pending -= STEP;
+          }
+          if (!closed && pills.every(({ body }) => body.bounds.min.y > ceiling())) {
+            closed = true;
+            build();
+          }
+          draw();
+        };
+        let running = false;
+        const run = (on: boolean) => {
+          if (on === running) return;
+          running = on;
+          pending = 0;
+          if (on) gsap.ticker.add(tick);
+          else gsap.ticker.remove(tick);
+        };
+        let dropped = false;
+        ScrollTrigger.create({
+          trigger: box,
+          start: "top 70%",
+          once: true,
+          onEnter: () => {
+            dropped = true;
+            run(true);
+          },
+        });
+        ScrollTrigger.create({
+          trigger: box,
+          start: "top bottom",
+          end: "bottom top",
+          onToggle: (self) => dropped && run(self.isActive),
+        });
+
+        // A held pill keeps the spot you grabbed under the pointer. Letting go hands it back to
+        // gravity with some of the speed it was moving at.
+        let front = 1;
+        const at = (event: PointerEvent) => {
+          const rect = box.getBoundingClientRect();
+          return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+        };
+        const press = (event: PointerEvent) => {
+          const pill = pills.find(({ el }) => el === event.currentTarget);
+          if (!pill || !dropped || held) return;
+          event.preventDefault();
+          // Keeps the pointer's moves coming to this pill even once it slips out from under it.
+          try {
+            pill.el.setPointerCapture(event.pointerId);
+          } catch {
+            // A pointer that is no longer down can't be captured; the press still works without it.
+          }
+          pill.el.style.cursor = "grabbing";
+          pill.el.style.zIndex = String(++front);
+          const point = at(event);
+          held = { pill, offset: { x: point.x - pill.body.position.x, y: point.y - pill.body.position.y }, target: point };
+          wake();
+        };
+        const move = (event: PointerEvent) => {
+          if (held?.pill.el === event.currentTarget) held.target = at(event);
+        };
+        const release = (event: PointerEvent) => {
+          if (held?.pill.el !== event.currentTarget) return;
+          const { el, body } = held.pill;
+          Body.setVelocity(body, { x: body.velocity.x * THROW, y: body.velocity.y * THROW });
+          held = undefined;
+          el.style.cursor = "grab";
+          wake();
+        };
+        pills.forEach(({ el }) => {
+          el.addEventListener("pointerdown", press);
+          el.addEventListener("pointermove", move);
+          el.addEventListener("pointerup", release);
+          el.addEventListener("pointercancel", release);
+        });
+
+        return () => {
+          run(false);
+          resize.disconnect();
+          pills.forEach(({ el }) => {
+            el.removeEventListener("pointerdown", press);
+            el.removeEventListener("pointermove", move);
+            el.removeEventListener("pointerup", release);
+            el.removeEventListener("pointercancel", release);
+            el.style.transform = "";
+            el.style.zIndex = "";
+          });
+          Engine.clear(engine);
+          ul.style.height = "";
+        };
+      });
+      return () => mm.revert();
+    },
+    { scope: tile },
+  );
+
+  return (
+    <div ref={tile} data-reveal className="tile col-span-2 flex min-h-[260px] flex-col justify-between gap-5 bg-black p-5 text-white lg:col-span-3 lg:row-span-2 lg:min-h-0">
+      <h3 className="text-[28px] font-normal leading-none tracking-[-0.035em]">What we cover</h3>
+      <ul ref={list} className="flex flex-wrap gap-1.5">
+        {topics.map((topic) => (
+          <li key={topic} className="select-none whitespace-nowrap rounded-full bg-[#262626] px-3 py-1 text-[14px]">
+            {topic}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+// The selection box's corner squares, with which way each one grows the box: -1 is left or up.
+const corners = [
+  { pos: "-left-[5px] -top-[5px]", x: -1, y: -1, cursor: "cursor-nwse-resize" },
+  { pos: "-right-[5px] -top-[5px]", x: 1, y: -1, cursor: "cursor-nesw-resize" },
+  { pos: "-bottom-[5px] -left-[5px]", x: -1, y: 1, cursor: "cursor-nesw-resize" },
+  { pos: "-bottom-[5px] -right-[5px]", x: 1, y: 1, cursor: "cursor-nwse-resize" },
+];
+
+/**
+ * "Your first talk" in a selection box, as in a design tool: drag the box anywhere in the tile,
+ * or drag a corner square to make the text bigger or smaller while the opposite corner stays put.
+ * The text never grows past the room the tile has for it. Not a link as a whole, so dragging
+ * doesn't open the email; the email link sits in the copy.
+ */
+function TalkTile() {
+  const tile = useRef<HTMLDivElement>(null);
+  const frame = useRef<HTMLSpanElement>(null);
+  const text = useRef<HTMLSpanElement>(null);
+  const copy = useRef<HTMLSpanElement>(null);
+
+  useGSAP(
+    () => {
+      const box = tile.current;
+      const sel = frame.current;
+      const words = text.current;
+      const below = copy.current;
+      if (!box || !sel || !words || !below) return;
+      const pad = parseFloat(getComputedStyle(box).paddingLeft);
+      // Where the box may go, as offsets from where the layout puts it: anywhere inside the
+      // tile's padding.
+      const limits = () => ({
+        minX: pad - sel.offsetLeft,
+        maxX: box.clientWidth - pad - sel.offsetLeft - sel.offsetWidth,
+        minY: pad - sel.offsetTop,
+        maxY: box.clientHeight - pad - sel.offsetTop - sel.offsetHeight,
+      });
+      const [drag] = Draggable.create(sel, {
+        type: "x,y",
+        bounds: limits(),
+        onPress() {
+          this.applyBounds(limits());
+        },
+      });
+
+      const handles = gsap.utils.toArray<HTMLElement>("[data-corner]", sel);
+      const cleanups = handles.map((handle, i) => {
+        const { x: sx, y: sy } = corners[i];
+        let start: { px: number; py: number; font: number; x: number; y: number; w: number; h: number; textW: number; textH: number; most: number } | undefined;
+        const down = (event: PointerEvent) => {
+          // The box's own drag mustn't start too.
+          event.stopPropagation();
+          event.preventDefault();
+          try {
+            handle.setPointerCapture(event.pointerId);
+          } catch {
+            // A pointer that is no longer down can't be captured; the resize still works without it.
+          }
+          const font = parseFloat(getComputedStyle(words).fontSize);
+          const w = sel.offsetWidth;
+          const h = sel.offsetHeight;
+          const textW = words.offsetWidth;
+          const textH = words.offsetHeight;
+          // The biggest the text may get: as wide as the tile's inside, and only as tall as the
+          // room above the copy, so the box never pushes the copy out of the tile.
+          const roomW = box.clientWidth - 2 * pad - (w - textW);
+          const roomH = below.offsetTop - 20 - sel.offsetTop - (h - textH);
+          start = { px: event.clientX, py: event.clientY, font, x: drag.x, y: drag.y, w, h, textW, textH, most: Math.min((roomW / textW) * font, (roomH / textH) * font) };
+        };
+        const move = (event: PointerEvent) => {
+          if (!start) return;
+          // The text size that puts this corner under the pointer, judged across and down and
+          // averaged, so a diagonal drag scales evenly.
+          const byWidth = (start.font * (start.textW + (event.clientX - start.px) * sx)) / start.textW;
+          const byHeight = (start.font * (start.textH + (event.clientY - start.py) * sy)) / start.textH;
+          words.style.fontSize = `${gsap.utils.clamp(20, start.most, (byWidth + byHeight) / 2)}px`;
+          // Keep the opposite corner where it was: growing to the left or up shifts the box back.
+          const grewW = sel.offsetWidth - start.w;
+          const grewH = sel.offsetHeight - start.h;
+          gsap.set(sel, { x: start.x - (sx < 0 ? grewW : 0), y: start.y - (sy < 0 ? grewH : 0) });
+          drag.update();
+          drag.applyBounds(limits());
+        };
+        const up = () => {
+          start = undefined;
+        };
+        handle.addEventListener("pointerdown", down);
+        handle.addEventListener("pointermove", move);
+        handle.addEventListener("pointerup", up);
+        handle.addEventListener("pointercancel", up);
+        return () => {
+          handle.removeEventListener("pointerdown", down);
+          handle.removeEventListener("pointermove", move);
+          handle.removeEventListener("pointerup", up);
+          handle.removeEventListener("pointercancel", up);
+        };
+      });
+
+      return () => {
+        cleanups.forEach((cleanup) => cleanup());
+        drag.kill();
+        words.style.fontSize = "";
+      };
+    },
+    { scope: tile },
+  );
+
+  return (
+    <div ref={tile} data-reveal className="tile col-span-2 flex flex-col justify-between gap-5 bg-black p-6 text-white lg:col-span-4 lg:row-span-2">
+      {/* Filled with the tile's black, so dropped over the copy it covers it like a layer. */}
+      <span ref={frame} className="relative cursor-move touch-none select-none self-start border-[1.5px] border-white bg-black px-4 py-3">
+        {corners.map((corner) => (
+          // Each square has a bigger invisible area around it, so it is easy to catch.
+          <span
+            key={corner.pos}
+            data-corner
+            aria-hidden="true"
+            className={`absolute size-[9px] bg-white before:absolute before:-inset-2.5 before:content-[''] ${corner.pos} ${corner.cursor}`}
+          />
+        ))}
+        <span ref={text} className="block whitespace-nowrap text-[clamp(32px,3vw,44px)] leading-none tracking-[-0.04em]">
+          Your first talk
+        </span>
+      </span>
+      <span ref={copy} className="flex flex-col gap-1.5">
+        <span className="text-lg leading-snug">Five minutes, any topic, any level.</span>
+        <span className="text-base leading-snug text-[#bdbdbd]">
+          First-timers get a mentor to shape the idea.{" "}
+          <a href={TALK_EMAIL} className="text-white underline underline-offset-4">
+            Email us yours
+          </a>
+          .
+        </span>
+      </span>
     </div>
   );
 }
@@ -181,14 +576,7 @@ export function Bento() {
           <LoopVideo src="/videos/workshop.mp4" label="Developers working together at a workshop" />
         </MediaTile>
 
-        <div data-reveal className="tile col-span-2 flex flex-col justify-between gap-5 bg-black p-5 text-white lg:col-span-3 lg:row-span-2">
-          <h3 className="text-[28px] font-normal leading-none tracking-[-0.035em]">What we cover</h3>
-          <ul className="flex flex-wrap gap-1.5">
-            {topics.map((topic) => (
-              <li key={topic} className="rounded-full bg-[#262626] px-3 py-1.5 text-[15px]">{topic}</li>
-            ))}
-          </ul>
-        </div>
+        <TopicPile />
 
         <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" data-reveal className="tile col-span-2 flex items-end justify-between gap-4 bg-fog p-5 lg:col-span-6">
           <span className="text-[28px] leading-none tracking-[-0.035em]">No question is too basic</span>
@@ -227,13 +615,7 @@ export function Bento() {
         </MediaTile>
 
         <div data-reveal className="tile col-span-2 flex flex-col justify-between gap-5 bg-fog p-6 lg:col-span-4 lg:row-span-3">
-          <div className="flex items-start justify-between gap-3">
-            <h3 className="text-4xl font-normal leading-none tracking-[-0.035em]">Code of conduct</h3>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M12 3l7 3v6c0 4.2-3 7.4-7 9-4-1.6-7-4.8-7-9V6z" />
-              <path d="M9 12l2 2 4-4" />
-            </svg>
-          </div>
+          <h3 className="text-4xl font-normal leading-none tracking-[-0.035em]">Code of conduct</h3>
           <div className="flex flex-col gap-2.5">
             {rules.map((rule) => (
               <div key={rule.id} className="flex items-center justify-between gap-3 rounded-full bg-white px-4 py-3">
@@ -244,9 +626,12 @@ export function Bento() {
                   aria-checked={on[rule.id]}
                   aria-label={rule.label}
                   onClick={() => setOn((prev) => ({ ...prev, [rule.id]: !prev[rule.id] }))}
-                  className={`inline-flex h-[30px] w-[52px] cursor-pointer rounded-full p-[3px] transition-colors ${on[rule.id] ? "justify-end bg-azure" : "justify-start bg-[#bdbdbd]"}`}
+                  className={`inline-flex h-[30px] w-[52px] shrink-0 cursor-pointer rounded-full p-[3px] transition-colors duration-300 ${on[rule.id] ? "bg-azure" : "bg-[#bdbdbd]"}`}
                 >
-                  <span className="size-6 rounded-full bg-white" />
+                  {/* The knob slides across (52 wide, less 3 of padding a side and its own 24) as the track's colour fades, both ways. */}
+                  <span
+                    className={`size-6 rounded-full bg-white transition-transform duration-300 ease-[cubic-bezier(0.34,1.4,0.64,1)] ${on[rule.id] ? "translate-x-[22px]" : "translate-x-0"}`}
+                  />
                 </button>
               </div>
             ))}
@@ -259,18 +644,7 @@ export function Bento() {
           </div>
         </div>
 
-        <a href={TALK_EMAIL} data-reveal className="tile col-span-2 flex flex-col justify-between gap-5 bg-black p-6 text-white lg:col-span-4 lg:row-span-2">
-          <span className="relative self-start border-[1.5px] border-white px-4 py-3">
-            {["-left-[5px] -top-[5px]", "-right-[5px] -top-[5px]", "-bottom-[5px] -left-[5px]", "-bottom-[5px] -right-[5px]"].map((pos) => (
-              <span key={pos} aria-hidden="true" className={`absolute size-[9px] bg-white ${pos}`} />
-            ))}
-            <span className="block text-[clamp(32px,3vw,44px)] leading-none tracking-[-0.04em]">Your first talk</span>
-          </span>
-          <span className="flex flex-col gap-1.5">
-            <span className="text-lg leading-snug">Five minutes, any topic, any level.</span>
-            <span className="text-base leading-snug text-[#bdbdbd]">First-timers get a mentor to shape the idea. Email us yours.</span>
-          </span>
-        </a>
+        <TalkTile />
 
         <TransitionLink href="/community#organizers" data-reveal className="tile col-span-2 flex flex-col justify-between gap-3 bg-azure p-5 text-white lg:col-span-4">
           <span className="text-2xl leading-tight tracking-[-0.02em]">Volunteer</span>
@@ -294,10 +668,11 @@ export function Bento() {
           <LoopVideo src="/videos/hacktoberfest.mp4" label="A team gathered around one laptop at Hacktoberfest" />
         </MediaTile>
 
-        <div data-reveal className="tile col-span-2 flex flex-col justify-between gap-6 bg-azure p-6 text-white lg:col-span-7 lg:flex-row lg:items-center lg:gap-8">
+        {/* React cyan carries ink, never white; the button goes ink so it still stands out. */}
+        <div data-reveal className="tile col-span-2 flex flex-col justify-between gap-6 bg-react p-6 text-ink lg:col-span-7 lg:flex-row lg:items-center lg:gap-8">
           <span className="text-[clamp(40px,3.6vw,56px)] leading-[0.95] tracking-[-0.045em]">Free, every time</span>
           <span className="max-w-[30ch] text-base leading-snug lg:flex-1">Partners cover the room, the snacks and the occasional pizza.</span>
-          <TransitionLink href="/partners" className="btn btn-white shrink-0 self-start lg:self-center">Partner with us</TransitionLink>
+          <TransitionLink href="/partners" className="btn btn-black shrink-0 self-start lg:self-center">Partner with us</TransitionLink>
         </div>
       </Reveal>
     </section>
