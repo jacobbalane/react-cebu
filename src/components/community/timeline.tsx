@@ -1,76 +1,109 @@
 "use client";
 
-import { useRef } from "react";
-import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
+import Image from "next/image";
+import { useState } from "react";
+import { LoopVideo } from "@/components/loop-video";
+import { Reveal, SplitHeading } from "@/components/motion";
 
-const milestones = [
-  { month: "Where it started", year: "2019", title: "The first meetup", text: "More than 50 developers came to The Company Cebu for the first React Cebu meetup.", tone: "bg-react text-black" },
-  { month: "October", year: "2019", title: "Gatsby workshop", text: "A hands-on workshop at the Go Negosyo Center, UP Cebu.", tone: "bg-fog text-black" },
-  { month: "October", year: "2025", title: "Cebu Hacktoberfest", text: "Co-led by JavaScript Cebu with PizzaPy and Ethereum Philippines: talks, workshops and hack nights all month.", tone: "bg-azure text-white" },
-  { month: "Now", year: "2026", title: "A new home online", text: "The site you’re looking at, built by members with Next.js.", tone: "bg-fog text-black" },
+function Photo({ src, alt }: { src: string; alt: string }) {
+  return <Image src={src} alt={alt} fill sizes="(min-width: 1024px) 62vw, 100vw" className="object-cover" />;
+}
+
+const stops = [
+  {
+    month: "Where it started",
+    year: 2019,
+    title: "The first meetup",
+    text: "More than 50 developers came to The Company Cebu for the first React Cebu meetup.",
+    media: <Photo src="/images/audience.jpg" alt="An audience watching a talk" />,
+  },
+  {
+    month: "October",
+    year: 2019,
+    title: "Gatsby workshop",
+    text: "A hands-on workshop at the Go Negosyo Center, UP Cebu.",
+    media: <Photo src="/images/workshop.jpg" alt="Developers at a workshop table" />,
+  },
+  {
+    month: "October",
+    year: 2025,
+    title: "Cebu Hacktoberfest",
+    text: "Co-led by JavaScript Cebu with PizzaPy and Ethereum Philippines: talks, workshops and hack nights all month.",
+    media: <LoopVideo src="/videos/hacktoberfest.mp4" label="A team gathered around one laptop at Hacktoberfest" />,
+  },
+  {
+    month: "November",
+    year: 2026,
+    title: "A new home online",
+    text: "The site you’re looking at, built by members with Next.js.",
+    media: <Photo src="/images/crowd.jpg" alt="A full room of developers at a community event in Cebu" />,
+  },
 ];
 
+const glide = "duration-700 ease-[cubic-bezier(.2,.8,.2,1)]";
+
 /**
- * On large screens the section pins and scrolling down moves the milestones
- * sideways. Everywhere else, and with reduced motion, it is a plain grid.
+ * Four slices of photo side by side, muted to grey, with their years on top. Hover, tap or tab to
+ * one and it opens wide in full colour with its story while the others close up. On phones they
+ * stack, all open.
  */
 export function Timeline() {
-  const ref = useRef<HTMLElement>(null);
-  const track = useRef<HTMLOListElement>(null);
-
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add(`(min-width: 1024px) and ${MOTION_OK}`, () => {
-        const distance = () => (track.current?.scrollWidth ?? 0) - window.innerWidth + 16;
-        gsap.to(track.current, {
-          x: () => -distance(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: ref.current,
-            start: "top top",
-            end: () => `+=${distance()}`,
-            pin: true,
-            scrub: 0.6,
-            invalidateOnRefresh: true,
-          },
-        });
-      });
-      return () => mm.revert();
-    },
-    { scope: ref },
-  );
+  const [active, setActive] = useState(0);
 
   return (
-    <section ref={ref} aria-labelledby="history-title" className="overflow-hidden px-2 pb-32 lg:flex lg:min-h-svh lg:flex-col lg:justify-center lg:pb-0">
-      {/* Where the community comes from, ahead of the dated milestones. */}
+    <section aria-labelledby="history-title" className="px-2 pb-32">
+      {/* The whole journey in a line, ahead of the milestones. */}
       <div className="mb-10 flex flex-col gap-3 px-4">
-        <h2 id="history-title" className="display m-0 text-[clamp(40px,4.2vw,60px)]">How we got here</h2>
+        <SplitHeading id="history-title" className="display m-0 text-[clamp(40px,4.2vw,60px)]">How we got here</SplitHeading>
         <p className="m-0 max-w-[60ch] text-base text-muted">
-          React Cebu is part of JavaScript Cebu, which grew out of the Laravel Cebu and Vue.js Cebu communities.
+          Built by members, one event at a time.
         </p>
       </div>
-      <ol
-        ref={track}
-        aria-label="React Cebu timeline"
-        className="motion-safe:lg:flex motion-safe:lg:w-max grid gap-2 sm:grid-cols-2 lg:grid-cols-4"
-      >
-        {milestones.map((m) => (
-          <li
-            key={m.title}
-            className={`tile flex min-h-[320px] flex-col justify-between gap-8 p-7 lg:min-h-[460px] motion-safe:lg:w-[min(560px,42vw)] motion-safe:lg:shrink-0 ${m.tone}`}
-          >
-            <span className="flex flex-col gap-2">
-              <span className="text-lg opacity-85">{m.month}</span>
-              <span className="text-[clamp(72px,7vw,128px)] leading-[0.8] tracking-[-0.06em]">{m.year}</span>
-            </span>
-            <span className="flex flex-col gap-2.5">
-              <span className="text-[32px] leading-[1.02] tracking-[-0.035em]">{m.title}</span>
-              <span className="text-[17px] leading-[1.45] opacity-85">{m.text}</span>
-            </span>
-          </li>
-        ))}
-      </ol>
+
+      <Reveal>
+        <ol data-reveal aria-label="React Cebu timeline" className="m-0 flex list-none flex-col gap-2 p-0 lg:h-[clamp(480px,68svh,620px)] lg:flex-row">
+          {stops.map((stop, i) => {
+            const open = i === active;
+            return (
+              <li
+                key={stop.title}
+                onPointerEnter={(event) => event.pointerType === "mouse" && setActive(i)}
+                style={{ flexGrow: open ? 5 : 1 }}
+                className={`tile min-h-[440px] basis-0 bg-black text-white transition-[flex-grow] lg:min-h-0 ${glide}`}
+              >
+                {/* Wider than a closed panel and centred, so opening reveals more of the photo instead of resizing it. */}
+                <div className={`absolute inset-y-0 left-1/2 w-full -translate-x-1/2 transition-[filter] lg:w-[62vw] ${glide} ${open ? "" : "lg:grayscale"}`}>{stop.media}</div>
+                {/* Darkens the top and bottom so the white text reads over any photo. */}
+                <span aria-hidden="true" className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/80 via-black/20 via-45% to-black/50" />
+
+                <div className="pointer-events-none absolute left-5 top-5 flex flex-col gap-1">
+                  {/* Dropped from closed panels too narrow to hold it. */}
+                  <span className={`whitespace-nowrap text-base transition-opacity duration-500 ${open ? "" : "lg:opacity-0 xl:opacity-100"}`}>{stop.month}</span>
+                  <span className="text-[clamp(36px,3.6vw,64px)] leading-none tabular-nums tracking-[-0.04em]">{stop.year}</span>
+                </div>
+
+                {/* A fixed width, so the text doesn't reflow as the panel opens. */}
+                <div className={`pointer-events-none absolute bottom-5 left-5 flex w-[calc(100%-40px)] flex-col gap-2 transition-opacity duration-500 lg:w-[min(460px,34vw)] ${open ? "" : "lg:opacity-0"}`}>
+                  <h3 className="title m-0 text-[clamp(28px,3vw,40px)]">{stop.title}</h3>
+                  <p className="m-0 text-lg leading-[1.4]">{stop.text}</p>
+                </div>
+
+                <button
+                  type="button"
+                  aria-expanded={open}
+                  onClick={() => setActive(i)}
+                  onFocus={() => setActive(i)}
+                  className="absolute inset-0 hidden cursor-pointer rounded-[10px] focus-visible:outline-offset-[-4px]! lg:block"
+                >
+                  <span className="sr-only">
+                    {stop.title}, {stop.year}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      </Reveal>
     </section>
   );
 }

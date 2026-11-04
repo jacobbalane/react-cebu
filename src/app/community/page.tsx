@@ -39,7 +39,7 @@ export default function CommunityPage() {
 
       <Timeline />
 
-      <section id="organizers" aria-labelledby="org-title" className="scroll-mt-24 px-2 pb-32 lg:pt-28">
+      <section id="organizers" aria-labelledby="org-title" className="scroll-mt-24 px-2 pb-32">
         <div className="mb-10 flex flex-col items-center gap-3 px-4 text-center">
           <SplitHeading id="org-title" className="display m-0 text-[clamp(40px,4.2vw,60px)]">The people who run it</SplitHeading>
           <p className="m-0 text-base text-muted">Volunteers, every one of them</p>
