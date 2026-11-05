@@ -30,7 +30,13 @@ export default function CommunityPage() {
   return (
     <>
       <PhotoIntro
-        title="We’re a community, not an audience."
+        title={
+          <>
+            We’re a community,
+            <br />
+            not an audience.
+          </>
+        }
         description="Students, career-shifters and working engineers in Cebu, learning React together since 2019."
         src="/images/crowd.jpg"
         alt="A full room of developers at a community event in Cebu"

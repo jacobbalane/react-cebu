@@ -16,7 +16,7 @@ export function PhotoIntro({
   src,
   alt,
 }: {
-  title: string;
+  title: React.ReactNode;
   description: string;
   src: string;
   alt: string;
