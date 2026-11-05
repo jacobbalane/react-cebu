@@ -46,11 +46,13 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
       pending.current = url.pathname;
 
       gsap.killTweensOf(el);
+      const calm = !window.matchMedia(MOTION_OK).matches;
       const go = () => {
         fallback.current = setTimeout(reveal, 6000);
-        router.push(href);
+        // A section on the next page is SmoothScroll's to glide to, unless motion is off.
+        router.push(href, { scroll: calm || !url.hash });
       };
-      if (!window.matchMedia(MOTION_OK).matches) {
+      if (calm) {
         gsap.fromTo(el, { yPercent: 0, autoAlpha: 0, pointerEvents: "auto" }, { autoAlpha: 1, duration: 0.2, onComplete: go });
         return true;
       }

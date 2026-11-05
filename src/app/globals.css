@@ -45,6 +45,11 @@ body {
   outline-offset: 3px;
 }
 
+/* A section takes focus when a link glides to it, so Tab carries on from there. It needs no ring. */
+[tabindex="-1"]:focus-visible {
+  outline: none;
+}
+
 @layer components {
   .tile {
     position: relative;
