@@ -16,7 +16,7 @@ const formats = [
 export function Formats() {
   return (
     <section id="learn" aria-labelledby="formats-title" className="px-2 pb-32 pt-28">
-      <SplitHeading id="formats-title" className="display mb-10 px-4 text-[clamp(40px,4.2vw,60px)]">
+      <SplitHeading id="formats-title" className="display mb-10 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">
         What happens at React Cebu
       </SplitHeading>
       <Reveal className="grid gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -35,7 +35,7 @@ export function Formats() {
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               />
             )}
-            <p className="px-2 text-[21px] leading-[1.3] tracking-[-0.015em]">
+            <p className="px-2 text-[1.3125rem] leading-[1.3] tracking-[-0.015em]">
               <span className="font-medium text-ink">{format.name}</span>{" "}
               <span className="text-muted">{format.desc}</span>
             </p>

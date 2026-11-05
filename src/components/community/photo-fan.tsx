@@ -124,9 +124,9 @@ export function PhotoFan() {
   return (
     <section aria-label="Photos from React Cebu events" className="overflow-hidden pb-32">
       {/* As tall as a card plus the room its lean and drop need. */}
-      <div ref={stage} className="grid h-[calc(clamp(150px,26vw,460px)*1.25+64px)] place-items-center">
+      <div ref={stage} className="grid h-[calc(clamp(9.375rem,26vw,28.75rem)*1.25+4rem)] place-items-center">
         {photos.map((photo, i) => (
-          <div key={photo.src} data-card style={{ zIndex: layer(i) }} className="relative col-start-1 row-start-1 aspect-[4/5] w-[clamp(150px,26vw,460px)]">
+          <div key={photo.src} data-card style={{ zIndex: layer(i) }} className="relative col-start-1 row-start-1 aspect-[4/5] w-[clamp(9.375rem,26vw,28.75rem)]">
             {/* The shadow only shows where the cards lie over each other. A landscape photo fills
                 the portrait card by its height, so it's drawn about twice the card's width. */}
             <div data-face className="tile size-full bg-fog shadow-[0_4px_8px_rgba(0,0,0,0.1),0_24px_48px_rgba(0,0,0,0.16)]">

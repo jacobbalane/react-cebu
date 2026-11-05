@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-const field = "flex flex-col gap-2 text-[15px] font-medium";
-const input = "min-h-[52px] rounded-[10px] border border-[#bdbdbd] bg-white px-[18px] py-3 text-[17px] font-normal";
+const field = "flex flex-col gap-2 text-[0.9375rem] font-medium";
+const input = "min-h-[3.25rem] rounded-[0.625rem] border border-[#bdbdbd] bg-white px-[1.125rem] py-3 text-[1.0625rem] font-normal";
 
 // Front-end only for now: connect the form to email or a form service before launch.
 export function PartnerForm() {
@@ -24,9 +24,9 @@ export function PartnerForm() {
         event.preventDefault();
         setSent(true);
       }}
-      className="flex flex-col gap-[18px]"
+      className="flex flex-col gap-[1.125rem]"
     >
-      <div className="grid gap-[18px] sm:grid-cols-2">
+      <div className="grid gap-[1.125rem] sm:grid-cols-2">
         <label className={field}>Company or organization<input className={input} type="text" name="org" required autoComplete="organization" /></label>
         <label className={field}>Work email<input className={input} type="email" name="email" required autoComplete="email" /></label>
       </div>
@@ -40,7 +40,7 @@ export function PartnerForm() {
       </label>
       <label className={field}>
         Anything else we should know?
-        <textarea className={`${input} min-h-[130px] resize-y`} name="message" />
+        <textarea className={`${input} min-h-[8.125rem] resize-y`} name="message" />
       </label>
       <button type="submit" className="btn btn-primary self-start">Send message</button>
     </form>

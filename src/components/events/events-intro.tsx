@@ -58,11 +58,11 @@ export function EventsIntro() {
       {/* Darkens the lower half so the white copy reads wherever the circle goes. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/80 via-black/25 via-45% to-transparent" />
 
-      <SplitHeading as="h1" id="page-title" animation="rise" by="line" className="display relative m-0 text-balance text-[clamp(44px,6.4vw,112px)] leading-[0.92]">
+      <SplitHeading as="h1" id="page-title" animation="rise" by="line" className="display relative m-0 text-balance text-[clamp(2.75rem,6.4vw,7rem)] leading-[0.92]">
         Come to the next one.
       </SplitHeading>
       {/* A sentence to each row, where there's room for them. */}
-      <p className="relative m-0 text-[clamp(18px,1.5vw,22px)] leading-snug text-white/80">
+      <p className="relative m-0 text-[clamp(1.125rem,1.5vw,1.375rem)] leading-snug text-white/80">
         Free meetups, workshops and code camps around Cebu. <br className="max-sm:hidden" />
         Everyone is welcome, whatever your level.
       </p>

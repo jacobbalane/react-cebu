@@ -49,7 +49,7 @@ export default function CommunityPage() {
 
       <section id="organizers" aria-labelledby="org-title" className="scroll-mt-24 px-2 pb-32">
         <div className="mb-10 flex flex-col items-center gap-3 px-4 text-center">
-          <SplitHeading id="org-title" className="display m-0 text-[clamp(40px,4.2vw,60px)]">The people who run it</SplitHeading>
+          <SplitHeading id="org-title" className="display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]">The people who run it</SplitHeading>
           <p className="m-0 text-base text-muted">Volunteers, every one of them</p>
         </div>
         <Reveal className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
@@ -65,7 +65,7 @@ export default function CommunityPage() {
               {/* Darkens the bottom so the white text reads over any photo. */}
               <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
               <div className="absolute inset-x-5 bottom-5 flex flex-col gap-1">
-                <span className="text-[28px] leading-[1.1] tracking-[-0.03em]">{person.name}</span>
+                <span className="text-[1.75rem] leading-[1.1] tracking-[-0.03em]">{person.name}</span>
                 <span className="text-base">{person.role}</span>
               </div>
             </div>

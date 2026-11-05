@@ -98,7 +98,7 @@ export function SiteHeader() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="border-b border-line px-1 py-4 text-[40px] tracking-[-0.04em]"
+                className="border-b border-line px-1 py-4 text-[2.5rem] tracking-[-0.04em]"
               >
                 {link.label}
               </TransitionLink>

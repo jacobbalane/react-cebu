@@ -54,14 +54,14 @@ export function Timeline() {
     <section aria-labelledby="history-title" className="px-2 pb-32">
       {/* The whole journey in a line, ahead of the milestones. */}
       <div className="mb-10 flex flex-col gap-3 px-4">
-        <SplitHeading id="history-title" className="display m-0 text-[clamp(40px,4.2vw,60px)]">How we got here</SplitHeading>
+        <SplitHeading id="history-title" className="display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]">How we got here</SplitHeading>
         <p className="m-0 max-w-[60ch] text-base text-muted">
           Built by members, one event at a time.
         </p>
       </div>
 
       <Reveal>
-        <ol data-reveal aria-label="React Cebu timeline" className="m-0 flex list-none flex-col gap-2 p-0 lg:h-[clamp(480px,68svh,620px)] lg:flex-row">
+        <ol data-reveal aria-label="React Cebu timeline" className="m-0 flex list-none flex-col gap-2 p-0 lg:h-[clamp(30rem,68svh,38.75rem)] lg:flex-row">
           {stops.map((stop, i) => {
             const open = i === active;
             return (
@@ -69,7 +69,7 @@ export function Timeline() {
                 key={stop.title}
                 onPointerEnter={(event) => event.pointerType === "mouse" && setActive(i)}
                 style={{ flexGrow: open ? 5 : 1 }}
-                className={`tile min-h-[440px] basis-0 bg-black text-white transition-[flex-grow] lg:min-h-0 ${glide}`}
+                className={`tile min-h-[27.5rem] basis-0 bg-black text-white transition-[flex-grow] lg:min-h-0 ${glide}`}
               >
                 {/* Wider than a closed panel and centred, so opening reveals more of the photo instead of resizing it. */}
                 <div className={`absolute inset-y-0 left-1/2 w-full -translate-x-1/2 transition-[filter] lg:w-[62vw] ${glide} ${open ? "" : "lg:grayscale"}`}>{stop.media}</div>
@@ -78,13 +78,13 @@ export function Timeline() {
 
                 <div className="pointer-events-none absolute left-5 top-5 flex flex-col gap-1">
                   {/* Dropped from closed panels too narrow to hold it. */}
-                  <span className={`whitespace-nowrap text-base transition-opacity duration-500 ${open ? "" : "lg:opacity-0 xl:opacity-100"}`}>{stop.month}</span>
-                  <span className="text-[clamp(36px,3.6vw,64px)] leading-none tabular-nums tracking-[-0.04em]">{stop.year}</span>
+                  <span className={`whitespace-nowrap text-base transition-opacity duration-500 ${open ? "" : "lg:opacity-0 min-[88rem]:opacity-100"}`}>{stop.month}</span>
+                  <span className="text-[clamp(2.25rem,3.6vw,4rem)] leading-none tabular-nums tracking-[-0.04em]">{stop.year}</span>
                 </div>
 
                 {/* A fixed width, so the text doesn't reflow as the panel opens. */}
-                <div className={`pointer-events-none absolute bottom-5 left-5 flex w-[calc(100%-40px)] flex-col gap-2 transition-opacity duration-500 lg:w-[min(460px,34vw)] ${open ? "" : "lg:opacity-0"}`}>
-                  <h3 className="title m-0 text-[clamp(28px,3vw,40px)]">{stop.title}</h3>
+                <div className={`pointer-events-none absolute bottom-5 left-5 flex w-[calc(100%-2.5rem)] flex-col gap-2 transition-opacity duration-500 lg:w-[min(28.75rem,34vw)] ${open ? "" : "lg:opacity-0"}`}>
+                  <h3 className="title m-0 text-[clamp(1.75rem,3vw,2.5rem)]">{stop.title}</h3>
                   <p className="m-0 text-lg leading-[1.4]">{stop.text}</p>
                 </div>
 
@@ -93,7 +93,7 @@ export function Timeline() {
                   aria-expanded={open}
                   onClick={() => setActive(i)}
                   onFocus={() => setActive(i)}
-                  className="absolute inset-0 hidden cursor-pointer rounded-[10px] focus-visible:outline-offset-[-4px]! lg:block"
+                  className="absolute inset-0 hidden cursor-pointer rounded-[0.625rem] focus-visible:outline-offset-[-4px]! lg:block"
                 >
                   <span className="sr-only">
                     {stop.title}, {stop.year}

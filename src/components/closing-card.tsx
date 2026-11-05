@@ -24,7 +24,7 @@ export function ClosingCard({
 }) {
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-20 px-2 pb-2">
-      <div className="tile flex min-h-[clamp(460px,72vh,760px)] flex-col justify-between gap-12 bg-black p-7 text-white sm:p-10 lg:p-14">
+      <div className="tile flex min-h-[clamp(28.75rem,72vh,47.5rem)] flex-col justify-between gap-12 bg-black p-7 text-white sm:p-10 lg:p-14">
         <GlyphStream />
 
         <SplitHeading
@@ -32,7 +32,7 @@ export function ClosingCard({
           by="word"
           // Sized to the viewport so its two lines run well across the card, capped so it stops
           // growing on wide screens.
-          className="relative m-0 text-balance text-[clamp(56px,11vw,210px)] font-normal leading-[0.9] tracking-[-0.05em]"
+          className="relative m-0 text-balance text-[clamp(3.5rem,11vw,13.125rem)] font-normal leading-[0.9] tracking-[-0.05em]"
         >
           {title}
         </SplitHeading>

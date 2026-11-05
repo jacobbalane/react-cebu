@@ -14,12 +14,12 @@ const calm = () => !window.matchMedia(MOTION_OK).matches;
 // what that means in practice, the detail, then somewhere to go next.
 const cardBase = "tile flex flex-col gap-4 p-6";
 const card = `${cardBase} lg:row-span-6 lg:grid lg:grid-rows-subgrid`;
-const cardTitle = "title m-0 text-[clamp(28px,3vw,40px)]";
+const cardTitle = "title m-0 text-[clamp(1.75rem,3vw,2.5rem)]";
 const controlRow = "mt-2 h-32";
 const labelRow = "flex min-h-12 items-center";
 // Each card's longest line sets this row's height, even while a shorter one shows. Text sits at the
 // bottom of the row, so it stays right on top of the detail and the spare room goes above it.
-const lead = "m-0 text-[clamp(22px,1.9vw,28px)] leading-[1.12] tracking-[-0.03em]";
+const lead = "m-0 text-[clamp(1.375rem,1.9vw,1.75rem)] leading-[1.12] tracking-[-0.03em]";
 const detail = "m-0 -mt-2 text-base leading-[1.45]";
 // Links that stand alone are pills, as on the homepage.
 const action = "btn mt-2 self-start justify-self-start";
@@ -166,7 +166,7 @@ function PriceSlider() {
   return (
     <div
       ref={track}
-      className="relative h-[76px] cursor-grab touch-pan-y select-none overflow-hidden rounded-full bg-ink active:cursor-grabbing lg:h-[92px]"
+      className="relative h-[4.75rem] cursor-grab touch-pan-y select-none overflow-hidden rounded-full bg-ink active:cursor-grabbing lg:h-[5.75rem]"
     >
       <span className="absolute inset-y-0 right-7 flex items-center text-base text-white lg:right-9">
         <Swap lines={priceLines} shown={line} className="text-right" />
@@ -180,13 +180,13 @@ function PriceSlider() {
         aria-valuemax={0}
         aria-valuenow={0}
         aria-valuetext="₱0, free"
-        className="absolute inset-y-1.5 left-1.5 w-[120px] rounded-full focus-visible:outline-offset-[-5px]! focus-visible:outline-ink! lg:w-[176px]"
+        className="absolute inset-y-1.5 left-1.5 w-[7.5rem] rounded-full focus-visible:outline-offset-[-5px]! focus-visible:outline-ink! lg:w-[11rem]"
       >
         {/* Reaches back from the knob to where it started, so pulling it stretches the pill. */}
         <span ref={fill} aria-hidden="true" className="absolute inset-y-0 right-1/2 w-1/2 rounded-l-full bg-white" />
         <span
           ref={price}
-          className="relative flex h-full items-center justify-center rounded-full bg-white text-[28px] tabular-nums tracking-[-0.035em] text-ink lg:text-[36px]"
+          className="relative flex h-full items-center justify-center rounded-full bg-white text-[1.75rem] tabular-nums tracking-[-0.035em] text-ink lg:text-[2.25rem]"
         >
           ₱0
         </span>
@@ -341,7 +341,7 @@ function ComponentRuler() {
             1st
           </span>
           {/* Dropped where three equal cards leave no room for it beside the title. */}
-          <span className="text-base text-[#555] lg:hidden xl:inline">component</span>
+          <span className="text-base text-[#555] lg:hidden min-[88rem]:inline">component</span>
         </span>
       </div>
 
@@ -361,7 +361,7 @@ function ComponentRuler() {
         ))}
       </div>
 
-      <div role="group" aria-label="Your experience with React" className={`${labelRow} justify-between gap-2 text-[13px] sm:text-base lg:text-[13px] xl:text-base`}>
+      <div role="group" aria-label="Your experience with React" className={`${labelRow} justify-between gap-2 text-[0.8125rem] sm:text-base lg:text-[0.8125rem] min-[88rem]:text-base`}>
         {stages.map((item, i) => (
           <button
             key={item.name}
@@ -602,7 +602,7 @@ function KindSwitch({ rules }: { rules: string[] }) {
           aria-checked="true"
           aria-label="Kind by default"
           onClick={() => flick.current()}
-          className="relative h-20 w-36 shrink-0 cursor-pointer rounded-full bg-azure xl:h-24 xl:w-44"
+          className="relative h-20 w-36 shrink-0 cursor-pointer rounded-full bg-azure min-[88rem]:h-24 min-[88rem]:w-44"
         >
           <span ref={knob} className="absolute inset-y-1.5 right-1.5 aspect-square rounded-full bg-white" />
         </button>
@@ -630,7 +630,7 @@ export function Principles({ rules }: { rules: string[] }) {
   return (
     <section aria-labelledby="values-title" className="px-2 pb-32 pt-28">
       <div className="mb-10 flex flex-col items-center gap-3 px-4 text-center">
-        <SplitHeading id="values-title" className="display m-0 text-[clamp(40px,4.2vw,60px)]">How we run things</SplitHeading>
+        <SplitHeading id="values-title" className="display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]">How we run things</SplitHeading>
         <p className="m-0 text-base text-muted">Four things that never change. Go on, test them.</p>
       </div>
 
@@ -640,7 +640,7 @@ export function Principles({ rules }: { rules: string[] }) {
           <div className="mt-2">
             <PriceSlider />
           </div>
-          <div className="grid gap-x-8 gap-y-6 lg:grid-cols-2 xl:gap-x-16">
+          <div className="grid gap-x-8 gap-y-6 lg:grid-cols-2 min-[88rem]:gap-x-16">
             <div className="flex flex-col gap-4">
               <p className={lead}>Every event is free to attend.</p>
               <p className={detail}>Partners cover the room, the snacks and the occasional pizza.</p>
@@ -660,13 +660,13 @@ export function Principles({ rules }: { rules: string[] }) {
         </div>
 
         {/* Shares the top row, so the slider doesn't run the whole width of the page. */}
-        <div data-reveal className="tile min-h-[260px] bg-fog sm:col-span-2 lg:col-span-5">
+        <div data-reveal className="tile min-h-[16.25rem] bg-fog sm:col-span-2 lg:col-span-5">
           <LoopVideo src="/videos/workshop.mp4" label="Developers working together at a workshop" />
           <span className="absolute bottom-4 left-4 rounded-lg bg-black px-3.5 py-2.5 text-base text-white">Every seat, free</span>
         </div>
 
         {/* Equal thirds until the last card has room for its button on one line. */}
-        <div data-reveal className={`${card} bg-fog sm:col-span-2 lg:col-span-4 xl:col-span-5`}>
+        <div data-reveal className={`${card} bg-fog sm:col-span-2 lg:col-span-4 min-[88rem]:col-span-5`}>
           <ComponentRuler />
         </div>
 
@@ -675,7 +675,7 @@ export function Principles({ rules }: { rules: string[] }) {
           <OpenMic />
         </div>
 
-        <div data-reveal className={`${card} bg-fog lg:col-span-4 xl:col-span-3`}>
+        <div data-reveal className={`${card} bg-fog lg:col-span-4 min-[88rem]:col-span-3`}>
           <h3 className={cardTitle}>Kind by default</h3>
           <KindSwitch rules={rules} />
           <p className={`${detail} text-[#555]`}>The same code of conduct applies at every event, in the Facebook group, and anywhere else we meet.</p>

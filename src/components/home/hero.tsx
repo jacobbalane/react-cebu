@@ -97,7 +97,7 @@ export function Hero() {
 
       <div className="absolute inset-x-4 bottom-6 flex flex-col items-start gap-6 text-white md:inset-x-10 md:bottom-10 md:gap-8">
         {/* Broken by phrase rather than by width, so no line ends mid-thought. */}
-        <h1 id="hero-title" className="display m-0 text-[clamp(48px,8.4vw,140px)] leading-[0.92]">
+        <h1 id="hero-title" className="display m-0 text-[clamp(3rem,8.4vw,8.75rem)] leading-[0.92]">
           <Line>Build the web</Line>{" "}
           <Line>with React,</Line>{" "}
           <span className="block">
@@ -105,7 +105,7 @@ export function Hero() {
             <Line inline>in Cebu.</Line>
           </span>
         </h1>
-        <p data-hero-fade className="m-0 max-w-[34ch] text-[clamp(18px,1.5vw,22px)] leading-snug text-[#b5b5b5]">
+        <p data-hero-fade className="m-0 max-w-[34ch] text-[clamp(1.125rem,1.5vw,1.375rem)] leading-snug text-[#b5b5b5]">
           A free community for developers, by developers, since 2019.
         </p>
         <div data-hero-fade className="flex flex-wrap gap-1.5">

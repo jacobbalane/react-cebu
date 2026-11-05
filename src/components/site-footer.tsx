@@ -17,7 +17,7 @@ async function CurrentYear() {
 export function SiteFooter() {
   return (
     <footer className="bg-black px-6 pb-7 pt-14 text-white">
-      <div className="grid grid-cols-2 gap-8 text-[15px] md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-8 text-[0.9375rem] md:grid-cols-4">
         {footerColumns.map((column) => (
           <nav key={column.title} aria-label={column.title} className="flex flex-col gap-2.5">
             <span className="font-medium">{column.title}</span>
@@ -51,7 +51,7 @@ export function SiteFooter() {
             width={36}
             height={40}
             className="block brightness-0 invert"
-            style={{ width: 36, height: 40 }}
+            style={{ width: "2.25rem", height: "2.5rem" }}
           />
         </TransitionLink>
         <span>

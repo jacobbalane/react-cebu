@@ -23,8 +23,8 @@
   --font-sans: var(--font-host), system-ui, sans-serif;
   --font-mono: Consolas, Menlo, monospace;
 
-  --radius-tile: 10px;
-  --radius-card: 12px;
+  --radius-tile: 0.625rem;
+  --radius-card: 0.75rem;
 
   --tracking-display: -0.045em;
   --tracking-title: -0.035em;
@@ -33,6 +33,13 @@
 html {
   background: var(--color-white);
   color: var(--color-black);
+}
+
+/* Desktop runs at 110%. Sizes are in rem so they all follow, as they would with browser zoom. Phones stay at 100%. */
+@media (min-width: 64rem) {
+  html {
+    font-size: 110%;
+  }
 }
 
 body {
@@ -60,12 +67,12 @@ body {
   .navpill {
     display: inline-flex;
     align-items: center;
-    min-height: 40px;
-    padding: 0 16px;
+    min-height: 2.5rem;
+    padding: 0 1rem;
     border-radius: 999px;
     background: var(--color-fog);
     color: var(--color-ink);
-    font-size: 15px;
+    font-size: 0.9375rem;
     font-weight: 500;
     transition: background-color 0.2s, color 0.2s;
   }
@@ -78,10 +85,10 @@ body {
   .btn {
     display: inline-flex;
     align-items: center;
-    min-height: 48px;
-    padding: 0 22px;
+    min-height: 3rem;
+    padding: 0 1.375rem;
     border-radius: 999px;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;

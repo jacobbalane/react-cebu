@@ -13,7 +13,7 @@ import { FACEBOOK_URL, TALK_EMAIL } from "@/data/site";
 /** A clip or a swiping set of photos, with a short caption pinned to its corner. */
 function MediaTile({ label, className, children }: { label: string; className: string; children: React.ReactNode }) {
   return (
-    <div data-reveal className={`tile col-span-2 min-h-[260px] bg-fog lg:min-h-0 ${className}`}>
+    <div data-reveal className={`tile col-span-2 min-h-[16.25rem] bg-fog lg:min-h-0 ${className}`}>
       {children}
       <span className="absolute bottom-4 left-4 rounded-lg bg-black px-3.5 py-2.5 text-base text-white">{label}</span>
     </div>
@@ -105,11 +105,11 @@ function PastStrip() {
     <div ref={frame} className="overflow-hidden rounded-lg">
       <ul ref={strip} aria-label="Past events" className="flex w-max cursor-grab gap-2 active:cursor-grabbing">
         {past.map((item) => (
-          <li key={item.title} className="relative h-[200px] w-[180px] shrink-0 overflow-hidden rounded-lg bg-black text-white lg:h-[290px] lg:w-[240px]">
+          <li key={item.title} className="relative h-[12.5rem] w-[11.25rem] shrink-0 overflow-hidden rounded-lg bg-black text-white lg:h-[18.125rem] lg:w-[15rem]">
             <Image src={item.image} alt="" fill sizes="240px" draggable={false} className="pointer-events-none object-cover" />
             {/* Darkens the bottom of the photo so the title reads on any of them. */}
             <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-3/5 bg-linear-to-t from-black/85 via-black/40 to-transparent" />
-            <span className="absolute inset-x-3 bottom-3 select-none text-[22px] leading-[1.05] tracking-[-0.03em]">{item.title}</span>
+            <span className="absolute inset-x-3 bottom-3 select-none text-[1.375rem] leading-[1.05] tracking-[-0.03em]">{item.title}</span>
           </li>
         ))}
       </ul>
@@ -343,11 +343,11 @@ function TopicPile() {
   );
 
   return (
-    <div ref={tile} data-reveal className="tile col-span-2 flex min-h-[260px] flex-col justify-between gap-5 bg-black p-5 text-white lg:col-span-3 lg:row-span-2 lg:min-h-0">
-      <h3 className="text-[28px] font-normal leading-none tracking-[-0.035em]">What we cover</h3>
+    <div ref={tile} data-reveal className="tile col-span-2 flex min-h-[16.25rem] flex-col justify-between gap-5 bg-black p-5 text-white lg:col-span-3 lg:row-span-2 lg:min-h-0">
+      <h3 className="text-[1.75rem] font-normal leading-none tracking-[-0.035em]">What we cover</h3>
       <ul ref={list} className="flex flex-wrap gap-1.5">
         {topics.map((topic) => (
-          <li key={topic} className="select-none whitespace-nowrap rounded-full bg-[#262626] px-3 py-1 text-[14px]">
+          <li key={topic} className="select-none whitespace-nowrap rounded-full bg-[#262626] px-3 py-1 text-[0.875rem]">
             {topic}
           </li>
         ))}
@@ -472,10 +472,10 @@ function TalkTile() {
             key={corner.pos}
             data-corner
             aria-hidden="true"
-            className={`absolute size-[9px] bg-white before:absolute before:-inset-2.5 before:content-[''] ${corner.pos} ${corner.cursor}`}
+            className={`absolute size-[0.5625rem] bg-white before:absolute before:-inset-2.5 before:content-[''] ${corner.pos} ${corner.cursor}`}
           />
         ))}
-        <span ref={text} className="block whitespace-nowrap text-[clamp(32px,3vw,44px)] leading-none tracking-[-0.04em]">
+        <span ref={text} className="block whitespace-nowrap text-[clamp(2rem,3vw,2.75rem)] leading-none tracking-[-0.04em]">
           Your first talk
         </span>
       </span>
@@ -520,7 +520,7 @@ function LevelPicker() {
   return (
     <div data-reveal className="tile col-span-2 flex flex-col gap-8 bg-azure p-6 text-white sm:p-8 lg:col-span-6 lg:row-span-4">
       <div className="flex flex-col gap-5">
-        <h3 className="text-[clamp(32px,3vw,44px)] font-normal leading-none tracking-[-0.04em]">Start where you are</h3>
+        <h3 className="text-[clamp(2rem,3vw,2.75rem)] font-normal leading-none tracking-[-0.04em]">Start where you are</h3>
         <div role="group" aria-label="Your experience with React" className="flex flex-wrap gap-1.5">
           {levels.map((l, i) => (
             <button
@@ -528,7 +528,7 @@ function LevelPicker() {
               type="button"
               aria-pressed={i === current}
               onClick={() => choose(i)}
-              className={`btn min-h-11 px-[18px] text-[15px] ${i === current ? "bg-white text-ink" : "text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.6)] hover:bg-white/15"}`}
+              className={`btn min-h-11 px-[1.125rem] text-[0.9375rem] ${i === current ? "bg-white text-ink" : "text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.6)] hover:bg-white/15"}`}
             >
               {l.name}
             </button>
@@ -537,7 +537,7 @@ function LevelPicker() {
       </div>
       <div ref={body} className="flex flex-1 flex-col justify-between gap-6">
         <div className="flex flex-col gap-5">
-          <p className="max-w-[24ch] text-[clamp(24px,2.2vw,32px)] leading-[1.1] tracking-[-0.03em]">{level.lead}</p>
+          <p className="max-w-[24ch] text-[clamp(1.5rem,2.2vw,2rem)] leading-[1.1] tracking-[-0.03em]">{level.lead}</p>
           <ul className="flex flex-col">
             {level.items.map((item) => (
               <li key={item} className="border-t border-white/40 py-2.5 text-base leading-snug">
@@ -562,10 +562,10 @@ export function Bento() {
 
   return (
     <section aria-labelledby="grow-title" className="px-2 pb-32 pt-28">
-      <SplitHeading id="grow-title" className="display mb-10 px-4 text-[clamp(40px,4.2vw,60px)]">
+      <SplitHeading id="grow-title" className="display mb-10 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">
         Everything you need to grow as a React developer
       </SplitHeading>
-      <Reveal className="grid auto-rows-[minmax(220px,auto)] grid-cols-2 gap-2 lg:auto-rows-[150px] lg:grid-cols-12">
+      <Reveal className="grid auto-rows-[minmax(13.75rem,auto)] grid-cols-2 gap-2 lg:auto-rows-[9.375rem] lg:grid-cols-12">
         {/* Media alternates sides down the grid (right, left, right, left) so the
             scatter stays balanced. Each band below is one block of rows on desktop. */}
 
@@ -579,14 +579,14 @@ export function Bento() {
         <TopicPile />
 
         <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" data-reveal className="tile col-span-2 flex items-end justify-between gap-4 bg-fog p-5 lg:col-span-6">
-          <span className="text-[28px] leading-none tracking-[-0.035em]">No question is too basic</span>
-          <span className="text-[15px] text-[#555]">Ask in the Facebook group</span>
+          <span className="text-[1.75rem] leading-none tracking-[-0.035em]">No question is too basic</span>
+          <span className="text-[0.9375rem] text-[#555]">Ask in the Facebook group</span>
         </a>
 
         <TransitionLink href="/community#organizers" data-reveal className="tile group col-span-2 flex items-center justify-between gap-4 bg-react p-5 text-ink lg:col-span-6">
           <span className="flex flex-col gap-1">
-            <span className="text-[28px] leading-none tracking-[-0.035em]">Mentors at every table</span>
-            <span className="text-[15px]">Meet the organizers</span>
+            <span className="text-[1.75rem] leading-none tracking-[-0.035em]">Mentors at every table</span>
+            <span className="text-[0.9375rem]">Meet the organizers</span>
           </span>
           <span className="flex shrink-0">
             {[1, 2, 3, 4].map((n, i) => (
@@ -626,11 +626,11 @@ export function Bento() {
                   aria-checked={on[rule.id]}
                   aria-label={rule.label}
                   onClick={() => setOn((prev) => ({ ...prev, [rule.id]: !prev[rule.id] }))}
-                  className={`inline-flex h-[30px] w-[52px] shrink-0 cursor-pointer rounded-full p-[3px] transition-colors duration-300 ${on[rule.id] ? "bg-azure" : "bg-[#bdbdbd]"}`}
+                  className={`inline-flex h-[1.875rem] w-[3.25rem] shrink-0 cursor-pointer rounded-full p-[3px] transition-colors duration-300 ${on[rule.id] ? "bg-azure" : "bg-[#bdbdbd]"}`}
                 >
                   {/* The knob slides across (52 wide, less 3 of padding a side and its own 24) as the track's colour fades, both ways. */}
                   <span
-                    className={`size-6 rounded-full bg-white transition-transform duration-300 ease-[cubic-bezier(0.34,1.4,0.64,1)] ${on[rule.id] ? "translate-x-[22px]" : "translate-x-0"}`}
+                    className={`size-6 rounded-full bg-white transition-transform duration-300 ease-[cubic-bezier(0.34,1.4,0.64,1)] ${on[rule.id] ? "translate-x-[1.375rem]" : "translate-x-0"}`}
                   />
                 </button>
               </div>
@@ -648,7 +648,7 @@ export function Bento() {
 
         <TransitionLink href="/community#volunteer" data-reveal className="tile col-span-2 flex flex-col justify-between gap-3 bg-azure p-5 text-white lg:col-span-4">
           <span className="text-2xl leading-tight tracking-[-0.02em]">Volunteer</span>
-          <span className="text-[15px] leading-snug">Set up chairs, run the stream or welcome first-timers</span>
+          <span className="text-[0.9375rem] leading-snug">Set up chairs, run the stream or welcome first-timers</span>
         </TransitionLink>
 
         {/* Rows 8–11: recaps over what it costs, with a tall clip on the right */}
@@ -657,9 +657,9 @@ export function Bento() {
           <div className="flex items-start justify-between gap-3">
             <span className="flex flex-col gap-1.5">
               <span className="text-4xl leading-none tracking-[-0.035em]">Missed one?</span>
-              <span className="text-[15px] text-[#bdbdbd]">Drag to look back through past events</span>
+              <span className="text-[0.9375rem] text-[#bdbdbd]">Drag to look back through past events</span>
             </span>
-            <TransitionLink href="/events#recaps" className="btn btn-white min-h-11 shrink-0 px-[18px] text-[15px]">Read the recaps</TransitionLink>
+            <TransitionLink href="/events#recaps" className="btn btn-white min-h-11 shrink-0 px-[1.125rem] text-[0.9375rem]">Read the recaps</TransitionLink>
           </div>
           <PastStrip />
         </div>
@@ -670,7 +670,7 @@ export function Bento() {
 
         {/* React cyan carries ink, never white; the button goes ink so it still stands out. */}
         <div data-reveal className="tile col-span-2 flex flex-col justify-between gap-6 bg-react p-6 text-ink lg:col-span-7 lg:flex-row lg:items-center lg:gap-8">
-          <span className="text-[clamp(40px,3.6vw,56px)] leading-[0.95] tracking-[-0.045em]">Free, every time</span>
+          <span className="text-[clamp(2.5rem,3.6vw,3.5rem)] leading-[0.95] tracking-[-0.045em]">Free, every time</span>
           <span className="max-w-[30ch] text-base leading-snug lg:flex-1">Partners cover the room, the snacks and the occasional pizza.</span>
           <TransitionLink href="/partners" className="btn btn-black shrink-0 self-start lg:self-center">Partner with us</TransitionLink>
         </div>

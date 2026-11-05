@@ -265,7 +265,7 @@ export function LiveCoding() {
       <div className="pointer-events-none relative flex flex-col items-center gap-3 text-center">
         {/* Like the other headings, but a touch smaller on phones and short screens, so the
             pinned editor always fits below it. */}
-        <SplitHeading id="demo-title" className="display max-w-[900px] text-[clamp(34px,min(4.2vw,7vh),60px)]">
+        <SplitHeading id="demo-title" className="display max-w-[56.25rem] text-[clamp(2.125rem,min(4.2vw,7vh),3.75rem)]">
           Come with a question. Leave with something you built.
         </SplitHeading>
         <p className="m-0 hidden text-base text-muted sm:block">What a workshop afternoon looks like</p>
@@ -274,10 +274,10 @@ export function LiveCoding() {
       {/* The editor window, as tall as its code. It leans a little toward the mouse. */}
       <div
         data-editor
-        className="relative flex w-full max-w-[1280px] flex-col overflow-hidden rounded-[16px] border-[3px] border-[#333333] bg-[#222222] text-[#e6e6e6] shadow-[0_40px_100px_rgba(0,0,0,0.25)]"
+        className="relative flex w-full max-w-[80rem] flex-col overflow-hidden rounded-[1rem] border-[3px] border-[#333333] bg-[#222222] text-[#e6e6e6] shadow-[0_40px_100px_rgba(0,0,0,0.25)]"
       >
         {/* Title bar */}
-        <div className="flex h-12 shrink-0 items-center gap-3 border-b border-[#333333] px-4 text-[13px] lg:text-[14px]">
+        <div className="flex h-12 shrink-0 items-center gap-3 border-b border-[#333333] px-4 text-[0.8125rem] lg:text-[0.875rem]">
           <span className="flex gap-2" aria-hidden="true">
             <span className="size-3 rounded-full bg-[#ff5f57]" />
             <span className="size-3 rounded-full bg-[#febc2e]" />
@@ -285,9 +285,9 @@ export function LiveCoding() {
           </span>
           <span className="ml-3 hidden flex-col leading-tight sm:flex">
             <span className="font-medium">react-cebu-workshop</span>
-            <span className="text-[11px] text-[#8b8e94]">main</span>
+            <span className="text-[0.6875rem] text-[#8b8e94]">main</span>
           </span>
-          <span className="mx-auto flex items-center gap-2 rounded-md bg-[#2e2e2e] px-3 py-1 text-[12px] text-[#b4b7bd] lg:text-[13px]">
+          <span className="mx-auto flex items-center gap-2 rounded-md bg-[#2e2e2e] px-3 py-1 text-[0.75rem] text-[#b4b7bd] lg:text-[0.8125rem]">
             <span className="relative inline-grid">
               <span data-status="compiling" className="col-start-1 row-start-1 flex items-center gap-1.5">
                 <span className="size-2 rounded-full bg-[#febc2e]" />
@@ -307,14 +307,14 @@ export function LiveCoding() {
         {/* Sidebar, code and preview side by side; on phones the preview sits under the code. */}
         <div className="flex min-h-0 flex-1 flex-col md:flex-row">
           {/* Sidebar */}
-          <div aria-hidden="true" className="hidden w-[230px] shrink-0 flex-col gap-0.5 border-r border-[#333333] bg-[#1b1b1b] p-3 text-[14px] lg:flex">
+          <div aria-hidden="true" className="hidden w-[14.375rem] shrink-0 flex-col gap-0.5 border-r border-[#333333] bg-[#1b1b1b] p-3 text-[0.875rem] lg:flex">
             {files.map((file) => (
               <span
                 key={file.name}
                 className={`flex items-center gap-2 rounded-md py-1 pr-2 ${"active" in file ? "bg-[#333333] text-white" : "text-[#b4b7bd]"}`}
                 style={{ paddingLeft: 8 + file.depth * 14 }}
               >
-                {file.kind === "folder" ? <Folder /> : file.kind === "react" ? <Atom className="size-3.5 shrink-0" /> : <span className="w-3.5 text-center text-[10px] text-[#8b8e94]">{"{}"}</span>}
+                {file.kind === "folder" ? <Folder /> : file.kind === "react" ? <Atom className="size-3.5 shrink-0" /> : <span className="w-3.5 text-center text-[0.625rem] text-[#8b8e94]">{"{}"}</span>}
                 {file.name}
               </span>
             ))}
@@ -322,7 +322,7 @@ export function LiveCoding() {
 
           {/* Code */}
           <div className="flex min-w-0 flex-1 flex-col">
-            <div aria-hidden="true" className="flex h-[38px] shrink-0 items-stretch border-b border-[#333333] text-[12px] lg:h-[42px] lg:text-[13px]">
+            <div aria-hidden="true" className="flex h-[2.375rem] shrink-0 items-stretch border-b border-[#333333] text-[0.75rem] lg:h-[2.625rem] lg:text-[0.8125rem]">
               <span className="flex items-center gap-2 border-r border-[#333333] bg-[#222222] px-4 text-white shadow-[inset_0_2px_0_#00d8ff]">
                 <Atom className="size-3.5" /> Meetup.jsx
               </span>
@@ -338,7 +338,7 @@ export function LiveCoding() {
               aria-label="A Meetup component with an RSVP counter"
               // On desktop the code grows with the screen's height (13px to 17px), so the pinned
               // editor always fits.
-              className="m-0 min-h-0 flex-1 overflow-hidden py-3 font-mono text-[11px] leading-[1.6] sm:text-[13px] lg:py-3.5 lg:text-[clamp(13px,1.85vh,17px)]"
+              className="m-0 min-h-0 flex-1 overflow-hidden py-3 font-mono text-[0.6875rem] leading-[1.6] sm:text-[0.8125rem] lg:py-3.5 lg:text-[clamp(0.8125rem,1.85vh,1.0625rem)]"
             >
               {code.map((line, i) => (
                 <span key={i} data-code-row className="flex">
@@ -368,8 +368,8 @@ export function LiveCoding() {
           </div>
 
           {/* Preview, inside the editor */}
-          <div aria-hidden="true" className="flex shrink-0 flex-col border-t border-[#333333] md:w-[min(400px,38%)] md:border-l md:border-t-0">
-            <div className="flex h-[38px] shrink-0 items-center gap-2 border-b border-[#333333] bg-[#1b1b1b] px-3 text-[12px] text-[#8b8e94] lg:h-[42px] lg:text-[13px]">
+          <div aria-hidden="true" className="flex shrink-0 flex-col border-t border-[#333333] md:w-[min(25rem,38%)] md:border-l md:border-t-0">
+            <div className="flex h-[2.375rem] shrink-0 items-center gap-2 border-b border-[#333333] bg-[#1b1b1b] px-3 text-[0.75rem] text-[#8b8e94] lg:h-[2.625rem] lg:text-[0.8125rem]">
               <span>Preview</span>
               <span className="ml-auto truncate rounded-md bg-[#2e2e2e] px-2.5 py-1 text-[#b4b7bd]">localhost:3000</span>
               <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -377,10 +377,10 @@ export function LiveCoding() {
               </svg>
             </div>
             <div className="relative flex flex-1 items-center justify-center bg-[#f4f5f7] p-4 text-black md:p-6">
-              <span data-preview-empty className="absolute text-[13px] text-[#8b8e94]">Waiting for changes…</span>
-              <div data-card className="flex w-full max-w-[300px] flex-col gap-4 rounded-[12px] border border-[#e3e3e3] bg-white p-5 shadow-[0_8px_24px_rgba(0,0,0,0.06)] md:gap-5 md:p-6">
-                <span className="text-[28px] leading-none tracking-[-0.04em] md:text-[34px] lg:text-[38px]">Hello, Cebu!</span>
-                <span data-button className="inline-flex min-h-11 items-center gap-2.5 self-start rounded-full bg-react px-5 text-[15px] font-medium text-ink lg:min-h-12 lg:text-[16px]">
+              <span data-preview-empty className="absolute text-[0.8125rem] text-[#8b8e94]">Waiting for changes…</span>
+              <div data-card className="flex w-full max-w-[18.75rem] flex-col gap-4 rounded-[0.75rem] border border-[#e3e3e3] bg-white p-5 shadow-[0_8px_24px_rgba(0,0,0,0.06)] md:gap-5 md:p-6">
+                <span className="text-[1.75rem] leading-none tracking-[-0.04em] md:text-[2.125rem] lg:text-[2.375rem]">Hello, Cebu!</span>
+                <span data-button className="inline-flex min-h-11 items-center gap-2.5 self-start rounded-full bg-react px-5 text-[0.9375rem] font-medium text-ink lg:min-h-12 lg:text-[1rem]">
                   RSVPs
                   <span className="relative inline-block w-[2ch]">
                     <span data-count="41" className="absolute left-0">41</span>

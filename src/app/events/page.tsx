@@ -20,8 +20,8 @@ const expectations = [
   { title: "Bring a laptop to workshops", text: "For a talk or a meetup, just bring yourself." },
 ];
 
-const heading = "display m-0 text-[clamp(40px,4.2vw,60px)]";
-const cardTitle = "title m-0 text-[clamp(28px,3vw,40px)]";
+const heading = "display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]";
+const cardTitle = "title m-0 text-[clamp(1.75rem,3vw,2.5rem)]";
 
 /**
  * The page answers a visitor's questions in order: what's next, what are they like, what happens
@@ -43,7 +43,7 @@ export default function EventsPage() {
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/25 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-5 text-white">
                 <span className="text-base">{recap.when}</span>
-                <h3 className="m-0 text-[28px] font-normal leading-[1.1] tracking-[-0.03em]">{recap.title}</h3>
+                <h3 className="m-0 text-[1.75rem] font-normal leading-[1.1] tracking-[-0.03em]">{recap.title}</h3>
                 <p className="m-0 text-base leading-normal">{recap.note}</p>
               </div>
             </div>
@@ -56,7 +56,7 @@ export default function EventsPage() {
         <ul className="m-0 grid list-none gap-x-6 gap-y-8 px-4 sm:grid-cols-2 lg:grid-cols-4">
           {expectations.map((item) => (
             <li key={item.title} className="flex flex-col gap-2">
-              <h3 className="m-0 text-[28px] font-normal leading-[1.1] tracking-[-0.03em]">{item.title}</h3>
+              <h3 className="m-0 text-[1.75rem] font-normal leading-[1.1] tracking-[-0.03em]">{item.title}</h3>
               <p className="m-0 text-base leading-normal text-muted">{item.text}</p>
             </li>
           ))}
@@ -66,14 +66,14 @@ export default function EventsPage() {
       <section aria-labelledby="involved-title" className="px-2 pb-32">
         <SplitHeading id="involved-title" className={`${heading} mb-10 px-4`}>Want to do more?</SplitHeading>
         <div className="grid gap-2 lg:grid-cols-2">
-          <div className="tile flex min-h-[320px] flex-col justify-between gap-6 bg-fog p-8">
+          <div className="tile flex min-h-[20rem] flex-col justify-between gap-6 bg-fog p-8">
             <div className="flex flex-col gap-2">
               <h3 className={cardTitle}>Give a talk</h3>
               <p className="m-0 text-lg leading-normal text-muted">Five minutes, any topic, any level.</p>
             </div>
             <a href={TALK_EMAIL} className="btn btn-black self-start">Email us a talk idea</a>
           </div>
-          <div className="tile flex min-h-[320px] flex-col justify-between gap-6 bg-fog p-8">
+          <div className="tile flex min-h-[20rem] flex-col justify-between gap-6 bg-fog p-8">
             <div className="flex flex-col gap-2">
               <h3 className={cardTitle}>Host a meetup</h3>
               <p className="m-0 text-lg leading-normal text-muted">Have a room for 40 people? We’d love to use it.</p>

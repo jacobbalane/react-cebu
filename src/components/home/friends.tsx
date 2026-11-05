@@ -69,7 +69,7 @@ export function Friends() {
   return (
     <section aria-labelledby="friends-title" className="px-2 pb-32">
       <div className="mb-16 flex flex-col items-center gap-3 px-4 text-center">
-        <SplitHeading id="friends-title" className="display max-w-[900px] text-[clamp(40px,4.2vw,60px)]">
+        <SplitHeading id="friends-title" className="display max-w-[56.25rem] text-[clamp(2.5rem,4.2vw,3.75rem)]">
           Every meetup is a team effort with these friends
         </SplitHeading>
         <p className="m-0 text-base text-muted">Communities we co-host with and venues that open their doors to us</p>
@@ -79,12 +79,12 @@ export function Friends() {
           column only gets that narrow from three across at 1024px, two from 640px; with an odd
           count, the last of two across spans both columns. */}
       <Reveal>
-        <ul className="mx-auto grid max-w-[1200px] grid-cols-1 gap-y-10 px-4 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-14 lg:grid-cols-3">
+        <ul className="mx-auto grid max-w-[75rem] grid-cols-1 gap-y-10 px-4 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-14 lg:grid-cols-3">
           {partners.map(({ name, logo }) => (
             <li
               key={name}
               data-reveal
-              className="flex items-center justify-center gap-[0.35em] text-[clamp(24px,2.4vw,34px)] leading-[1.1] tracking-[-0.035em] text-ink sm:last:col-span-2 lg:last:col-span-1"
+              className="flex items-center justify-center gap-[0.35em] text-[clamp(1.5rem,2.4vw,2.125rem)] leading-[1.1] tracking-[-0.035em] text-ink sm:last:col-span-2 lg:last:col-span-1"
             >
               <span className="flex shrink-0 items-center">{logo}</span>
               <span className="whitespace-nowrap">{name}</span>

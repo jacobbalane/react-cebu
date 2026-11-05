@@ -326,7 +326,7 @@ export function Manifesto() {
           at every desktop size; a fixed width let some sizes stack one pill right above another. */}
       <p
         data-paragraph
-        className="title relative isolate mx-auto my-0 max-w-[20em] text-balance text-center text-[clamp(32px,4.2vw,64px)] leading-[1.12] text-ink"
+        className="title relative isolate mx-auto my-0 max-w-[20em] text-balance text-center text-[clamp(2rem,4.2vw,4rem)] leading-[1.12] text-ink"
       >
         {/* The stroke that runs through the linked words, behind the text so it never covers a
             letter. Its path is laid out from the words' positions once they are on the page. */}

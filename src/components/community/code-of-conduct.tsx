@@ -38,9 +38,9 @@ export function CodeOfConduct({ rules }: { rules: string[] }) {
 
   return (
     <section id="code-of-conduct" aria-labelledby="coc-title" className="scroll-mt-16 px-2 pb-32">
-      <div className="grid gap-10 rounded-[12px] bg-fog p-6 sm:p-10 lg:grid-cols-2 lg:p-14">
+      <div className="grid gap-10 rounded-[0.75rem] bg-fog p-6 sm:p-10 lg:grid-cols-2 lg:p-14">
         <div className="flex flex-col gap-6">
-          <SplitHeading id="coc-title" className="display m-0 text-[clamp(40px,4.2vw,60px)]">Code of conduct</SplitHeading>
+          <SplitHeading id="coc-title" className="display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]">Code of conduct</SplitHeading>
           <p className="m-0 max-w-[46ch] text-lg leading-normal text-muted">
             If something makes you uncomfortable at an event or online, tell any organizer or email{" "}
             <a href={REPORT_EMAIL} className="text-azure-deep">
@@ -55,7 +55,7 @@ export function CodeOfConduct({ rules }: { rules: string[] }) {
         {/* Spread over the column, so the first rule lines up with the heading and the last with the button. */}
         <ul ref={rows} className="m-0 flex list-none flex-col justify-between gap-5 p-0">
           {rules.map((rule) => (
-            <li key={rule} data-rule className="text-[clamp(24px,2.2vw,32px)] leading-[1.15] tracking-[-0.03em]">
+            <li key={rule} data-rule className="text-[clamp(1.5rem,2.2vw,2rem)] leading-[1.15] tracking-[-0.03em]">
               {rule}
             </li>
           ))}

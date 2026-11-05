@@ -299,8 +299,8 @@ export function Family() {
     <section aria-labelledby="family-title" className="px-2 pb-32">
       {/* A fog panel holding the heading and the cards, so the family reads as one group. It clips
           any card dragged past its edge. The heading is inset to line up with the cards' text. */}
-      <div ref={panel} className="relative overflow-hidden rounded-[12px] bg-fog p-2">
-        <SplitHeading id="family-title" className="display mb-0 text-balance px-7 pb-10 pt-8 text-[clamp(40px,4.2vw,60px)]">
+      <div ref={panel} className="relative overflow-hidden rounded-[0.75rem] bg-fog p-2">
+        <SplitHeading id="family-title" className="display mb-0 text-balance px-7 pb-10 pt-8 text-[clamp(2.5rem,4.2vw,3.75rem)]">
           Three frameworks, one family under JavaScript Cebu
         </SplitHeading>
 
@@ -312,19 +312,19 @@ export function Family() {
               key={name}
               data-reveal
               data-drag={name === "React Cebu" ? "front" : ""}
-              className="relative aspect-[3/4] w-full max-w-[380px] lg:w-[calc((100%-16px)/3)]"
+              className="relative aspect-[3/4] w-full max-w-[23.75rem] lg:w-[calc((100%-1rem)/3)]"
             >
               {/* The card's shadow, drawn once and faded in and out to show how the cards stack. */}
               <span
                 data-shade
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 rounded-[10px] opacity-0 shadow-[0_4px_8px_rgba(0,0,0,0.1),0_24px_48px_rgba(0,0,0,0.16)] will-change-[opacity]"
+                className="pointer-events-none absolute inset-0 rounded-[0.625rem] opacity-0 shadow-[0_4px_8px_rgba(0,0,0,0.1),0_24px_48px_rgba(0,0,0,0.16)] will-change-[opacity]"
               />
               <div className={`tile flex h-full flex-col justify-between gap-6 p-6 sm:p-7 ${tile}`}>
                 <span aria-hidden="true" className="pointer-events-none absolute -bottom-[8%] -right-[10%] block w-[66%]">
                   <Mark className={`block w-full ${markTone}`} />
                 </span>
-                <h3 className="relative m-0 text-[clamp(28px,3vw,40px)] font-normal leading-[1.02] tracking-[-0.04em]">{name}</h3>
+                <h3 className="relative m-0 text-[clamp(1.75rem,3vw,2.5rem)] font-normal leading-[1.02] tracking-[-0.04em]">{name}</h3>
                 <div className="relative">{body}</div>
               </div>
             </div>

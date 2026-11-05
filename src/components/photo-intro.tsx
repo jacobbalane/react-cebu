@@ -65,11 +65,11 @@ export function PhotoIntro({
           id="page-title"
           animation="rise"
           by="line"
-          className="display m-0 text-balance text-[clamp(44px,6.4vw,112px)] leading-[0.92]"
+          className="display m-0 text-balance text-[clamp(2.75rem,6.4vw,7rem)] leading-[0.92]"
         >
           {title}
         </SplitHeading>
-        <p data-intro-fade className="m-0 max-w-[34ch] text-[clamp(18px,1.5vw,22px)] leading-snug text-white/80 lg:pb-2">
+        <p data-intro-fade className="m-0 max-w-[34ch] text-[clamp(1.125rem,1.5vw,1.375rem)] leading-snug text-white/80 lg:pb-2">
           {description}
         </p>
       </div>
