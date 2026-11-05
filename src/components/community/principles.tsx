@@ -80,9 +80,9 @@ function PriceSlider() {
       const moveKnob = gsap.quickSetter(handle, "x", "px");
       const draw = () => {
         const pull = Math.abs(state.pull);
-        moveKnob(pull * room());
-        // Hidden at rest, or it would show in the gap around the knob's rounded end.
-        bar.style.opacity = String(Math.min(1, pull * 14));
+        const moved = pull * room();
+        moveKnob(moved);
+        bar.style.width = `${moved + handle.offsetWidth / 2}px`;
         readout.textContent = `₱${pesos.format(Math.round((pull * TOP_PRICE) / 10) * 10)}`;
       };
 
@@ -182,8 +182,8 @@ function PriceSlider() {
         aria-valuetext="₱0, free"
         className="absolute inset-y-1.5 left-1.5 w-[120px] rounded-full focus-visible:outline-offset-[-5px]! focus-visible:outline-ink! lg:w-[176px]"
       >
-        {/* The bar the price climbs along: it trails the knob, and the track cuts it off at the far end. */}
-        <span ref={fill} aria-hidden="true" className="absolute -inset-y-1.5 right-1/2 w-[200vw] bg-azure opacity-0" />
+        {/* Reaches back from the knob to where it started, so pulling it stretches the pill. */}
+        <span ref={fill} aria-hidden="true" className="absolute inset-y-0 right-1/2 w-1/2 rounded-l-full bg-white" />
         <span
           ref={price}
           className="relative flex h-full items-center justify-center rounded-full bg-white text-[28px] tabular-nums tracking-[-0.035em] text-ink lg:text-[36px]"
