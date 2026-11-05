@@ -3,12 +3,14 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
+import { ColourTrail } from "@/components/community/colour-trail";
 import { SplitHeading } from "@/components/motion";
 
 /**
  * A page that opens on one full-bleed photo, set like the homepage hero: the title rises line by
  * line in white at the bottom left, the description follows it in, and the photo sinks slower
- * than the page as you scroll away. They stack on phones.
+ * than the page as you scroll away. They stack on phones. The photo is grey, and the pointer leaves
+ * a trail of its colour.
  */
 export function PhotoIntro({
   title,
@@ -45,10 +47,11 @@ export function PhotoIntro({
     <section
       ref={ref}
       aria-labelledby="page-title"
-      className="relative flex h-[max(640px,100svh)] flex-col justify-end overflow-hidden bg-black px-4 pb-6 text-white md:px-10 md:pb-10"
+      className="relative flex h-[max(640px,100svh)] touch-pan-y flex-col justify-end overflow-hidden bg-black px-4 pb-6 text-white md:px-10 md:pb-10"
     >
       <div data-intro-photo className="absolute inset-0">
-        <Image src={src} alt={alt} fill preload sizes="100vw" className="object-cover" />
+        <Image src={src} alt={alt} fill preload sizes="100vw" className="object-cover motion-safe:brightness-[.45] motion-safe:grayscale" />
+        <ColourTrail />
       </div>
       {/* Darkens the lower half so the white copy reads over any photo; the faces above stay clear. */}
       <div
