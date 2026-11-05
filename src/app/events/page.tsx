@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { ClosingCard, closingButton } from "@/components/closing-card";
+import { EventsIntro } from "@/components/events/events-intro";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { TransitionLink } from "@/components/page-transition";
-import { PhotoIntro } from "@/components/photo-intro";
 import { recaps } from "@/data/recaps";
 import { CEBBY_URL, FACEBOOK_URL, TALK_EMAIL } from "@/data/site";
 
@@ -29,12 +29,7 @@ const cardTitle = "title m-0 text-[clamp(28px,3vw,40px)]";
 export default function EventsPage() {
   return (
     <>
-      <PhotoIntro
-        title="Come to the next one."
-        description="Free meetups, workshops and code camps around Cebu. Everyone is welcome, whatever your level."
-        src="/images/audience.jpg"
-        alt="An audience watching a talk"
-      />
+      <EventsIntro />
 
       <section id="upcoming" aria-labelledby="upcoming-title" className="scroll-mt-24 px-2 pb-32 pt-28">
         <div className="grid gap-10 rounded-[12px] bg-fog p-6 sm:p-10 lg:grid-cols-2 lg:p-14">
