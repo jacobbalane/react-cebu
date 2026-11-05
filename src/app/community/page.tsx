@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PhotoIntro } from "@/components/photo-intro";
 import { Reveal, SplitHeading } from "@/components/motion";
+import { CodeOfConduct } from "@/components/community/code-of-conduct";
 import { PhotoFan } from "@/components/community/photo-fan";
 import { Principles } from "@/components/community/principles";
 import { Timeline } from "@/components/community/timeline";
@@ -68,28 +69,7 @@ export default function CommunityPage() {
 
       <PhotoFan />
 
-      {/* The fine print, on a fog panel: black is kept for the footer and the closing card. */}
-      <section id="code-of-conduct" aria-labelledby="coc-title" className="scroll-mt-16 px-2 pb-32">
-        <div className="grid gap-10 rounded-[12px] bg-fog p-6 sm:p-10 lg:grid-cols-2 lg:p-14">
-          <div className="flex flex-col gap-6">
-            <SplitHeading id="coc-title" className="display m-0 text-[clamp(40px,4.2vw,60px)]">Code of conduct</SplitHeading>
-            <p className="m-0 max-w-[46ch] text-lg leading-normal text-muted">
-              The short version is below. If something makes you uncomfortable at an event or online, tell any organizer or email react@jscebu.org. We read every report.
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              <a href="#full-code-of-conduct" className="btn btn-black">Read the full code of conduct</a>
-              <a href="mailto:react@jscebu.org" className="btn btn-white">Report a problem</a>
-            </div>
-          </div>
-          <ul className="m-0 list-none border-t border-black/15 p-0">
-            {rules.map((rule) => (
-              <li key={rule} className="border-b border-black/15 py-5 text-[clamp(24px,2.2vw,32px)] leading-[1.15] tracking-[-0.03em]">
-                {rule}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <CodeOfConduct rules={rules} />
 
       <ClosingCard
         id="volunteer"

@@ -7,6 +7,7 @@ export const FACEBOOK_URL = "https://www.facebook.com/reactcebu/";
 /** Talk ideas come in by email now that there's no Speak page. */
 export const TALK_EMAIL = "mailto:react@jscebu.org?subject=Talk%20idea";
 export const VOLUNTEER_EMAIL = "mailto:react@jscebu.org?subject=Volunteering";
+export const REPORT_EMAIL = "mailto:react@jscebu.org?subject=Code%20of%20conduct%20report";
 
 export const navLinks = [
   { href: "/", label: "Home" },
