@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PhotoIntro } from "@/components/photo-intro";
 import { Reveal, SplitHeading } from "@/components/motion";
+import { PhotoFan } from "@/components/community/photo-fan";
 import { Principles } from "@/components/community/principles";
 import { Timeline } from "@/components/community/timeline";
 import { ClosingCard, closingButton } from "@/components/closing-card";
@@ -64,6 +65,8 @@ export default function CommunityPage() {
           ))}
         </Reveal>
       </section>
+
+      <PhotoFan />
 
       {/* The fine print, on a fog panel: black is kept for the footer and the closing card. */}
       <section id="code-of-conduct" aria-labelledby="coc-title" className="scroll-mt-16 px-2 pb-32">
