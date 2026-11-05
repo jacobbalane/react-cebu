@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { ClosingCard, closingButton } from "@/components/closing-card";
 import { EventsIntro } from "@/components/events/events-intro";
+import { UpcomingEvents } from "@/components/events/upcoming-events";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { TransitionLink } from "@/components/page-transition";
 import { recaps } from "@/data/recaps";
@@ -31,19 +32,7 @@ export default function EventsPage() {
     <>
       <EventsIntro />
 
-      <section id="upcoming" aria-labelledby="upcoming-title" className="scroll-mt-24 px-2 pb-32 pt-28">
-        <div className="grid gap-10 rounded-[12px] bg-fog p-6 sm:p-10 lg:grid-cols-2 lg:p-14">
-          <SplitHeading id="upcoming-title" className={heading}>Upcoming events</SplitHeading>
-          <div className="flex flex-col gap-6">
-            <p className="m-0 max-w-[46ch] text-lg leading-normal text-muted">
-              Our upcoming events are listed on Cebby, along with the rest of Cebu’s tech events.
-            </p>
-            <a href={CEBBY_URL} target="_blank" rel="noopener noreferrer" className="btn btn-black self-start">
-              See upcoming events on Cebby
-            </a>
-          </div>
-        </div>
-      </section>
+      <UpcomingEvents />
 
       <section id="recaps" aria-labelledby="recaps-title" className="scroll-mt-24 px-2 pb-32">
         <div className="mb-10 flex flex-col gap-3 px-4">
