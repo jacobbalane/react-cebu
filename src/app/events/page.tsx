@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { ClosingCard, closingButton } from "@/components/closing-card";
 import { EventsIntro } from "@/components/events/events-intro";
+import { FirstEvent } from "@/components/events/first-event";
 import { UpcomingEvents } from "@/components/events/upcoming-events";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { TransitionLink } from "@/components/page-transition";
@@ -12,13 +13,6 @@ export const metadata: Metadata = {
   title: "Events",
   description: "Free React meetups, workshops and code camps around Cebu. Find the next one on Cebby, and see what we’ve run since 2019.",
 };
-
-const expectations = [
-  { title: "It’s free", text: "You don’t pay to get in. Partners cover the room and the snacks." },
-  { title: "Any level is fine", text: "New to React or shipping it at work, there’s a place for you." },
-  { title: "Questions are welcome", text: "Nobody expects you to know it all. Everyone here was new once." },
-  { title: "Bring a laptop to workshops", text: "For a talk or a meetup, just bring yourself." },
-];
 
 const heading = "display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]";
 const cardTitle = "title m-0 text-[clamp(1.75rem,3vw,2.5rem)]";
@@ -51,17 +45,7 @@ export default function EventsPage() {
         </Reveal>
       </section>
 
-      <section aria-labelledby="expect-title" className="px-2 pb-32">
-        <SplitHeading id="expect-title" className={`${heading} mb-10 px-4`}>What to expect at your first event</SplitHeading>
-        <ul className="m-0 grid list-none gap-x-6 gap-y-8 px-4 sm:grid-cols-2 lg:grid-cols-4">
-          {expectations.map((item) => (
-            <li key={item.title} className="flex flex-col gap-2">
-              <h3 className="m-0 text-[1.75rem] font-normal leading-[1.1] tracking-[-0.03em]">{item.title}</h3>
-              <p className="m-0 text-base leading-normal text-muted">{item.text}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <FirstEvent />
 
       <section aria-labelledby="involved-title" className="px-2 pb-32">
         <SplitHeading id="involved-title" className={`${heading} mb-10 px-4`}>Want to do more?</SplitHeading>
