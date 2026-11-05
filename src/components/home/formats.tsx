@@ -3,14 +3,14 @@ import { Reveal, SplitHeading } from "@/components/motion";
 import { PhotoSlides } from "@/components/photo-slides";
 
 // Cards with a video play it on a loop; the rest swipe through their photos, left or up.
-// Delays ripple the swipes in order: Meetups, then Lightning talks, then Code camps.
+// Delays ripple the swipes in order: Meetups, then Lightning talks, Code camps and Training.
 const formats = [
   { name: "Meetups", desc: "that end in new friendships", photos: ["presenter", "speaker", "audience"], swipe: "left", delay: 0, alt: "A speaker presenting at a meetup" },
   { name: "Workshops", desc: "where you build instead of watching", video: "workshop", alt: "Developers working together at a workshop" },
   { name: "Code camps", desc: "that take a whole Saturday, happily", photos: ["students", "react-code", "laptops"], swipe: "left", delay: 0.6, alt: "Students coding together at a code camp" },
   { name: "Hacktoberfest", desc: "that ships real open source", video: "hacktoberfest", alt: "A team gathered around one laptop at Hacktoberfest" },
   { name: "Lightning talks", desc: "five minutes, any topic, any level", photos: ["speaker", "presenter", "panel"], swipe: "up", delay: 0.3, alt: "A speaker giving a short talk" },
-  { name: "Training", desc: "for students writing their first component", video: "training", alt: "Students learning to code in a computer lab" },
+  { name: "Training", desc: "for students writing their first component", photos: ["workshop", "coder", "react-code"], swipe: "up", delay: 0.9, alt: "People learning to code side by side at a long table" },
 ] as const;
 
 export function Formats() {
