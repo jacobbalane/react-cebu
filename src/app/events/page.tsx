@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { ClosingCard, closingButton } from "@/components/closing-card";
+import { DoMore } from "@/components/events/do-more";
 import { EventsIntro } from "@/components/events/events-intro";
 import { FirstEvent } from "@/components/events/first-event";
 import { UpcomingEvents } from "@/components/events/upcoming-events";
 import { Reveal, SplitHeading } from "@/components/motion";
-import { TransitionLink } from "@/components/page-transition";
 import { recaps } from "@/data/recaps";
-import { CEBBY_URL, FACEBOOK_URL, TALK_EMAIL } from "@/data/site";
+import { CEBBY_URL, FACEBOOK_URL } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 };
 
 const heading = "display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]";
-const cardTitle = "title m-0 text-[clamp(1.75rem,3vw,2.5rem)]";
 
 /**
  * The page answers a visitor's questions in order: what's next, what are they like, what happens
@@ -47,25 +46,7 @@ export default function EventsPage() {
 
       <FirstEvent />
 
-      <section aria-labelledby="involved-title" className="px-2 pb-32">
-        <SplitHeading id="involved-title" className={`${heading} mb-10 px-4`}>Want to do more?</SplitHeading>
-        <div className="grid gap-2 lg:grid-cols-2">
-          <div className="tile flex min-h-[20rem] flex-col justify-between gap-6 bg-fog p-8">
-            <div className="flex flex-col gap-2">
-              <h3 className={cardTitle}>Give a talk</h3>
-              <p className="m-0 text-lg leading-normal text-muted">Five minutes, any topic, any level.</p>
-            </div>
-            <a href={TALK_EMAIL} className="btn btn-black self-start">Email us a talk idea</a>
-          </div>
-          <div className="tile flex min-h-[20rem] flex-col justify-between gap-6 bg-fog p-8">
-            <div className="flex flex-col gap-2">
-              <h3 className={cardTitle}>Host a meetup</h3>
-              <p className="m-0 text-lg leading-normal text-muted">Have a room for 40 people? We’d love to use it.</p>
-            </div>
-            <TransitionLink href="/partners" className="btn btn-black self-start">Offer a venue</TransitionLink>
-          </div>
-        </div>
-      </section>
+      <DoMore />
 
       <ClosingCard id="next-one" title="See you at the next one." description="Find the next event on Cebby, and join the Facebook page to keep up with the community.">
         <a href={CEBBY_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-primary hover:bg-white hover:text-ink`}>
