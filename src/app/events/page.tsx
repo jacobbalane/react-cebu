@@ -35,20 +35,16 @@ export default function EventsPage() {
       <UpcomingEvents />
 
       <section id="recaps" aria-labelledby="recaps-title" className="scroll-mt-24 px-2 pb-32">
-        <div className="mb-10 flex flex-col gap-3 px-4">
-          <SplitHeading id="recaps-title" className={heading}>Recaps</SplitHeading>
-          <p className="m-0 text-base text-muted">Some of the events we’ve run since 2019.</p>
-        </div>
-        <Reveal className="grid gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        <SplitHeading id="recaps-title" className={`${heading} mb-10 px-4`}>Some of the events we’ve run since 2019</SplitHeading>
+        <Reveal className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {recaps.map((recap) => (
-            <div key={recap.title} data-reveal className="flex flex-col gap-3.5">
-              <div className="tile aspect-[16/10] bg-fog">
-                <Image src={recap.image} alt={recap.alt} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
-              </div>
-              <div className="flex flex-col gap-1 px-2">
-                <span className="text-base text-muted">{recap.when}</span>
+            <div key={recap.title} data-reveal className="tile aspect-[16/10] bg-fog">
+              <Image src={recap.image} alt={recap.alt} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/25 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-5 text-white">
+                <span className="text-base">{recap.when}</span>
                 <h3 className="m-0 text-[28px] font-normal leading-[1.1] tracking-[-0.03em]">{recap.title}</h3>
-                <p className="m-0 text-base leading-normal text-muted">{recap.note}</p>
+                <p className="m-0 text-base leading-normal">{recap.note}</p>
               </div>
             </div>
           ))}
