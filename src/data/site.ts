@@ -9,6 +9,9 @@ export const TALK_EMAIL = "mailto:react@jscebu.org?subject=Talk%20idea";
 export const VOLUNTEER_EMAIL = "mailto:react@jscebu.org?subject=Volunteering";
 export const REPORT_EMAIL = "mailto:react@jscebu.org?subject=Code%20of%20conduct%20report";
 
+/** Upcoming dates live on Cebby, which lists Cebu tech events, ours included. */
+export const CEBBY_URL = "https://www.getcebby.com/events";
+
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/community", label: "Community" },
@@ -27,7 +30,7 @@ export const footerColumns = [
   {
     title: "Events",
     links: [
-      { href: "/events", label: "Upcoming" },
+      { href: "/events#upcoming", label: "Upcoming" },
       { href: "/events#recaps", label: "Recaps" },
       { href: "/partners", label: "Host an event" },
     ],

@@ -1,23 +1,61 @@
-export type RecapTag = "Meetups" | "Workshops" | "Code camps" | "Hacktoberfest";
-
 export type Recap = {
   title: string;
+  when: string;
   note: string;
-  tag: RecapTag;
   image: string;
   alt: string;
-  has: string[];
 };
 
-// Sample recaps, except the 2019 and Hacktoberfest entries which reflect real events.
+// Real React Cebu events, from the React Cebu Facebook page and the "React Cebu 2019 Wrapped" post
+// on Medium. It isn't the full list, and the photos are samples, not from these events.
 export const recaps: Recap[] = [
-  { title: "Panel: careers in frontend", note: "August 2026. Four engineers on getting hired in Cebu.", tag: "Meetups", image: "/images/panel.jpg", alt: "A panel discussion with the audience on steps", has: ["Recording"] },
-  { title: "Hooks from first principles", note: "June 2026. Build useState from scratch.", tag: "Workshops", image: "/images/coder.jpg", alt: "A developer coding in a dim room", has: ["Slides", "Code"] },
-  { title: "What’s new in React 19", note: "May 2026. Actions, use, and the compiler.", tag: "Meetups", image: "/images/speaker.jpg", alt: "A speaker presenting to a room", has: ["Slides", "Recording"] },
-  { title: "Student code camp", note: "March 2026. A Saturday of React basics.", tag: "Code camps", image: "/images/students.jpg", alt: "Students working on laptops", has: ["Slides", "Code"] },
-  { title: "Testing React apps", note: "February 2026. Testing Library without tears.", tag: "Workshops", image: "/images/react-code.jpg", alt: "React code on a screen", has: ["Code"] },
-  { title: "Hack night, week one", note: "October 2025. First pull requests of Hacktoberfest.", tag: "Hacktoberfest", image: "/images/crowd.jpg", alt: "A crowd at a hack night", has: ["Photos"] },
-  { title: "Gatsby workshop", note: "October 2019 at UP Cebu.", tag: "Workshops", image: "/images/workshop.jpg", alt: "Developers at a workshop table", has: ["Photos"] },
-  { title: "The first React Cebu meetup", note: "2019 at The Company Cebu, with 50+ developers.", tag: "Meetups", image: "/images/audience.jpg", alt: "An audience watching a talk", has: ["Photos"] },
-  { title: "Hacktoberfest wrap-up", note: "October 2025. What got merged.", tag: "Hacktoberfest", image: "/images/laptops.jpg", alt: "People working on laptops", has: ["Photos", "Slides"] },
+  {
+    title: "Beplop Night 2024",
+    when: "December 2024",
+    note: "At Kusina ni Osting, Cebu City.",
+    image: "/images/crowd.jpg",
+    alt: "A full room of developers at a community event",
+  },
+  {
+    title: "REACT-IVATE 24",
+    when: "February 2024",
+    note: "At enspace Cebu.",
+    image: "/images/speaker.jpg",
+    alt: "A speaker presenting to a room",
+  },
+  {
+    title: "Beplop Night",
+    when: "November 2019",
+    note: "Our year-ender, with beplop (beef loaf) and a few drinks.",
+    image: "/images/panel.jpg",
+    alt: "A panel discussion with the audience on steps",
+  },
+  {
+    title: "React Cebu goes to Iloilo",
+    when: "November 2019",
+    note: "A React workshop in Iloilo with more than 50 participants.",
+    image: "/images/students.jpg",
+    alt: "Students working on laptops",
+  },
+  {
+    title: "Gatsby Workshop",
+    when: "October 2019",
+    note: "We built a website with Gatsby.",
+    image: "/images/workshop.jpg",
+    alt: "Developers at a workshop table",
+  },
+  {
+    title: "React Series: Zero to Hero",
+    when: "June to August 2019",
+    note: "Five sessions for beginners and a hackathon, with LegalMatch Philippines.",
+    image: "/images/coder.jpg",
+    alt: "A developer coding in a dim room",
+  },
+  {
+    title: "React Cebu: Meet & Greet",
+    when: "May 2019",
+    note: "Our first meetup, at The Company Cebu, with more than 50 participants.",
+    image: "/images/audience.jpg",
+    alt: "An audience watching a talk",
+  },
 ];

@@ -1,109 +1,116 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { ClosingCard, closingButton } from "@/components/closing-card";
+import { Reveal, SplitHeading } from "@/components/motion";
 import { TransitionLink } from "@/components/page-transition";
-import { PageIntro } from "@/components/page-intro";
-import { EventList } from "@/components/events/event-list";
-import { RecapGrid } from "@/components/events/recap-grid";
-import { SubscribeForm } from "@/components/subscribe-form";
-import { eventShortDate, eventWeekday, upcomingEvents } from "@/data/events";
+import { PhotoIntro } from "@/components/photo-intro";
 import { recaps } from "@/data/recaps";
-import { FACEBOOK_URL } from "@/data/site";
+import { CEBBY_URL, FACEBOOK_URL, TALK_EMAIL } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Events",
-  description: "Free React meetups, workshops and code camps around Cebu, plus slides, recordings and photos from every event since 2019.",
+  description: "Free React meetups, workshops and code camps around Cebu. Find the next one on Cebby, and see what we’ve run since 2019.",
 };
 
-export default function EventsPage() {
-  const next = upcomingEvents[0];
-  const seatsLeft = next.seats - next.taken;
+const expectations = [
+  { title: "It’s free", text: "You don’t pay to get in. Partners cover the room and the snacks." },
+  { title: "Any level is fine", text: "New to React or shipping it at work, there’s a place for you." },
+  { title: "Questions are welcome", text: "Nobody expects you to know it all. Everyone here was new once." },
+  { title: "Bring a laptop to workshops", text: "For a talk or a meetup, just bring yourself." },
+];
 
+const heading = "display m-0 text-[clamp(40px,4.2vw,60px)]";
+const cardTitle = "title m-0 text-[clamp(28px,3vw,40px)]";
+
+/**
+ * The page answers a visitor's questions in order: what's next, what are they like, what happens
+ * if I show up, can I do more, and what do I do now. Upcoming dates live on Cebby, not here.
+ */
+export default function EventsPage() {
   return (
     <>
-      <PageIntro title="Events." description="Free meetups, workshops and code camps around Cebu. Everyone is welcome, whatever your level.">
-        <a href="#recaps" className="btn btn-quiet">See the recaps</a>
-        <a href="#subscribe" className="btn btn-quiet">Get events by email</a>
-      </PageIntro>
+      <PhotoIntro
+        title="Come to the next one."
+        description="Free meetups, workshops and code camps around Cebu. Everyone is welcome, whatever your level."
+        src="/images/audience.jpg"
+        alt="An audience watching a talk"
+      />
 
-      <section aria-labelledby="next-title" className="px-2 pb-24">
-        <div className="grid gap-2 lg:grid-cols-12">
-          <div className="tile reel h-[420px] bg-black lg:col-span-8 lg:h-[600px]">
-            {[next.image, "/images/laptops.jpg", "/images/coder.jpg"].map((src, i) => (
-              <Image key={src} src={src} alt={i === 0 ? next.imageAlt : ""} fill sizes="(min-width: 1024px) 66vw, 100vw" className="object-cover" preload={i === 0} />
-            ))}
-            <span className="absolute bottom-4 left-4 rounded-lg bg-black px-3.5 py-2.5 text-base text-white">Photos from our last workshop. Hover to flip through.</span>
-          </div>
-          <div className="tile flex flex-col justify-between gap-7 bg-azure p-7 text-white lg:col-span-4 lg:min-h-[600px]">
-            <div className="flex flex-col gap-1.5">
-              <span className="text-base text-on-azure">Next up</span>
-              <span className="text-[96px] leading-[0.85] tracking-[-0.06em]">{eventShortDate(next.start)}</span>
-              <span className="text-lg text-on-azure">{eventWeekday(next.start)}, {next.timeLabel}</span>
-            </div>
-            <div className="flex flex-col gap-2.5">
-              <h2 id="next-title" className="title text-[40px]">{next.title}</h2>
-              <span className="text-lg text-on-azure">{next.kind} at {next.venue}, {next.area}</span>
-            </div>
-            <div className="flex flex-col gap-2.5">
-              <div className="flex justify-between text-[15px]">
-                <span>{next.taken} of {next.seats} seats taken</span>
-                <span>{seatsLeft} left</span>
-              </div>
-              <div className="h-2 overflow-hidden rounded-full bg-azure-deep">
-                <div className="h-full rounded-full bg-react" style={{ width: `${(next.taken / next.seats) * 100}%` }} />
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="btn btn-white">RSVP, it’s free</a>
-              <a href={`/events/${next.slug}/calendar`} download className="btn btn-black">Add to calendar</a>
-            </div>
+      <section id="upcoming" aria-labelledby="upcoming-title" className="scroll-mt-24 px-2 pb-32 pt-28">
+        <div className="grid gap-10 rounded-[12px] bg-fog p-6 sm:p-10 lg:grid-cols-2 lg:p-14">
+          <SplitHeading id="upcoming-title" className={heading}>Upcoming events</SplitHeading>
+          <div className="flex flex-col gap-6">
+            <p className="m-0 max-w-[46ch] text-lg leading-normal text-muted">
+              Our upcoming events are listed on Cebby, along with the rest of Cebu’s tech events.
+            </p>
+            <a href={CEBBY_URL} target="_blank" rel="noopener noreferrer" className="btn btn-black self-start">
+              See upcoming events on Cebby
+            </a>
           </div>
         </div>
       </section>
 
-      <EventList events={upcomingEvents} />
-
-      <section id="recaps" aria-labelledby="recaps-title" className="scroll-mt-24 px-2 pb-24">
-        <h2 id="recaps-title" className="display mb-10 max-w-[1100px] px-4 text-[clamp(40px,4.2vw,60px)]">
-          Recaps. <span className="text-muted">Slides, recordings, code and photos from every event since 2019.</span>
-        </h2>
-        <div className="grid gap-2 lg:grid-cols-12">
-          <div className="tile h-[420px] bg-black lg:col-span-8 lg:h-[600px]">
-            <Image src="/images/crowd.jpg" alt="A full room at Cebu Hacktoberfest" fill sizes="(min-width: 1024px) 66vw, 100vw" className="object-cover" />
-          </div>
-          <div className="tile flex flex-col justify-between gap-6 bg-black p-7 text-white lg:col-span-4 lg:min-h-[600px]">
-            <span className="text-base text-[#bdbdbd]">October 2025</span>
-            <div className="flex flex-col gap-3.5">
-              <h3 className="display text-[56px] leading-[0.95]">Cebu Hacktoberfest</h3>
-              <p className="text-lg leading-normal text-[#bdbdbd]">
-                A month of talks, workshops and hack nights co-led by JavaScript Cebu, PizzaPy and Ethereum Philippines. Here’s what got merged, who spoke, and the photos.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              <a href="#recap" className="btn btn-white">Read the recap</a>
-              <a href="#photos" className="btn border border-[#4d4d4d] text-white hover:bg-white hover:text-black">See the photos</a>
-            </div>
-          </div>
+      <section id="recaps" aria-labelledby="recaps-title" className="scroll-mt-24 px-2 pb-32">
+        <div className="mb-10 flex flex-col gap-3 px-4">
+          <SplitHeading id="recaps-title" className={heading}>Recaps</SplitHeading>
+          <p className="m-0 text-base text-muted">Some of the events we’ve run since 2019.</p>
         </div>
+        <Reveal className="grid gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          {recaps.map((recap) => (
+            <div key={recap.title} data-reveal className="flex flex-col gap-3.5">
+              <div className="tile aspect-[16/10] bg-fog">
+                <Image src={recap.image} alt={recap.alt} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
+              </div>
+              <div className="flex flex-col gap-1 px-2">
+                <span className="text-base text-muted">{recap.when}</span>
+                <h3 className="m-0 text-[28px] font-normal leading-[1.1] tracking-[-0.03em]">{recap.title}</h3>
+                <p className="m-0 text-base leading-normal text-muted">{recap.note}</p>
+              </div>
+            </div>
+          ))}
+        </Reveal>
       </section>
 
-      <RecapGrid recaps={recaps} />
+      <section aria-labelledby="expect-title" className="px-2 pb-32">
+        <SplitHeading id="expect-title" className={`${heading} mb-10 px-4`}>What to expect at your first event</SplitHeading>
+        <ul className="m-0 grid list-none gap-x-6 gap-y-8 px-4 sm:grid-cols-2 lg:grid-cols-4">
+          {expectations.map((item) => (
+            <li key={item.title} className="flex flex-col gap-2">
+              <h3 className="m-0 text-[28px] font-normal leading-[1.1] tracking-[-0.03em]">{item.title}</h3>
+              <p className="m-0 text-base leading-normal text-muted">{item.text}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
 
-      <section id="subscribe" aria-label="Host or subscribe" className="scroll-mt-24 px-2 pb-2">
+      <section aria-labelledby="involved-title" className="px-2 pb-32">
+        <SplitHeading id="involved-title" className={`${heading} mb-10 px-4`}>Want to do more?</SplitHeading>
         <div className="grid gap-2 lg:grid-cols-2">
-          <div className="tile flex min-h-[360px] flex-col justify-between gap-6 bg-fog p-8">
-            <h2 className="display text-[48px]">
-              Have a room for 40 people? <span className="text-muted">Host a meetup.</span>
-            </h2>
+          <div className="tile flex min-h-[320px] flex-col justify-between gap-6 bg-fog p-8">
+            <div className="flex flex-col gap-2">
+              <h3 className={cardTitle}>Give a talk</h3>
+              <p className="m-0 text-lg leading-normal text-muted">Five minutes, any topic, any level.</p>
+            </div>
+            <a href={TALK_EMAIL} className="btn btn-black self-start">Email us a talk idea</a>
+          </div>
+          <div className="tile flex min-h-[320px] flex-col justify-between gap-6 bg-fog p-8">
+            <div className="flex flex-col gap-2">
+              <h3 className={cardTitle}>Host a meetup</h3>
+              <p className="m-0 text-lg leading-normal text-muted">Have a room for 40 people? We’d love to use it.</p>
+            </div>
             <TransitionLink href="/partners" className="btn btn-black self-start">Offer a venue</TransitionLink>
           </div>
-          <div className="tile flex min-h-[360px] flex-col justify-between gap-6 bg-black p-8 text-white">
-            <h2 className="display text-[48px]">
-              Get new events and recaps by email. <span className="text-soft">About one a month.</span>
-            </h2>
-            <SubscribeForm />
-          </div>
         </div>
       </section>
+
+      <ClosingCard id="next-one" title="See you at the next one." description="Find the next event on Cebby, and join the Facebook page to keep up with the community.">
+        <a href={CEBBY_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-primary hover:bg-white hover:text-ink`}>
+          See upcoming events on Cebby
+        </a>
+        <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-white`}>
+          Join the Facebook page
+        </a>
+      </ClosingCard>
     </>
   );
 }
