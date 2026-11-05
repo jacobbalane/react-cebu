@@ -31,8 +31,9 @@ export function ClosingCard({
           id={`${id}-title`}
           by="word"
           // Sized to the viewport so its two lines run well across the card, capped so it stops
-          // growing on wide screens.
-          className="relative m-0 text-balance text-[clamp(3.5rem,11vw,13.125rem)] font-normal leading-[0.9] tracking-[-0.05em]"
+          // growing on wide screens. The width is in em, so a shorter line still takes two rows, and
+          // phones size it to the card, so the longest row always fits.
+          className="relative m-0 max-w-[8.5em] text-balance text-[clamp(2.25rem,(100vw-4.5rem)/6,3.5rem)] font-normal sm:text-[clamp(3.5rem,11vw,13.125rem)] leading-[0.9] tracking-[-0.05em]"
         >
           {title}
         </SplitHeading>
