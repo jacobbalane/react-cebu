@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PageIntro } from "@/components/page-intro";
 import { Reveal, SplitHeading } from "@/components/motion";
+import { OfferProvider } from "@/components/partners/offer";
 import { PartnerForm } from "@/components/partners/partner-form";
+import { Ways } from "@/components/partners/ways";
 
 export const metadata: Metadata = {
   title: "Partner with us",
@@ -29,7 +31,7 @@ const hosts = [
 
 export default function PartnersPage() {
   return (
-    <>
+    <OfferProvider>
       <PageIntro title="Help keep React Cebu free." description="Every event runs on a borrowed room, donated snacks and volunteer time.">
         <a href="#contact" className="btn btn-primary">Get in touch</a>
         <a href="#perks" className="btn btn-quiet">What partners get</a>
@@ -47,34 +49,7 @@ export default function PartnersPage() {
         ))}
       </section>
 
-      <section aria-labelledby="ways-title" className="px-2 pb-28">
-        <SplitHeading id="ways-title" className="display mb-8 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">Ways to help</SplitHeading>
-        <Reveal className="grid auto-rows-[minmax(13.75rem,auto)] gap-2 lg:auto-rows-[15rem] lg:grid-cols-12">
-          <a href="#contact" data-reveal className="tile min-h-[22.5rem] bg-black lg:col-span-6 lg:row-span-2">
-            <Image src="/images/laptops.jpg" alt="People learning on laptops in a bright room" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
-            <span className="absolute inset-x-4 bottom-4 flex max-w-[32.5rem] flex-col gap-2 rounded-lg bg-white p-[1.375rem] text-black">
-              <span className="text-[2.75rem] leading-none tracking-[-0.045em]">Host a meetup</span>
-              <span className="text-[1.0625rem] leading-[1.45] text-[#4d4d4d]">A room for 40 to 80 people, a projector and Wi-Fi, one evening a month.</span>
-            </span>
-          </a>
-          <div data-reveal className="tile flex flex-col justify-between bg-react p-6 lg:col-span-3">
-            <span className="text-4xl tracking-[-0.035em]">Feed the room</span>
-            <span className="text-base leading-[1.45]">Snacks and drinks for one meetup or workshop.</span>
-          </div>
-          <div data-reveal className="tile flex flex-col justify-between bg-azure p-6 text-white lg:col-span-3">
-            <span className="text-4xl tracking-[-0.035em]">Prizes and swag</span>
-            <span className="text-base leading-[1.45] text-on-azure">Stickers, shirts and course credits for Hacktoberfest and code camps.</span>
-          </div>
-          <div data-reveal className="tile flex flex-col justify-between bg-fog p-6 lg:col-span-3">
-            <span className="text-4xl tracking-[-0.035em]">Lend your engineers</span>
-            <span className="text-base leading-[1.45] text-[#555]">Send a speaker or a mentor for a workshop afternoon.</span>
-          </div>
-          <div data-reveal className="tile flex flex-col justify-between bg-fog p-6 lg:col-span-3">
-            <span className="text-4xl tracking-[-0.035em]">Back a student</span>
-            <span className="text-base leading-[1.45] text-[#555]">Cover transport for students coming in from outside the city.</span>
-          </div>
-        </Reveal>
-      </section>
+      <Ways />
 
       <section id="perks" aria-labelledby="perks-title" className="grid scroll-mt-24 gap-10 px-6 pb-28 lg:grid-cols-2">
         <SplitHeading id="perks-title" className="display text-[clamp(2.5rem,4.2vw,3.75rem)]">What partners get</SplitHeading>
@@ -111,6 +86,6 @@ export default function PartnersPage() {
           <PartnerForm />
         </div>
       </section>
-    </>
+    </OfferProvider>
   );
 }
