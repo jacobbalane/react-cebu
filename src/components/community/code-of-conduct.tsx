@@ -6,8 +6,8 @@ import { REPORT_EMAIL } from "@/data/site";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 
 /**
- * The fine print, on a fog panel: black is kept for the footer and the closing card. Once all four
- * are on screen the rules sharpen into ink one after another, the way the homepage's manifesto
+ * The fine print, on a fog panel: black is kept for the footer and the closing card. As the list
+ * comes on screen the rules sharpen into ink one after another, the way the homepage's manifesto
  * reads, at a pace of their own. With reduced motion they're simply there.
  */
 export function CodeOfConduct({ rules }: { rules: string[] }) {
@@ -23,11 +23,11 @@ export function CodeOfConduct({ rules }: { rules: string[] }) {
           {
             opacity: 1,
             filter: "blur(0px)",
-            duration: 0.9,
+            duration: 0.6,
             ease: "power2.out",
-            stagger: 0.45,
+            stagger: 0.2,
             clearProps: "filter",
-            scrollTrigger: { trigger: rows.current, start: "top 65%", once: true },
+            scrollTrigger: { trigger: rows.current, start: "top 85%", once: true },
           },
         );
       });
