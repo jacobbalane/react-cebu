@@ -5,19 +5,13 @@ import { Reveal, SplitHeading } from "@/components/motion";
 import { Interlude } from "@/components/partners/interlude";
 import { OfferProvider } from "@/components/partners/offer";
 import { PartnerForm } from "@/components/partners/partner-form";
+import { Perks } from "@/components/partners/perks";
 import { Ways } from "@/components/partners/ways";
 
 export const metadata: Metadata = {
   title: "Partner with us",
   description: "Help keep React Cebu free: host a meetup, feed the room, sponsor prizes or lend your engineers.",
 };
-
-const perks = [
-  { title: "Your logo here and on event slides", text: "On this page and on the opening slide of every event you support." },
-  { title: "A minute on stage", text: "Say hello, tell the room what your team builds and whether you’re hiring." },
-  { title: "Job posts in the group", text: "Share React roles with developers who already show up to learn." },
-  { title: "A recap with photos", text: "Something your team can share after the event." },
-];
 
 const hosts = [
   { name: "JavaScript Cebu", weight: 700 },
@@ -54,17 +48,7 @@ export default function PartnersPage() {
 
       <Interlude />
 
-      <section id="perks" aria-labelledby="perks-title" className="grid scroll-mt-24 gap-10 px-6 pb-28 lg:grid-cols-2">
-        <SplitHeading id="perks-title" className="display text-[clamp(2.5rem,4.2vw,3.75rem)]">What partners get</SplitHeading>
-        <ul className="border-t border-black">
-          {perks.map((perk) => (
-            <li key={perk.title} className="grid gap-x-6 gap-y-2 border-b border-line py-[1.375rem] md:grid-cols-2">
-              <span className="text-[1.625rem] tracking-[-0.025em]">{perk.title}</span>
-              <span className="text-[1.0625rem] leading-normal text-[#4d4d4d]">{perk.text}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <Perks />
 
       <section aria-labelledby="hosts-title" className="px-2 pb-28">
         <SplitHeading id="hosts-title" className="display mb-8 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">Friends and past hosts</SplitHeading>

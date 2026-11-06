@@ -2,16 +2,13 @@
 
 import { createContext, useContext, useMemo, useState } from "react";
 
-/**
- * What a partner can give. `brings` finishes "You’ll bring…", `slide` opens their event slide, and
- * `thanks` finishes the recap's "Thanks to your team for…".
- */
+/** What a partner can give. `brings` finishes "You’ll bring…". */
 export const ways = [
-  { id: "room", title: "Host a meetup", text: "A room for 40 to 80 people, a projector and Wi-Fi, one evening a month.", brings: "the room", slide: "Tonight’s room is by", thanks: "the room" },
-  { id: "snacks", title: "Feed the room", text: "Snacks and drinks for one meetup or workshop.", brings: "the snacks", slide: "Tonight’s snacks are from", thanks: "the snacks" },
-  { id: "prizes", title: "Prizes and swag", text: "Stickers, shirts and course credits for Hacktoberfest and code camps.", brings: "the prizes", slide: "Tonight’s prizes are from", thanks: "the prizes" },
-  { id: "engineers", title: "Lend your engineers", text: "Send a speaker or a mentor for a workshop afternoon.", brings: "a speaker or mentor", slide: "Tonight’s speaker is from", thanks: "the speaker" },
-  { id: "student", title: "Back a student", text: "Cover transport for students coming in from outside the city.", brings: "a student’s ride", slide: "A student’s ride tonight is from", thanks: "a student’s ride" },
+  { id: "room", title: "Host a meetup", text: "A room for 40 to 80 people, a projector and Wi-Fi, one evening a month.", brings: "the room" },
+  { id: "snacks", title: "Feed the room", text: "Snacks and drinks for one meetup or workshop.", brings: "the snacks" },
+  { id: "prizes", title: "Prizes and swag", text: "Stickers, shirts and course credits for Hacktoberfest and code camps.", brings: "the prizes" },
+  { id: "engineers", title: "Lend your engineers", text: "Send a speaker or a mentor for a workshop afternoon.", brings: "a speaker or mentor" },
+  { id: "student", title: "Back a student", text: "Cover transport for students coming in from outside the city.", brings: "a student’s ride" },
 ] as const;
 
 export type Way = (typeof ways)[number];
@@ -28,7 +25,7 @@ const OfferContext = createContext<Offer | null>(null);
 
 /**
  * The offer a visitor builds as they read: the ways they pick and their team's name. Both carry down
- * the page, into their event slide and on to the form, so by the end there's little left to type.
+ * the page to the form, so by the end there's little left to type.
  */
 export function OfferProvider({ children }: { children: React.ReactNode }) {
   const [team, setTeam] = useState("");
@@ -63,7 +60,7 @@ const hashOf = (text: string) => {
 };
 
 /** Which corners of the mark's four squares are round: top left, top right, bottom right, bottom left. */
-export function markCorners(team: string) {
+function markCorners(team: string) {
   const seed = hashOf(teamName(team).toLowerCase());
   return [0, 1, 2, 3].map((cell) => [1, 2, 4, 8].map((bit) => Boolean((seed >>> (cell * 7)) & bit)));
 }
