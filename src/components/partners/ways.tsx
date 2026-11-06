@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChecklistTile } from "@/components/partners/checklist-tile";
 import { SplitHeading, Reveal } from "@/components/motion";
 import { useOffer } from "@/components/partners/offer";
+import { PARTNER_EMAIL } from "@/data/site";
 import { ReceiptTile } from "@/components/partners/receipt-tile";
 import { retype } from "@/components/partners/retype";
 import { RunSheetTile } from "@/components/partners/run-sheet-tile";
@@ -22,6 +23,7 @@ const list = new Intl.ListFormat("en-GB", { type: "conjunction" });
 export function Ways() {
   const { picked } = useOffer();
   const sentence = picked.length ? `You’ll bring ${list.format(picked.map((way) => way.brings))}. The door stays ₱0.` : "Whatever you pick, the door stays ₱0.";
+  const email = picked.length ? `${PARTNER_EMAIL}&body=${encodeURIComponent(`We’d like to help with: ${list.format(picked.map((way) => way.title))}.`)}` : PARTNER_EMAIL;
   // The letters are handed over to `retype` after the first render, so React keeps writing only what it wrote first.
   const [first] = useState(sentence);
   const typed = useRef<HTMLSpanElement>(null);
@@ -57,7 +59,7 @@ export function Ways() {
             <span ref={typed} aria-hidden="true">{first}</span>
             <span aria-live="polite" className="sr-only">{sentence}</span>
           </p>
-          <a href="#contact" className="btn btn-primary shrink-0 hover:bg-white hover:text-ink">{picked.length ? "Finish my offer" : "Get in touch"}</a>
+          <a href={email} className="btn btn-primary shrink-0 hover:bg-white hover:text-ink">{picked.length ? "Email my offer" : "Email us"}</a>
         </div>
       </Reveal>
     </section>

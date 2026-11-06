@@ -2,25 +2,24 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { LoopVideo } from "@/components/loop-video";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 
 const firstRow = [
-  { src: "/images/audience.jpg", alt: "An audience watching a talk" },
-  { video: "/videos/workshop.mp4", alt: "Developers working together at a workshop" },
-  { src: "/images/speaker.jpg", alt: "A speaker presenting to a room" },
-  { src: "/images/crowd.jpg", alt: "A crowd at a meetup" },
-  { src: "/images/laptops.jpg", alt: "A small group on laptops around a table" },
-  { src: "/images/presenter.jpg", alt: "A presenter at the front of a room" },
+  { src: "/images/thumbs-up.jpg", alt: "Three members giving a thumbs up at their desks" },
+  { src: "/images/mentor-lean.jpg", alt: "A mentor leaning in to point something out on a laptop" },
+  { src: "/images/blue-wall-talk.jpg", alt: "A speaker checking a phone in front of a blue wall" },
+  { src: "/images/zero-to-hero-group.jpg", alt: "A large group posing together in an office" },
+  { src: "/images/whiteboard-pair.jpg", alt: "Two members reading a screen in front of a whiteboard" },
+  { src: "/images/desk-laugh.jpg", alt: "A member laughing at a desk" },
 ];
 
 const secondRow = [
-  { src: "/images/workshop.jpg", alt: "Developers at a workshop table" },
-  { src: "/images/coder.jpg", alt: "A developer at work" },
-  { video: "/videos/hacktoberfest.mp4", alt: "A team gathered around one laptop" },
-  { src: "/images/react-code.jpg", alt: "React code on a screen" },
-  { src: "/images/audience.jpg", alt: "An audience watching a talk" },
-  { src: "/images/speaker.jpg", alt: "A speaker presenting to a room" },
+  { src: "/images/laptop-desk.jpg", alt: "A member working at a bright desk with two laptops" },
+  { src: "/images/coding-desk.jpg", alt: "A member typing on a laptop at a long desk" },
+  { src: "/images/projector-speaker.jpg", alt: "A speaker pointing at a slide, lit by the projector" },
+  { src: "/images/sticker-coder.jpg", alt: "A member concentrating behind a laptop covered in stickers" },
+  { src: "/images/talking-hands.jpg", alt: "A member talking with clasped hands" },
+  { src: "/images/denim-smile.jpg", alt: "A member in a denim jacket smiling at a laptop" },
 ];
 
 /**
@@ -54,7 +53,7 @@ export function Interlude() {
     <div data-row className="flex w-max gap-2 px-2">
       {items.map((item, i) => (
         <div key={i} data-frame className="tile aspect-[3/2] h-[max(11rem,21vw)] shrink-0 bg-black motion-safe:grayscale">
-          {item.video ? <LoopVideo src={item.video} label={item.alt} /> : <Image src={item.src ?? ""} alt={item.alt} fill sizes="(min-width: 1024px) 32vw, 70vw" className="object-cover" />}
+          <Image src={item.src} alt={item.alt} fill sizes="(min-width: 1024px) 32vw, 70vw" className="object-cover" />
         </div>
       ))}
     </div>

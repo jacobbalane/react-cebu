@@ -24,8 +24,8 @@ type Offer = {
 const OfferContext = createContext<Offer | null>(null);
 
 /**
- * The offer a visitor builds as they read: the ways they pick and their team's name. Both carry down
- * the page to the form, so by the end there's little left to type.
+ * The offer a visitor builds as they read: the ways they pick and their team's name. The name stays
+ * "Your team" while the form is off the page, as the form is the only place to type it.
  */
 export function OfferProvider({ children }: { children: React.ReactNode }) {
   const [team, setTeam] = useState("");

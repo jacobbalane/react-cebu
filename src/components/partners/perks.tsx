@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { SplitHeading } from "@/components/motion";
+import { PARTNER_EMAIL } from "@/data/site";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 
 const answers = [
@@ -24,7 +25,7 @@ const answers = [
   },
 ];
 
-const photo = { src: "/images/speaker.jpg", alt: "A speaker presenting to a room" };
+const photo = { src: "/images/first-meetup-speaker.jpg", alt: "A speaker beside a React Cebu slide on a big screen" };
 
 // A white corner that rounds off the fog where it meets the photo's cut-out.
 const corner = "absolute size-3 bg-[radial-gradient(circle_at_100%_0,transparent_calc(0.75rem_-_0.5px),#fff_0.75rem)]";
@@ -62,7 +63,7 @@ export function Perks() {
               <div className="flex flex-col items-start gap-6 px-6 pt-6 sm:px-10 sm:pt-10 lg:px-14 lg:pb-10 lg:pt-0">
                 <SplitHeading id="perks-title" className="display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]">What partners get</SplitHeading>
                 <p className="m-0 max-w-[34ch] text-lg leading-normal text-muted">The four things your team will ask before anyone says yes.</p>
-                <a href="#contact" className="btn btn-black">Get in touch</a>
+                <a href={PARTNER_EMAIL} className="btn btn-black">Email us</a>
               </div>
 
               <div className="relative hidden min-h-0 flex-1 rounded-tr-[1.25rem] bg-white pr-2 pt-2 lg:block">

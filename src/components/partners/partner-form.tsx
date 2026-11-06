@@ -9,8 +9,8 @@ const choice = "btn min-h-11 cursor-pointer bg-white px-4 text-[0.9375rem] text-
 
 /**
  * What the visitor has already told the page is filled in here, and stays linked to it: the team's
- * name, and the ways they picked. Front-end only for now: connect the form to email or a form
- * service before launch.
+ * name, and the ways they picked. Off the page for now, as it sends nothing: connect it to email or a
+ * form service before it goes back.
  */
 export function PartnerForm() {
   const { team, setTeam, picked, toggle } = useOffer();
