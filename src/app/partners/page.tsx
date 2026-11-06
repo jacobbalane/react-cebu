@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PageIntro } from "@/components/page-intro";
 import { Reveal, SplitHeading } from "@/components/motion";
+import { Interlude } from "@/components/partners/interlude";
 import { OfferProvider } from "@/components/partners/offer";
 import { PartnerForm } from "@/components/partners/partner-form";
 import { Ways } from "@/components/partners/ways";
@@ -50,6 +51,8 @@ export default function PartnersPage() {
       </section>
 
       <Ways />
+
+      <Interlude />
 
       <section id="perks" aria-labelledby="perks-title" className="grid scroll-mt-24 gap-10 px-6 pb-28 lg:grid-cols-2">
         <SplitHeading id="perks-title" className="display text-[clamp(2.5rem,4.2vw,3.75rem)]">What partners get</SplitHeading>
