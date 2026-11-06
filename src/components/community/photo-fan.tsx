@@ -5,11 +5,11 @@ import { useRef } from "react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 
 const photos = [
-  { src: "/images/laptops.jpg", alt: "People working on laptops" },
-  { src: "/images/presenter.jpg", alt: "A speaker presenting to a group at a meetup" },
-  { src: "/images/speaker.jpg", alt: "A speaker presenting to a room" },
-  { src: "/images/students.jpg", alt: "Students working on laptops" },
-  { src: "/images/coder.jpg", alt: "A developer coding in a dim room" },
+  { src: "/images/enspace-demo.jpg", alt: "A speaker pointing at the screen while people follow along at a wooden table" },
+  { src: "/images/big-laugh.jpg", alt: "A member laughing at a meetup, wearing a name tag" },
+  { src: "/images/table-tablet.jpg", alt: "People talking around a wooden table with a tablet in front of them" },
+  { src: "/images/peace-wall.jpg", alt: "A member smiling and making a peace sign", position: "34% 50%" },
+  { src: "/images/sticker-laptop.jpg", alt: "A member smiling behind a laptop covered in stickers" },
 ];
 
 const MIDDLE = (photos.length - 1) / 2;
@@ -130,7 +130,7 @@ export function PhotoFan() {
             {/* The shadow only shows where the cards lie over each other. A landscape photo fills
                 the portrait card by its height, so it's drawn about twice the card's width. */}
             <div data-face className="tile size-full bg-fog shadow-[0_4px_8px_rgba(0,0,0,0.1),0_24px_48px_rgba(0,0,0,0.16)]">
-              <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1770px) 920px, (min-width: 577px) 52vw, 300px" className="object-cover" />
+              <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1770px) 920px, (min-width: 577px) 52vw, 300px" className="object-cover" style={{ objectPosition: photo.position }} />
             </div>
           </div>
         ))}

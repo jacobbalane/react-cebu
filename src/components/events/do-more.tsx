@@ -1,15 +1,32 @@
 "use client";
 
-import Image from "next/image";
 import { useRef, useState } from "react";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { TransitionLink } from "@/components/page-transition";
+import { PhotoRotation } from "@/components/photo-rotation";
 import { TALK_EMAIL } from "@/data/site";
 import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "@/lib/gsap";
 
-const glide = "duration-700 ease-[cubic-bezier(.2,.8,.2,1)]";
 const tileTitle = "title m-0 text-[clamp(2.25rem,4vw,3.75rem)]";
 const tilePadding = "p-7 sm:p-10 lg:p-8 min-[88rem]:p-10";
+
+// One set per tile, in tile order: people giving talks, then what a partner's room and snacks make possible.
+const media = [
+  [
+    { src: "/images/gatsby-speaker.jpg", alt: "A speaker talking to a room beside a React Cebu banner" },
+    { src: "/images/zero-to-hero-speaker.jpg", alt: "A speaker talking with both hands raised" },
+    { src: "/images/first-meetup-speaker.jpg", alt: "A speaker beside a React Cebu slide on a big screen" },
+    { src: "/images/blue-wall-talk.jpg", alt: "A speaker checking a phone in front of a blue wall" },
+    { src: "/images/projector-speaker.jpg", alt: "A speaker pointing at a slide, lit by the projector" },
+  ],
+  [
+    { src: "/images/desk-pair.jpg", alt: "Two members coding at their desks in a partner’s office" },
+    { src: "/images/pizza.jpg", alt: "Boxes of pizza on a long table at a meetup" },
+    { src: "/images/the-company-group.jpg", alt: "React Cebu members together at The Company Cebu" },
+    { src: "/images/enspace-group.jpg", alt: "React Cebu members around a long wooden table at enspace" },
+    { src: "/images/table-laptops.jpg", alt: "Members coding around a long table in a bright office" },
+  ],
+];
 
 // What a partner can bring, as the Partners page lists it. The first comes back at the end so the roll loops without a jump.
 const offers = ["room", "projector", "Wi-Fi", "snacks", "drinks", "prizes", "swag", "stickers", "speakers", "mentors", "engineers", "time", "room"];
@@ -50,8 +67,8 @@ function rollOffers(pill: HTMLElement, reel: HTMLElement) {
 
 /**
  * Two ways to give back, and each tile acts out its own line: the talk tile counts down its five
- * minutes, and the partner tile asks for everything an event runs on. The photo or film beside
- * them changes to match the tile being looked at.
+ * minutes, and the partner tile asks for everything an event runs on. The photos beside them roll
+ * on by themselves, moving to the set for the tile being looked at on their next change.
  */
 export function DoMore() {
   const [active, setActive] = useState(0);
@@ -151,12 +168,7 @@ export function DoMore() {
       </SplitHeading>
       <Reveal className="grid gap-2 lg:h-[clamp(30rem,66svh,38rem)] lg:grid-cols-12 lg:grid-rows-2">
         <div data-reveal className="tile min-h-[20rem] bg-black lg:col-span-5 lg:row-span-2 lg:min-h-0">
-          <div className={`absolute inset-0 transition-opacity ${glide} ${active === 0 ? "opacity-100" : "opacity-0"}`}>
-            <Image src="/images/speaker.jpg" alt="A speaker presenting to a room" fill sizes="(min-width: 1024px) 42vw, 100vw" className="object-cover" />
-          </div>
-          <div className={`absolute inset-0 transition-opacity ${glide} ${active === 1 ? "opacity-100" : "opacity-0"}`}>
-            <Image src="/images/laptops.jpg" alt="A small group on laptops around a table, watching a presenter" fill sizes="(min-width: 1024px) 56vw, 100vw" className="object-cover" />
-          </div>
+          <PhotoRotation sets={media} active={active} sizes="(min-width: 1024px) 42vw, 100vw" />
         </div>
 
         <div data-reveal data-tile className={`tile flex min-h-[16rem] flex-col justify-between gap-6 bg-react text-ink sm:flex-row lg:col-span-7 lg:min-h-0 ${tilePadding}`}>

@@ -5,8 +5,8 @@ import { TransitionLink } from "@/components/page-transition";
 import { useRef, useState } from "react";
 import Matter from "matter-js";
 import { Draggable, gsap, ScrollTrigger, useGSAP, MOTION_OK } from "@/lib/gsap";
-import { LoopVideo } from "@/components/loop-video";
 import { Reveal, SplitHeading } from "@/components/motion";
+import { PersonPlaceholder } from "@/components/person-placeholder";
 import { PhotoSlides } from "@/components/photo-slides";
 import { FACEBOOK_URL, TALK_EMAIL } from "@/data/site";
 
@@ -64,15 +64,14 @@ const rules = [
   { id: "beginner", label: "Help a beginner" },
 ] as const;
 
-// Each with a photo from that kind of night; the Gatsby workshop and the first meetup use the
-// same photos as their recaps.
+// Real events, each with a photo from that event.
 const past = [
-  { title: "Cebu Hacktoberfest", image: "/images/crowd.jpg" },
-  { title: "Server Components, hands-on", image: "/images/presenter.jpg" },
-  { title: "Panel: careers in frontend", image: "/images/panel.jpg" },
-  { title: "Gatsby workshop, 2019", image: "/images/workshop.jpg" },
-  { title: "Student code camp", image: "/images/students.jpg" },
-  { title: "The first meetup, 2019", image: "/images/audience.jpg" },
+  { title: "REACT-IVATE 24", image: "/images/reactivate-group.jpg" },
+  { title: "TypeScript Patterns, 2023", image: "/images/enspace-talk.jpg" },
+  { title: "React Native series, 2020", image: "/images/native-speaker.jpg" },
+  { title: "Gatsby workshop, 2019", image: "/images/gatsby-group.jpg" },
+  { title: "Zero to Hero, 2019", image: "/images/what-is-react-cebu.jpg" },
+  { title: "The first meetup, 2019", image: "/images/first-meetup-room.jpg" },
 ];
 
 /** Past events in a strip you drag sideways: it glides to a stop after a flick and resists at either end. */
@@ -573,7 +572,7 @@ export function Bento() {
         <LevelPicker />
 
         <MediaTile label="Hands-on workshops" className="lg:col-span-3 lg:row-span-2">
-          <LoopVideo src="/videos/workshop.mp4" label="Developers working together at a workshop" />
+          <PhotoSlides photos={["desk-pair", "laptop-desk", "focused-coders"]} alt="Two members coding at their desks" delay={1.2} sizes="(min-width: 1024px) 25vw, 100vw" className="absolute inset-0" />
         </MediaTile>
 
         <TopicPile />
@@ -590,14 +589,9 @@ export function Bento() {
           </span>
           <span className="flex shrink-0">
             {[1, 2, 3, 4].map((n, i) => (
-              <Image
-                key={n}
-                src={`/images/portrait-${n}.jpg`}
-                alt=""
-                width={48}
-                height={48}
-                className={`size-12 rounded-full border-2 border-react object-cover transition-[margin] duration-500 ${i ? "-ml-5 group-hover:ml-1.5" : ""}`}
-              />
+              <span key={n} className={`size-12 overflow-hidden rounded-full border-2 border-react bg-[#585858] transition-[margin] duration-500 ${i ? "-ml-5 group-hover:ml-1.5" : ""}`}>
+                <PersonPlaceholder className="block size-full" />
+              </span>
             ))}
           </span>
         </TransitionLink>
@@ -605,7 +599,7 @@ export function Bento() {
         {/* Rows 5–7: photos on the left, then the code of conduct, a talk and volunteering */}
         <MediaTile label="Code camps" className="lg:col-span-4 lg:row-span-3">
           <PhotoSlides
-            photos={["laptops", "coder", "react-code"]}
+            photos={["laptop-plant", "team-huddle", "coffee-stickers"]}
             alt="Students coding together at a code camp"
             direction="up"
             delay={1.8}
@@ -665,7 +659,7 @@ export function Bento() {
         </div>
 
         <MediaTile label="Hacktoberfest" className="lg:col-span-5 lg:row-span-4">
-          <LoopVideo src="/videos/hacktoberfest.mp4" label="A team gathered around one laptop at Hacktoberfest" />
+          <PhotoSlides photos={["shirt-mentor", "iced-coffee-coder", "projector-speaker"]} alt="A mentor and a member working through something on a laptop" delay={2.4} sizes="(min-width: 1024px) 42vw, 100vw" className="absolute inset-0" />
         </MediaTile>
 
         {/* React cyan carries ink, never white; the button goes ink so it still stands out. */}

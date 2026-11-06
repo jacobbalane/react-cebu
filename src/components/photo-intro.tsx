@@ -11,7 +11,7 @@ import { SplitHeading } from "@/components/motion";
  * line in white at the bottom left, the description follows it in, and the photo sinks slower
  * than the page as you scroll away. They stack on phones. The photo is grey, and the pointer leaves
  * a trail of its colour, which `keepColour` makes stay. `position` sets which part of the photo shows,
- * and any children sit under the description.
+ * and any children sit under the description. `align="right"` stacks the words in the bottom right.
  */
 export function PhotoIntro({
   title,
@@ -20,6 +20,7 @@ export function PhotoIntro({
   alt,
   position,
   keepColour = false,
+  align = "left",
   children,
 }: {
   title: React.ReactNode;
@@ -28,6 +29,7 @@ export function PhotoIntro({
   alt: string;
   position?: string;
   keepColour?: boolean;
+  align?: "left" | "right";
   children?: React.ReactNode;
 }) {
   const ref = useRef<HTMLElement>(null);
@@ -66,7 +68,7 @@ export function PhotoIntro({
         className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/80 via-black/25 via-45% to-transparent"
       />
 
-      <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-x-16">
+      <div className={`relative ${align === "right" ? "flex flex-col items-end gap-6 text-right" : "grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-x-16"}`}>
         <SplitHeading
           as="h1"
           id="page-title"
@@ -76,7 +78,7 @@ export function PhotoIntro({
         >
           {title}
         </SplitHeading>
-        <div data-intro-fade className="flex flex-col gap-5 lg:pb-2">
+        <div data-intro-fade className={`flex flex-col gap-5 ${align === "right" ? "" : "lg:pb-2"}`}>
           <p className="m-0 max-w-[34ch] text-[clamp(1.125rem,1.5vw,1.375rem)] leading-snug text-white/80">{description}</p>
           {children && <div className="flex flex-wrap gap-2">{children}</div>}
         </div>

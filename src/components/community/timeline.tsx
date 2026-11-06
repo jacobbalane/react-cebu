@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { LoopVideo } from "@/components/loop-video";
 import { Reveal, SplitHeading } from "@/components/motion";
 
 function Photo({ src, alt }: { src: string; alt: string }) {
@@ -15,28 +14,28 @@ const stops = [
     year: 2019,
     title: "The first meetup",
     text: "More than 50 developers came to The Company Cebu for the first React Cebu meetup.",
-    media: <Photo src="/images/audience.jpg" alt="An audience watching a talk" />,
+    media: <Photo src="/images/first-meetup-group.jpg" alt="Everyone at the first React Cebu meetup, gathered in front of the screen" />,
   },
   {
     month: "October",
     year: 2019,
     title: "Gatsby workshop",
     text: "A hands-on workshop at the Go Negosyo Center, UP Cebu.",
-    media: <Photo src="/images/workshop.jpg" alt="Developers at a workshop table" />,
+    media: <Photo src="/images/gatsby-group.jpg" alt="Everyone at the Gatsby workshop gathered for a group photo" />,
   },
   {
     month: "October",
     year: 2025,
     title: "Cebu Hacktoberfest",
     text: "Co-led by JavaScript Cebu with PizzaPy and Ethereum Philippines: talks, workshops and hack nights all month.",
-    media: <LoopVideo src="/videos/hacktoberfest.mp4" label="A team gathered around one laptop at Hacktoberfest" />,
+    media: <Photo src="/images/javascript-cebu-group.jpg" alt="JavaScript Cebu and React Cebu members together around a long table" />,
   },
   {
     month: "November",
     year: 2026,
     title: "A new home online",
     text: "The site you’re looking at, built by members with Next.js.",
-    media: <Photo src="/images/crowd.jpg" alt="A full room of developers at a community event in Cebu" />,
+    media: <Photo src="/images/enspace-group.jpg" alt="React Cebu members around a long wooden table at enspace" />,
   },
 ];
 

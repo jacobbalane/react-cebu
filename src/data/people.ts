@@ -1,7 +1,2 @@
-// Sample people. Replace with the real organizers before launch.
-export const organizers = [
-  { name: "Andrea Villanueva", role: "Lead organizer", image: "/images/portrait-2.jpg" },
-  { name: "Miguel Santos", role: "Events and venues", image: "/images/portrait-1.jpg" },
-  { name: "Bea Reyes", role: "Design and website", image: "/images/portrait-4.jpg" },
-  { name: "Paolo Cruz", role: "Workshops and mentors", image: "/images/portrait-3.jpg" },
-];
+// Placeholders until the organizers are confirmed.
+export const organizers = Array.from({ length: 4 }, () => ({ name: "Organizer name", role: "Role to be confirmed" }));

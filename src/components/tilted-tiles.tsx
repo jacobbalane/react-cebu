@@ -96,9 +96,19 @@ export function TiltedTiles({ tiles, columns = 13, perColumn = 10, duration = 80
     { scope: root },
   );
 
+  // Tiles split into sets of `perColumn`, and the sets rotate across the columns. Columns slide past
+  // each other, so a tile must only come back several columns away or it ends up beside itself.
   // Every column gets its own shuffled order, so no pattern repeats across the wall.
-  const orders = useMemo(() => Array.from({ length: columns }, (_, column) => shuffled(tiles, column + 1)), [tiles, columns]);
-  const tileAt = (column: number, row: number) => orders[column][row % tiles.length];
+  const sets = Math.max(1, Math.floor(tiles.length / perColumn));
+  const orders = useMemo(
+    () =>
+      Array.from({ length: columns }, (_, column) => {
+        const start = (column % sets) * perColumn;
+        return shuffled(sets > 1 ? tiles.slice(start, start + perColumn) : tiles, column + 1);
+      }),
+    [tiles, columns, perColumn, sets],
+  );
+  const tileAt = (column: number, row: number) => orders[column][row % orders[column].length];
 
   return (
     <div ref={root} aria-hidden="true" className={`absolute inset-0 overflow-hidden bg-black [perspective:max(137vw,1008px,140svh)] ${className}`}>

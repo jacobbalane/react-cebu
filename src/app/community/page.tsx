@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { PersonPlaceholder } from "@/components/person-placeholder";
 import { PhotoIntro } from "@/components/photo-intro";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { CodeOfConduct } from "@/components/community/code-of-conduct";
@@ -38,8 +38,8 @@ export default function CommunityPage() {
           </>
         }
         description="Students, career-shifters and working engineers in Cebu, learning React together since 2019."
-        src="/images/crowd.jpg"
-        alt="A full room of developers at a community event in Cebu"
+        src="/images/big-group.jpg"
+        alt="Dozens of React Cebu members packed together for a group photo"
       />
 
       {/* Right after the claim, what backs it up. */}
@@ -53,17 +53,9 @@ export default function CommunityPage() {
           <p className="m-0 text-base text-muted">Volunteers, every one of them</p>
         </div>
         <Reveal className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-          {organizers.map((person) => (
-            <div key={person.name} data-reveal className="tile group aspect-[4/5] bg-fog text-white">
-              <Image
-                src={person.image}
-                alt={`Portrait of ${person.name}`}
-                fill
-                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover grayscale transition-[filter,scale] duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-105 group-hover:grayscale-0"
-              />
-              {/* Darkens the bottom so the white text reads over any photo. */}
-              <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
+          {organizers.map((person, i) => (
+            <div key={i} data-reveal className="tile group aspect-[4/5] bg-fog text-ink">
+              <PersonPlaceholder className="absolute inset-0 size-full transition-[scale] duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-105" />
               <div className="absolute inset-x-5 bottom-5 flex flex-col gap-1">
                 <span className="text-[1.75rem] leading-[1.1] tracking-[-0.03em]">{person.name}</span>
                 <span className="text-base">{person.role}</span>
