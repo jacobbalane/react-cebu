@@ -181,7 +181,7 @@ export function DoMore() {
               <h3 className={tileTitle}>Partner with us</h3>
               <p className="m-0 max-w-[36ch] text-lg leading-normal">Every event runs on a borrowed room, donated snacks and volunteer time.</p>
             </div>
-            <TransitionLink href="/partners" className="btn btn-white">
+            <TransitionLink href="/partners#ways" className="btn btn-white">
               See ways to help
             </TransitionLink>
           </div>

@@ -7,6 +7,7 @@ export const FACEBOOK_URL = "https://www.facebook.com/reactcebu/";
 /** Talk ideas come in by email now that there's no Speak page. */
 export const TALK_EMAIL = "mailto:react@jscebu.org?subject=Talk%20idea";
 export const VOLUNTEER_EMAIL = "mailto:react@jscebu.org?subject=Volunteering";
+export const PARTNER_EMAIL = "mailto:react@jscebu.org?subject=Partnering%20with%20React%20Cebu";
 export const REPORT_EMAIL = "mailto:react@jscebu.org?subject=Code%20of%20conduct%20report";
 
 /** Upcoming dates live on Cebby, which lists Cebu tech events, ours included. */

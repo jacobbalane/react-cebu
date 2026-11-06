@@ -21,9 +21,10 @@ type Dab = { x: number; y: number; born: number };
  * the room is back to grey soon after the pointer stops. Without a pointer, one trail crosses the
  * photo as the page opens to show there's colour under the grey, and a sideways drag makes more.
  * Sits beside the photo's <img>, which it paints from. It only runs while there's a trail to draw,
- * and with reduced motion there's nothing to run, as the photo stays in colour.
+ * and with reduced motion there's nothing to run, as the photo stays in colour. With `keep`, the
+ * colour stays where it's painted instead of closing up.
  */
-export function ColourTrail() {
+export function ColourTrail({ keep = false }: { keep?: boolean }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -35,7 +36,10 @@ export function ColourTrail() {
     // One soft dab, drawn once and stamped along the path.
     const brush = document.createElement("canvas");
     const pen = brush.getContext("2d");
-    if (!canvas || !host || !stage || !photo || !ctx || !pen) return;
+    // Everything painted so far, when the colour stays.
+    const kept = document.createElement("canvas");
+    const keeper = kept.getContext("2d");
+    if (!canvas || !host || !stage || !photo || !ctx || !pen || !keeper) return;
     if (!window.matchMedia(MOTION_OK).matches) return;
 
     let radius = 0;
@@ -43,6 +47,8 @@ export function ColourTrail() {
       const scale = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = Math.round(host.offsetWidth * scale);
       canvas.height = Math.round(host.offsetHeight * scale);
+      kept.width = canvas.width;
+      kept.height = canvas.height;
       radius = canvas.width * BRUSH;
       brush.width = brush.height = Math.ceil(radius * 2);
       const soft = pen.createRadialGradient(radius, radius, radius * SOLID, radius, radius, radius);
@@ -57,11 +63,33 @@ export function ColourTrail() {
 
     let dabs: Dab[] = [];
     let running = false;
+
+    // The photo, placed as object-cover places it, kept only along the trail.
+    const fillTrail = () => {
+      ctx.globalCompositeOperation = "source-in";
+      const cover = Math.max(canvas.width / photo.naturalWidth, canvas.height / photo.naturalHeight);
+      const width = photo.naturalWidth * cover;
+      const height = photo.naturalHeight * cover;
+      const [across, down] = getComputedStyle(photo).objectPosition.split(" ").map((share) => parseFloat(share) / 100);
+      ctx.drawImage(photo, (canvas.width - width) * across, (canvas.height - height) * down, width, height);
+    };
+
     const frame = () => {
       const now = gsap.ticker.time;
-      dabs = dabs.filter((dab) => now - dab.born < LIFE);
       ctx.globalCompositeOperation = "source-over";
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (keep) {
+        for (const dab of dabs) keeper.drawImage(brush, dab.x - brush.width / 2, dab.y - brush.height / 2);
+        dabs = [];
+        ctx.drawImage(kept, 0, 0);
+        fillTrail();
+        gsap.ticker.remove(frame);
+        running = false;
+        return;
+      }
+
+      dabs = dabs.filter((dab) => now - dab.born < LIFE);
       if (!dabs.length) {
         gsap.ticker.remove(frame);
         running = false;
@@ -75,13 +103,7 @@ export function ColourTrail() {
         ctx.drawImage(brush, dab.x - size / 2, dab.y - size / 2, size, size);
       }
       ctx.globalAlpha = 1;
-
-      // The photo, placed as object-cover places it, kept only along the trail.
-      ctx.globalCompositeOperation = "source-in";
-      const cover = Math.max(canvas.width / photo.naturalWidth, canvas.height / photo.naturalHeight);
-      const width = photo.naturalWidth * cover;
-      const height = photo.naturalHeight * cover;
-      ctx.drawImage(photo, (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
+      fillTrail();
     };
 
     let last: { x: number; y: number } | null = null;
@@ -139,7 +161,7 @@ export function ColourTrail() {
       stage.removeEventListener("pointerleave", lift);
       stage.removeEventListener("pointercancel", lift);
     };
-  }, []);
+  }, [keep]);
 
   return <canvas ref={ref} aria-hidden="true" className="pointer-events-none absolute inset-0 size-full" />;
 }

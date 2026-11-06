@@ -10,18 +10,25 @@ import { SplitHeading } from "@/components/motion";
  * A page that opens on one full-bleed photo, set like the homepage hero: the title rises line by
  * line in white at the bottom left, the description follows it in, and the photo sinks slower
  * than the page as you scroll away. They stack on phones. The photo is grey, and the pointer leaves
- * a trail of its colour.
+ * a trail of its colour, which `keepColour` makes stay. `position` sets which part of the photo shows,
+ * and any children sit under the description.
  */
 export function PhotoIntro({
   title,
   description,
   src,
   alt,
+  position,
+  keepColour = false,
+  children,
 }: {
   title: React.ReactNode;
   description: string;
   src: string;
   alt: string;
+  position?: string;
+  keepColour?: boolean;
+  children?: React.ReactNode;
 }) {
   const ref = useRef<HTMLElement>(null);
 
@@ -50,8 +57,8 @@ export function PhotoIntro({
       className="relative flex h-[max(640px,100svh)] touch-pan-y flex-col justify-end overflow-hidden bg-black px-4 pb-6 text-white md:px-10 md:pb-10"
     >
       <div data-intro-photo className="absolute inset-0">
-        <Image src={src} alt={alt} fill preload sizes="100vw" className="object-cover motion-safe:brightness-[.45] motion-safe:grayscale" />
-        <ColourTrail />
+        <Image src={src} alt={alt} fill preload sizes="100vw" style={{ objectPosition: position }} className="object-cover motion-safe:brightness-[.45] motion-safe:grayscale" />
+        <ColourTrail keep={keepColour} />
       </div>
       {/* Darkens the lower half so the white copy reads over any photo; the faces above stay clear. */}
       <div
@@ -69,9 +76,10 @@ export function PhotoIntro({
         >
           {title}
         </SplitHeading>
-        <p data-intro-fade className="m-0 max-w-[34ch] text-[clamp(1.125rem,1.5vw,1.375rem)] leading-snug text-white/80 lg:pb-2">
-          {description}
-        </p>
+        <div data-intro-fade className="flex flex-col gap-5 lg:pb-2">
+          <p className="m-0 max-w-[34ch] text-[clamp(1.125rem,1.5vw,1.375rem)] leading-snug text-white/80">{description}</p>
+          {children && <div className="flex flex-wrap gap-2">{children}</div>}
+        </div>
       </div>
     </section>
   );

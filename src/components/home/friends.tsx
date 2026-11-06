@@ -64,13 +64,16 @@ const partners: { name: string; logo: React.ReactNode }[] = [
   { name: "The Company", logo: <FileLogo src="the-company-cebu.png" width={490} height={114} /> },
 ];
 
-/** The communities we co-host with and the venues that have hosted us, by name in a grid. */
-export function Friends() {
+/**
+ * The communities we co-host with and the venues that have hosted us, by name in a grid. Anything
+ * passed as children sits on its own row after the last name.
+ */
+export function Friends({ title = "Every meetup is a team effort with these friends", children }: { title?: string; children?: React.ReactNode }) {
   return (
     <section aria-labelledby="friends-title" className="px-2 pb-32">
       <div className="mb-16 flex flex-col items-center gap-3 px-4 text-center">
         <SplitHeading id="friends-title" className="display max-w-[56.25rem] text-[clamp(2.5rem,4.2vw,3.75rem)]">
-          Every meetup is a team effort with these friends
+          {title}
         </SplitHeading>
         <p className="m-0 text-base text-muted">Communities we co-host with and venues that open their doors to us</p>
       </div>
@@ -91,6 +94,7 @@ export function Friends() {
             </li>
           ))}
         </ul>
+        {children && <div data-reveal className="mt-10 sm:mt-14">{children}</div>}
       </Reveal>
     </section>
   );

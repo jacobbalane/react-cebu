@@ -1,48 +1,45 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { PageIntro } from "@/components/page-intro";
-import { Reveal, SplitHeading } from "@/components/motion";
+import { ClosingCard, closingButton } from "@/components/closing-card";
+import { Friends } from "@/components/home/friends";
+import { SplitHeading } from "@/components/motion";
 import { Interlude } from "@/components/partners/interlude";
-import { OfferProvider } from "@/components/partners/offer";
+import { OfferProvider, YourTeam } from "@/components/partners/offer";
 import { PartnerForm } from "@/components/partners/partner-form";
 import { Perks } from "@/components/partners/perks";
 import { Ways } from "@/components/partners/ways";
+import { PhotoIntro } from "@/components/photo-intro";
+import { FACEBOOK_URL, PARTNER_EMAIL } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Partner with us",
   description: "Help keep React Cebu free: host a meetup, feed the room, sponsor prizes or lend your engineers.",
 };
 
-const hosts = [
-  { name: "JavaScript Cebu", weight: 700 },
-  { name: "Vue.js Cebu", weight: 500 },
-  { name: "Angular Cebu", weight: 400 },
-  { name: "PizzaPy", weight: 800 },
-  { name: "Ethereum Philippines", weight: 300 },
-  { name: "DEVCON Cebu", weight: 700 },
-  { name: "PWA Pilipinas", weight: 500 },
-  { name: "The Company Cebu", weight: 400 },
-];
-
+/**
+ * The page answers a partner's questions in order: why you, what could I give, what do I get, who
+ * else does this, and how do I start. The visitor's answers build an offer as they go, so the form
+ * at the end is mostly filled in by the time they reach it.
+ */
 export default function PartnersPage() {
   return (
     <OfferProvider>
-      <PageIntro title="Help keep React Cebu free." description="Every event runs on a borrowed room, donated snacks and volunteer time.">
-        <a href="#contact" className="btn btn-primary">Get in touch</a>
-        <a href="#perks" className="btn btn-quiet">What partners get</a>
-      </PageIntro>
-
-      <section className="grid gap-2 px-2 pb-28 md:grid-cols-[1.3fr_1fr_1fr]">
-        {[
-          { src: "/images/audience.jpg", alt: "An audience watching a talk" },
-          { src: "/images/workshop.jpg", alt: "Developers at a workshop table" },
-          { src: "/images/panel.jpg", alt: "A panel discussion with the audience on steps" },
-        ].map((photo, i) => (
-          <div key={photo.src} className="tile h-[20rem] md:h-[30rem]">
-            <Image src={photo.src} alt={photo.alt} fill preload={i === 0} sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
-          </div>
-        ))}
-      </section>
+      <PhotoIntro
+        title={
+          <>
+            Help keep
+            <br />
+            React Cebu free.
+          </>
+        }
+        description="Every event runs on a borrowed room, donated snacks and volunteer time."
+        src="/images/panel.jpg"
+        alt="A panel on a carpeted stage, facing a full room on the steps"
+        position="50% 74%"
+        keepColour
+      >
+        <a href="#ways" className="btn btn-primary hover:bg-white hover:text-ink">See ways to help</a>
+        <a href="#contact" className="btn btn-white">Get in touch</a>
+      </PhotoIntro>
 
       <Ways />
 
@@ -50,29 +47,31 @@ export default function PartnersPage() {
 
       <Perks />
 
-      <section aria-labelledby="hosts-title" className="px-2 pb-28">
-        <SplitHeading id="hosts-title" className="display mb-8 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">Friends and past hosts</SplitHeading>
-        <Reveal className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-          {hosts.map((host) => (
-            <div key={host.name} data-reveal className="tile flex h-[11.25rem] items-center justify-center bg-fog p-5 text-center text-[1.75rem] tracking-[-0.03em]" style={{ fontWeight: host.weight }}>
-              {host.name}
-            </div>
-          ))}
-        </Reveal>
-      </section>
+      <Friends title="Friends and past hosts">
+        <YourTeam />
+      </Friends>
 
-      <section id="contact" aria-labelledby="contact-title" className="scroll-mt-24 px-2 pb-2">
-        <div className="tile grid gap-10 bg-fog p-7 sm:p-12 lg:grid-cols-2">
-          <div className="flex flex-col gap-5">
-            <h2 id="contact-title" className="display text-[clamp(2.5rem,4.2vw,3.75rem)]">Let’s talk</h2>
-            <p className="max-w-[40ch] text-lg leading-normal text-[#4d4d4d]">
+      <section id="contact" aria-labelledby="contact-title" className="scroll-mt-24 px-2 pb-32">
+        <div className="grid gap-10 rounded-[0.75rem] bg-fog p-6 sm:p-10 lg:grid-cols-2 lg:p-14">
+          <div className="flex flex-col gap-6">
+            <SplitHeading id="contact-title" className="display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]">Let’s talk</SplitHeading>
+            <p className="m-0 max-w-[40ch] text-lg leading-normal text-muted">
               Tell us a little about your team and how you’d like to help. Or email{" "}
-              <a href="mailto:react@jscebu.org" className="text-azure-deep">react@jscebu.org</a> directly.
+              <a href={PARTNER_EMAIL} className="text-azure-deep">react@jscebu.org</a> directly.
             </p>
           </div>
           <PartnerForm />
         </div>
       </section>
+
+      <ClosingCard id="keep-it-free" title="Keep the next one free." description="Everything you give goes into the room, so the next person through the door pays nothing.">
+        <a href={PARTNER_EMAIL} className={`${closingButton} btn-primary hover:bg-white hover:text-ink`}>
+          Email us about partnering
+        </a>
+        <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-white`}>
+          Join the Facebook page
+        </a>
+      </ClosingCard>
     </OfferProvider>
   );
 }
