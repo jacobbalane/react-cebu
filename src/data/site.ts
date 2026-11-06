@@ -3,6 +3,7 @@ export const SITE_URL = "https://react.jscebu.org";
 
 /** The React Cebu Facebook page: where people join, and where events are announced and RSVPed. */
 export const FACEBOOK_URL = "https://www.facebook.com/reactcebu/";
+export const FACEBOOK_PHOTOS_URL = "https://www.facebook.com/reactcebu/photos";
 
 /** Talk ideas come in by email now that there's no Speak page. */
 export const TALK_EMAIL = "mailto:react@jscebu.org?subject=Talk%20idea";
@@ -17,6 +18,7 @@ export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/community", label: "Community" },
   { href: "/events", label: "Events" },
+  { href: "/gallery", label: "Gallery" },
 ];
 
 export const footerColumns = [
@@ -33,6 +35,7 @@ export const footerColumns = [
     links: [
       { href: "/events#upcoming", label: "Upcoming" },
       { href: "/events#recaps", label: "Recaps" },
+      { href: "/gallery", label: "Gallery" },
       { href: "/partners", label: "Host an event" },
     ],
   },
