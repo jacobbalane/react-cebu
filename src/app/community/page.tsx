@@ -20,7 +20,7 @@ const rules = [
   "Be kind, especially to beginners.",
   "Make room for everyone in the conversation.",
   "No harassment, in any form, ever.",
-  "Ask before you photograph someone.",
+  "Respect people’s ideas and boundaries.",
 ];
 
 /**
@@ -50,8 +50,8 @@ export default function CommunityPage() {
 
       <section id="organizers" aria-labelledby="org-title" className="scroll-mt-24 px-2 pb-32">
         <div className="mb-10 flex flex-col items-center gap-3 px-4 text-center">
-          <SplitHeading id="org-title" className="display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]">The people who run it</SplitHeading>
-          <p className="m-0 text-base text-muted">Say hi at the next meetup</p>
+          <SplitHeading id="org-title" className="display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]">The people leading React Cebu</SplitHeading>
+          <p className="m-0 text-base text-muted">Organizers, speakers and mentors</p>
         </div>
         <Reveal className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {organizers.map((person, i) => (
@@ -73,7 +73,6 @@ export default function CommunityPage() {
               )}
               <div className="absolute inset-x-5 bottom-5 flex flex-col gap-1">
                 <span className="text-[1.75rem] leading-[1.1] tracking-[-0.03em]">{person.name}</span>
-                <span className="text-base">{person.role}</span>
               </div>
             </div>
           ))}
