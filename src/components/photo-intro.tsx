@@ -10,7 +10,7 @@ import { SplitHeading } from "@/components/motion";
  * A page that opens on one full-bleed photo, set like the homepage hero: the title rises line by
  * line in white at the bottom left, the description follows it in, and the photo sinks slower
  * than the page as you scroll away. They stack on phones. The photo is grey, and the pointer leaves
- * a trail of its colour, which `keepColour` makes stay. `position` sets which part of the photo shows,
+ * a trail of its colour. `position` sets which part of the photo shows,
  * and any children sit under the description. `align="right"` stacks the words in the bottom right.
  */
 export function PhotoIntro({
@@ -19,7 +19,6 @@ export function PhotoIntro({
   src,
   alt,
   position,
-  keepColour = false,
   align = "left",
   children,
 }: {
@@ -28,7 +27,6 @@ export function PhotoIntro({
   src: string;
   alt: string;
   position?: string;
-  keepColour?: boolean;
   align?: "left" | "right";
   children?: React.ReactNode;
 }) {
@@ -60,7 +58,7 @@ export function PhotoIntro({
     >
       <div data-intro-photo className="absolute inset-0">
         <Image src={src} alt={alt} fill preload sizes="100vw" style={{ objectPosition: position }} className="object-cover motion-safe:brightness-[.45] motion-safe:grayscale" />
-        <ColourTrail keep={keepColour} />
+        <ColourTrail />
       </div>
       {/* Darkens the lower half so the white copy reads over any photo; the faces above stay clear. */}
       <div

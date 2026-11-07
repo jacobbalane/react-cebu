@@ -15,8 +15,8 @@ export const metadata: Metadata = {
 
 /**
  * The page answers a partner's questions in order: why you, what could I give, what do I get, who
- * else does this, and how do I start. The ways a visitor picks build an offer as they go, and it
- * goes into the email they start from the black card.
+ * else does this, and how do I start. The ways a visitor picks build an offer on the black card as
+ * they go.
  */
 export default function PartnersPage() {
   return (
@@ -33,7 +33,6 @@ export default function PartnersPage() {
         src="/images/first-meetup-room.jpg"
         alt="A full hall watching a React Cebu slide at the first meetup"
         position="50% 100%"
-        keepColour
       >
         <a href="#ways" className="btn btn-primary hover:bg-white hover:text-ink">See ways to help</a>
         <a href={PARTNER_EMAIL} className="btn btn-white">Email us</a>

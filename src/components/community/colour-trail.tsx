@@ -21,10 +21,9 @@ type Dab = { x: number; y: number; born: number };
  * the room is back to grey soon after the pointer stops. Without a pointer, one trail crosses the
  * photo as the page opens to show there's colour under the grey, and a sideways drag makes more.
  * Sits beside the photo's <img>, which it paints from. It only runs while there's a trail to draw,
- * and with reduced motion there's nothing to run, as the photo stays in colour. With `keep`, the
- * colour stays where it's painted instead of closing up.
+ * and with reduced motion there's nothing to run, as the photo stays in colour.
  */
-export function ColourTrail({ keep = false }: { keep?: boolean }) {
+export function ColourTrail() {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -36,10 +35,7 @@ export function ColourTrail({ keep = false }: { keep?: boolean }) {
     // One soft dab, drawn once and stamped along the path.
     const brush = document.createElement("canvas");
     const pen = brush.getContext("2d");
-    // Everything painted so far, when the colour stays.
-    const kept = document.createElement("canvas");
-    const keeper = kept.getContext("2d");
-    if (!canvas || !host || !stage || !photo || !ctx || !pen || !keeper) return;
+    if (!canvas || !host || !stage || !photo || !ctx || !pen) return;
     if (!window.matchMedia(MOTION_OK).matches) return;
 
     let radius = 0;
@@ -47,8 +43,6 @@ export function ColourTrail({ keep = false }: { keep?: boolean }) {
       const scale = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = Math.round(host.offsetWidth * scale);
       canvas.height = Math.round(host.offsetHeight * scale);
-      kept.width = canvas.width;
-      kept.height = canvas.height;
       radius = canvas.width * BRUSH;
       brush.width = brush.height = Math.ceil(radius * 2);
       const soft = pen.createRadialGradient(radius, radius, radius * SOLID, radius, radius, radius);
@@ -78,16 +72,6 @@ export function ColourTrail({ keep = false }: { keep?: boolean }) {
       const now = gsap.ticker.time;
       ctx.globalCompositeOperation = "source-over";
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      if (keep) {
-        for (const dab of dabs) keeper.drawImage(brush, dab.x - brush.width / 2, dab.y - brush.height / 2);
-        dabs = [];
-        ctx.drawImage(kept, 0, 0);
-        fillTrail();
-        gsap.ticker.remove(frame);
-        running = false;
-        return;
-      }
 
       dabs = dabs.filter((dab) => now - dab.born < LIFE);
       if (!dabs.length) {
@@ -161,7 +145,7 @@ export function ColourTrail({ keep = false }: { keep?: boolean }) {
       stage.removeEventListener("pointerleave", lift);
       stage.removeEventListener("pointercancel", lift);
     };
-  }, [keep]);
+  }, []);
 
   return <canvas ref={ref} aria-hidden="true" className="pointer-events-none absolute inset-0 size-full" />;
 }
