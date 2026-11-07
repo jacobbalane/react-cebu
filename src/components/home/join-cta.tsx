@@ -11,7 +11,7 @@ export function JoinCta() {
       description="Every React Cebu event is free and open to every level. Bring a laptop, a question or just yourself."
     >
       <TransitionLink href="/events" className={`${closingButton} btn-primary hover:bg-white hover:text-ink`}>
-        View event
+        View events
       </TransitionLink>
       <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-white`}>
         Join the Facebook page
