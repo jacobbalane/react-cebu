@@ -45,7 +45,7 @@ export function Perks() {
         gsap.fromTo(
           gsap.utils.toArray<HTMLElement>("[data-answer]", list.current),
           { opacity: 0.12, filter: "blur(4px)" },
-          { opacity: 1, filter: "blur(0px)", duration: 0.9, ease: "power2.out", stagger: 0.45, clearProps: "filter", scrollTrigger: { trigger: list.current, start: "top 65%", once: true } },
+          { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power2.out", stagger: 0.2, clearProps: "filter", scrollTrigger: { trigger: list.current, start: "top 85%", once: true } },
         );
       });
       return () => mm.revert();
