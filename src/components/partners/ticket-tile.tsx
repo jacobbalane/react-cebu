@@ -7,48 +7,48 @@ import { gsap, useGSAP } from "@/lib/gsap";
 
 const student = ways[4];
 
-// Where a student might be coming in from, and on what.
-const trips = [
-  { ride: "Bus ticket", from: "Carcar" },
-  { ride: "Bus ticket", from: "Toledo" },
-  { ride: "V-hire ticket", from: "Danao" },
-  { ride: "Bus ticket", from: "Bogo" },
-  { ride: "V-hire ticket", from: "Argao" },
-  { ride: "Bus ticket", from: "Moalboal" },
-  { ride: "Bus ticket", from: "Barili" },
-  { ride: "V-hire ticket", from: "Balamban" },
+// What a saved seat might be for, and where it is. Talks have rows and hands-on days have tables.
+const seats = [
+  { event: "React Cebu meetup", seat: "Row C, Seat 12" },
+  { event: "Lightning talks", seat: "Row A, Seat 4" },
+  { event: "Code camp", seat: "Table 3, Seat 2" },
+  { event: "Hacktoberfest", seat: "Table 2, Seat 5" },
+  { event: "React workshop", seat: "Table 5, Seat 6" },
+  { event: "Training session", seat: "Row D, Seat 7" },
+  { event: "React Cebu meetup", seat: "Row F, Seat 18" },
+  { event: "Lightning talks", seat: "Row E, Seat 15" },
 ];
 
-// A random trip for each ticket: one per page load, then a new one each time a ticket is torn up. The
+// A random seat for each ticket: one per page load, then a new one each time a ticket is torn up. The
 // server always sends the first, and the browser swaps in its pick as it hydrates, so the two never disagree.
-let trip: number | undefined;
+let shown: number | undefined;
 const watchers = new Set<() => void>();
 
-const chooseTrip = () => {
+const chooseSeat = () => {
   // It skips the one shown last, so the text always changes. Storage can be blocked, and then a refresh is only random.
-  let last = trip ?? -1;
+  let last = shown ?? -1;
   try {
-    last = trip ?? Number(sessionStorage.getItem("ticket-trip") ?? -1);
+    last = shown ?? Number(sessionStorage.getItem("ticket-seat") ?? -1);
   } catch {
-    last = trip ?? -1;
+    last = shown ?? -1;
   }
-  const choices = trips.map((_, i) => i).filter((i) => i !== last);
-  trip = choices[Math.floor(Math.random() * choices.length)];
+  const choices = seats.map((_, i) => i).filter((i) => i !== last);
+  shown = choices[Math.floor(Math.random() * choices.length)];
   try {
-    sessionStorage.setItem("ticket-trip", String(trip));
+    sessionStorage.setItem("ticket-seat", String(shown));
   } catch {
     // Nothing to do: the next load just won't know what this one showed.
   }
-  return trip;
+  return shown;
 };
 
-const currentTrip = () => trip ?? chooseTrip();
-const firstTrip = () => 0;
-const nextTrip = () => {
-  chooseTrip();
+const currentSeat = () => shown ?? chooseSeat();
+const firstSeat = () => 0;
+const nextSeat = () => {
+  chooseSeat();
   watchers.forEach((tell) => tell());
 };
-const watchTrip = (tell: () => void) => {
+const watchSeat = (tell: () => void) => {
   watchers.add(tell);
   return () => {
     watchers.delete(tell);
@@ -101,7 +101,7 @@ function Flaps() {
  */
 export function TicketTile() {
   const { team } = useOffer();
-  const { ride, from } = trips[useSyncExternalStore(watchTrip, currentTrip, firstTrip)];
+  const { event, seat } = seats[useSyncExternalStore(watchSeat, currentSeat, firstSeat)];
   const ref = useRef<HTMLDivElement>(null);
   const hover = useLift(ref, "student", (line, box) => {
     rise(line, box, { y: "4rem", rotation: -5 }, { y: "1.5rem", rotation: -2 });
@@ -231,7 +231,7 @@ export function TicketTile() {
         punch.after(hole);
         const renew = () => {
           hole.remove();
-          nextTrip();
+          nextSeat();
           peels.forEach((peel) => {
             peel.top = 0;
             peel.bottom = 0;
@@ -317,9 +317,9 @@ export function TicketTile() {
             <span data-seam aria-hidden="true" className="absolute inset-y-[0.625rem] left-[calc(70%-0.3rem)] w-[0.6rem] bg-white" />
             <div data-half="main" className="relative w-[70%] cursor-grab touch-pan-y active:cursor-grabbing">
               <div data-face className={`${grain} ${mainNotches} flex h-full flex-col gap-3 rounded-l-[0.5rem] p-4 pb-16`} style={{ clipPath: mainEdge }}>
-                <p className="m-0 text-sm">{ride}</p>
-                <p className="title m-0 text-[1.375rem]">{from} to Cebu City</p>
-                <p className="m-0 truncate text-sm">Paid by {teamName(team)}</p>
+                <p className="m-0 text-sm">{seat}</p>
+                <p className="title m-0 text-[1.375rem]">{event}</p>
+                <p className="m-0 truncate text-sm">Reserved by {teamName(team)}</p>
               </div>
               <Flaps />
             </div>

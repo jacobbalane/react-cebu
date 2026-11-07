@@ -8,7 +8,7 @@ export const ways = [
   { id: "snacks", title: "Feed the room", text: "Snacks and drinks for one meetup or workshop.", brings: "the snacks" },
   { id: "prizes", title: "Prizes and swag", text: "Stickers, shirts and course credits for Hacktoberfest and code camps.", brings: "the prizes" },
   { id: "engineers", title: "Lend your engineers", text: "Send a speaker or a mentor for a workshop afternoon.", brings: "a speaker or mentor" },
-  { id: "student", title: "Back a student", text: "Cover transport for students coming in from outside the city.", brings: "a student’s ride" },
+  { id: "student", title: "Save a seat", text: "Hold a seat for a student at the next meetup or workshop.", brings: "a student’s seat" },
 ] as const;
 
 export type Way = (typeof ways)[number];
