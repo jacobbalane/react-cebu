@@ -2,16 +2,10 @@ import Image from "next/image";
 import { BlinkingSquares } from "@/components/events/blinking-squares";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { CEBBY_URL } from "@/data/site";
-import { PhotoRotation } from "@/components/photo-rotation";
+import { PhotoSlides } from "@/components/photo-slides";
 
-// None of these are in the recaps just below, so the page doesn't repeat itself.
-const photos = [
-  { src: "/images/enspace-talk.jpg", alt: "Members on laptops around a wooden table during a talk at enspace" },
-  { src: "/images/the-company-group.jpg", alt: "React Cebu members together at The Company Cebu" },
-  { src: "/images/table-trio.jpg", alt: "Three members talking around a table of laptops" },
-  { src: "/images/gatsby-students.jpg", alt: "Students on laptops at the Gatsby workshop" },
-  { src: "/images/first-meetup-speaker.jpg", alt: "A speaker beside a React Cebu slide on a big screen" },
-];
+// All group photos. None of them are in the recaps just below, so the page doesn't repeat itself.
+const photos = ["first-meetup-group", "big-group", "the-company-group", "office-crowd", "zero-to-hero-group", "office-group", "lobby-group", "zero-to-hero-crowd"];
 
 /** Upcoming dates live on Cebby, so this section points there: a real room beside the way in. */
 export function UpcomingEvents() {
@@ -23,7 +17,7 @@ export function UpcomingEvents() {
       <Reveal className="grid gap-2 lg:grid-cols-12">
         <div data-reveal className="tile group min-h-[clamp(20rem,62svh,38.75rem)] bg-fog lg:col-span-7">
           <div className="absolute inset-0 transition-[scale] duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-105">
-            <PhotoRotation sets={[photos]} sizes="(min-width: 1024px) 58vw, 100vw" />
+            <PhotoSlides photos={photos} alt="Everyone at the first React Cebu meetup, gathered in front of the screen" direction="up" sizes="(min-width: 1024px) 58vw, 100vw" className="absolute inset-0" />
           </div>
         </div>
         <div data-reveal className="tile flex flex-col items-start justify-between gap-12 bg-black p-7 text-white sm:p-10 lg:col-span-5">

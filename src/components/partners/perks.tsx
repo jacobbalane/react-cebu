@@ -25,7 +25,7 @@ const answers = [
   },
 ];
 
-const photo = { src: "/images/first-meetup-speaker.jpg", alt: "A speaker beside a React Cebu slide on a big screen" };
+const photo = { src: "/images/company-banners-group.jpg", alt: "A group posing between two long tables, beside community banners" };
 
 // A white corner that rounds off the fog where it meets the photo's cut-out.
 const corner = "absolute size-3 bg-[radial-gradient(circle_at_100%_0,transparent_calc(0.75rem_-_0.5px),#fff_0.75rem)]";

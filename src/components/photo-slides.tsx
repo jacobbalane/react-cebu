@@ -7,8 +7,9 @@ import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 /**
  * Photos that swipe on their own, left or up, one every few seconds, each new photo
  * pushing the last one out like a carousel. Every slider runs on the same cycle from
- * page load, so a `delay` keeps a set of them swiping in order. Reduced motion keeps
- * the first photo.
+ * page load, so a `delay` keeps a set of them swiping in order. A whole section pauses
+ * together while it's off screen, so they stay in that order. Reduced motion keeps the
+ * first photo.
  */
 export function PhotoSlides({
   photos,
@@ -44,7 +45,13 @@ export function PhotoSlides({
             .fromTo(slide, { [axis]: 0 }, { [axis]: -100, ...swipe })
             .fromTo(next, { [axis]: 100 }, { [axis]: 0, ...swipe }, "<");
         });
-        return () => tl.kill();
+        const section = ref.current?.closest("section");
+        const watch = new IntersectionObserver(([entry]) => tl.paused(!entry.isIntersecting));
+        if (section) watch.observe(section);
+        return () => {
+          watch.disconnect();
+          tl.kill();
+        };
       });
       return () => mm.revert();
     },

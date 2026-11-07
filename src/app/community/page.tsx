@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PersonPlaceholder } from "@/components/person-placeholder";
 import { PhotoIntro } from "@/components/photo-intro";
 import { Reveal, SplitHeading } from "@/components/motion";
@@ -50,12 +51,26 @@ export default function CommunityPage() {
       <section id="organizers" aria-labelledby="org-title" className="scroll-mt-24 px-2 pb-32">
         <div className="mb-10 flex flex-col items-center gap-3 px-4 text-center">
           <SplitHeading id="org-title" className="display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]">The people who run it</SplitHeading>
-          <p className="m-0 text-base text-muted">Volunteers, every one of them</p>
+          <p className="m-0 text-base text-muted">Say hi at the next meetup</p>
         </div>
         <Reveal className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {organizers.map((person, i) => (
-            <div key={i} data-reveal className="tile group aspect-[4/5] bg-fog text-ink">
-              <PersonPlaceholder className="absolute inset-0 size-full transition-[scale] duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-105" />
+            <div key={i} data-reveal className={`tile group aspect-[4/5] bg-fog ${person.photo ? "text-white" : "text-ink"}`}>
+              {person.photo ? (
+                <>
+                  <Image
+                    src={person.photo.src}
+                    alt={person.photo.alt}
+                    fill
+                    sizes="(min-width: 1024px) 32vw, (min-width: 640px) 63vw, 125vw"
+                    style={{ objectPosition: person.photo.position }}
+                    className="object-cover transition-[filter,scale] duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-105 group-hover:grayscale-0 [@media(hover:hover)]:grayscale"
+                  />
+                  <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
+                </>
+              ) : (
+                <PersonPlaceholder className="absolute inset-0 size-full transition-[scale] duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-105" />
+              )}
               <div className="absolute inset-x-5 bottom-5 flex flex-col gap-1">
                 <span className="text-[1.75rem] leading-[1.1] tracking-[-0.03em]">{person.name}</span>
                 <span className="text-base">{person.role}</span>

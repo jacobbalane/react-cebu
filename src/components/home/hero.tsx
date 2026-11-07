@@ -26,11 +26,11 @@ function Line({ children, inline = false }: { children: React.ReactNode; inline?
 // Photos only: flat text tiles read as stray gray boxes once the wall is muted. One line per set of
 // ten, each a mix of groups, talks, faces and details, as a column shows one set.
 const tiles: Tile[] = [
-  "first-meetup-group", "laughing-pair", "peace-smile", "gatsby-speaker", "table-laptops", "sticker-lid", "desk-room", "side-smile", "coffee-stickers", "blue-wall-talk",
-  "the-company-group", "table-trio", "peace-signs", "native-speaker", "coding-row", "pizza", "mentor-macbook", "chin-laugh", "terminal-hands", "gatsby-students",
-  "first-meetup-room", "desk-pair", "big-group", "zero-to-hero-speaker", "laptop-plant", "hello-react-cebu", "shirt-mentor", "maroon-smile", "thumbs-up", "gatsby-hand-up",
-  "reactivate-group", "whiteboard-pair", "glasses-smile", "what-is-react-cebu", "iced-coffee-coder", "sticker-coder", "team-huddle", "peace-wall", "desk-laugh", "gatsby-trio",
-  "gatsby-group", "senior-coder", "black-tee-smile", "first-meetup-speaker", "focused-coders", "coding-desk", "desk-duo", "denim-smile", "lanyard-smile", "enspace-talk",
+  "first-meetup-group", "peace-pair", "peace-smile", "gatsby-speaker", "table-laptops", "sticker-lid", "desk-room", "peace-window", "coffee-stickers", "company-slide-group",
+  "the-company-group", "table-trio", "peace-signs", "native-speaker", "coding-row", "pizza", "mentor-macbook", "projector-smile", "terminal-hands", "gatsby-students",
+  "first-meetup-room", "desk-row", "big-group", "zero-to-hero-speaker", "laptop-plant", "hello-react-cebu", "shirt-mentor", "small-group", "thumbs-up", "gatsby-hand-up",
+  "reactivate-group", "screen-trio", "glasses-smile", "what-is-react-cebu", "iced-coffee-coder", "sticker-coder", "team-huddle", "peace-wall", "workshop-window", "gatsby-trio",
+  "gatsby-workshop-group", "senior-coder", "black-tee-smile", "blue-shirt-talk", "workshop-banners", "coding-desk", "desk-duo", "denim-smile", "blue-shirts-group", "enspace-talk",
 ].map(photo);
 
 export function Hero() {

@@ -3,11 +3,11 @@ import { PhotoSlides } from "@/components/photo-slides";
 
 // Every card swipes through its photos, left or up. Delays ripple the swipes across the grid.
 const formats = [
-  { name: "Meetups", desc: "that end in new friendships", photos: ["first-meetup-speaker", "hall-speaker", "enspace-talk"], swipe: "left", delay: 0, alt: "A speaker presenting at a meetup" },
+  { name: "Meetups", desc: "that end in new friendships", photos: ["company-slide-group", "small-group", "enspace-talk"], swipe: "left", delay: 0, alt: "Members posing beside a slide at a meetup" },
   { name: "Workshops", desc: "where you build instead of watching", photos: ["gatsby-students", "gatsby-trio", "gatsby-laughing"], swipe: "left", delay: 0.45, alt: "Students on laptops at the Gatsby workshop" },
-  { name: "Code camps", desc: "that take a whole Saturday, happily", photos: ["table-trio", "mentor-macbook", "hello-react-cebu"], swipe: "left", delay: 0.6, alt: "Three members talking around a table of laptops" },
-  { name: "Hacktoberfest", desc: "that ships real open source", photos: ["gatsby-hand-up", "sticker-coder", "glasses-smile"], swipe: "up", delay: 0.75, alt: "A speaker in a Hacktoberfest shirt with a hand raised" },
-  { name: "Lightning talks", desc: "five minutes, any topic, any level", photos: ["blue-wall-talk", "native-speaker", "what-is-react-cebu"], swipe: "up", delay: 0.3, alt: "A speaker giving a short talk" },
+  { name: "Code camps", desc: "that take a whole Saturday, happily", photos: ["table-trio", "mentor-macbook", "phone-app-demo"], swipe: "left", delay: 0.6, alt: "Three members talking around a table of laptops" },
+  { name: "Hacktoberfest", desc: "that ships real open source", photos: ["gatsby-hand-up", "sticker-coder", "glasses-smile", "hacktoberfest-shirt"], swipe: "up", delay: 0.75, alt: "A speaker in a Hacktoberfest shirt with a hand raised" },
+  { name: "Lightning talks", desc: "five minutes, any topic, any level", photos: ["denim-talk", "native-speaker", "what-is-react-cebu"], swipe: "up", delay: 0.3, alt: "A speaker giving a short talk" },
   { name: "Training", desc: "for students writing their first component", photos: ["mentor-lean", "desk-room", "terminal-hands"], swipe: "up", delay: 0.9, alt: "A mentor leaning in to point something out on a laptop" },
 ] as const;
 

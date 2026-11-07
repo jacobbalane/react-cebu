@@ -21,14 +21,14 @@ const stops = [
     year: 2019,
     title: "Gatsby workshop",
     text: "A hands-on workshop at the Go Negosyo Center, UP Cebu.",
-    media: <Photo src="/images/gatsby-group.jpg" alt="Everyone at the Gatsby workshop gathered for a group photo" />,
+    media: <Photo src="/images/gatsby-workshop-group.jpg" alt="Everyone at the Gatsby workshop gathered for a group photo" />,
   },
   {
     month: "October",
     year: 2025,
     title: "Cebu Hacktoberfest",
     text: "Co-led by JavaScript Cebu with PizzaPy and Ethereum Philippines: talks, workshops and hack nights all month.",
-    media: <Photo src="/images/javascript-cebu-group.jpg" alt="JavaScript Cebu and React Cebu members together around a long table" />,
+    media: <Photo src="/images/hacktoberfest-shirt.jpg" alt="A close-up of a Hacktoberfest shirt" />,
   },
   {
     month: "November",

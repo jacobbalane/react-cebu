@@ -1,9 +1,8 @@
 export type GalleryPhoto = { src: string; alt: string; width: number; height: number };
 export type Album = { title: string; when: string; photos: GalleryPhoto[] };
 
-// Every photo the site uses, under the event it came from, newest first. Events were worked out
-// from the posters and slides on the Facebook page. "Meetups around Cebu" holds the ones that
-// couldn't be tied to a single night.
+// Every photo the site uses, under the event it came from, newest first. Events were worked out from
+// each photo's Facebook post date and caption, as some events shared a venue.
 export const albums: Album[] = [
   {
     title: "REACT-IVATE 24",
@@ -11,6 +10,9 @@ export const albums: Album[] = [
     photos: [
       { src: "/images/reactivate-group.jpg", alt: "Everyone at REACT-IVATE 24 gathered for a group photo at enspace", width: 2048, height: 1152 },
       { src: "/images/table-tablet.jpg", alt: "People talking around a wooden table with a tablet in front of them", width: 1152, height: 2048 },
+      { src: "/images/reactivate-talk.jpg", alt: "A speaker talking beside a big screen while members follow on laptops", width: 1179, height: 1566 },
+      { src: "/images/reactivate-screen.jpg", alt: "A member on a phone at a long table, under a screen showing the workshop title", width: 1152, height: 2048 },
+      { src: "/images/reactivate-table.jpg", alt: "Members at a long table under a screen showing the workshop title", width: 1152, height: 2048 },
     ],
   },
   {
@@ -23,21 +25,35 @@ export const albums: Album[] = [
     ],
   },
   {
-    title: "Meetups around Cebu",
-    when: "",
+    title: "Going 3D with React",
+    when: "March 2023",
     photos: [
-      { src: "/images/the-company-group.jpg", alt: "React Cebu members together at The Company Cebu", width: 2048, height: 1536 },
-      { src: "/images/javascript-cebu-group.jpg", alt: "JavaScript Cebu and React Cebu members together around a long table", width: 2048, height: 1536 },
       { src: "/images/table-laptops.jpg", alt: "Members coding around a long table in a bright office", width: 2048, height: 1536 },
+    ],
+  },
+  {
+    title: "Better Code Reviews",
+    when: "February 2023",
+    photos: [
+      { src: "/images/company-banners-group.jpg", alt: "A group posing between two long tables, beside community banners", width: 2048, height: 1536 },
+      { src: "/images/the-company-group.jpg", alt: "React Cebu members together at The Company Cebu", width: 2048, height: 1536 },
+      { src: "/images/company-room.jpg", alt: "Members around a curved table in a big room at night", width: 2048, height: 1536 },
       { src: "/images/iced-coffee-coder.jpg", alt: "A member working on a laptop with iced coffee on the table", width: 2048, height: 1536 },
       { src: "/images/pizza.jpg", alt: "Boxes of pizza on a long table at a meetup", width: 2048, height: 1536 },
+      { src: "/images/pizza-bite.jpg", alt: "A member grinning with a slice of pizza in their mouth", width: 2048, height: 1536 },
+    ],
+  },
+  {
+    title: "Secrets of Building Robust UI Components",
+    when: "January 2023",
+    photos: [
+      { src: "/images/company-slide-group.jpg", alt: "Members posing beside a slide at a long meeting table", width: 2048, height: 1536 },
     ],
   },
   {
     title: "React Native Series: Zero to Hero",
     when: "March 2020",
     photos: [
-      { src: "/images/laughing-pair.jpg", alt: "Two members laughing together over a laptop", width: 2016, height: 1512 },
       { src: "/images/native-speaker.jpg", alt: "A speaker opening the React Native series in front of the projected title", width: 1837, height: 1225 },
       { src: "/images/table-trio.jpg", alt: "Three members talking around a table of laptops", width: 1837, height: 1225 },
       { src: "/images/peace-smile.jpg", alt: "Two members smiling at the camera, one making a peace sign", width: 2016, height: 1512 },
@@ -49,18 +65,30 @@ export const albums: Album[] = [
       { src: "/images/thumbs-up.jpg", alt: "Three members giving a thumbs up at their desks", width: 2016, height: 1512 },
       { src: "/images/senior-coder.jpg", alt: "A member typing on a laptop with others working behind", width: 1837, height: 1225 },
       { src: "/images/hello-react-cebu.jpg", alt: "A laptop screen with code that says Hello React Cebu", width: 1837, height: 1225 },
-      { src: "/images/whiteboard-pair.jpg", alt: "Two members reading a screen in front of a whiteboard", width: 2016, height: 1512 },
-      { src: "/images/desk-pair.jpg", alt: "Two members coding at their desks", width: 2016, height: 1512 },
       { src: "/images/laptop-desk.jpg", alt: "A member working at a bright desk with two laptops", width: 1837, height: 1225 },
       { src: "/images/coding-desk.jpg", alt: "A member typing on a laptop at a long desk", width: 1837, height: 1225 },
-      { src: "/images/volunteer-camera.jpg", alt: "A volunteer photographing the room with a camera", width: 1504, height: 2016 },
+      { src: "/images/phone-app-demo.jpg", alt: "A Facebook-style app on a phone, resting on a laptop showing its code", width: 1837, height: 1225 },
+      { src: "/images/laptop-trio.jpg", alt: "Three members working something out around a laptop", width: 2016, height: 1512 },
+      { src: "/images/desk-smiles.jpg", alt: "Two members smiling at the camera from their desks", width: 1837, height: 1225 },
+      { src: "/images/small-group.jpg", alt: "A small group posing together in an office, one of them flexing", width: 2016, height: 1512 },
+      { src: "/images/lobby-group.jpg", alt: "A big group posing in an office lobby", width: 2016, height: 1512 },
+      { src: "/images/blue-shirts-group.jpg", alt: "Six members posing in an office, some in blue shirts", width: 2016, height: 1512 },
+      { src: "/images/desks-group.jpg", alt: "A big group posing behind a row of desks", width: 1837, height: 1225 },
+      { src: "/images/screen-trio.jpg", alt: "Three members leaning in to read a screen", width: 2016, height: 1512 },
+      { src: "/images/peace-pair.jpg", alt: "Two members making peace signs", width: 2016, height: 1512 },
+      { src: "/images/desk-row.jpg", alt: "Members working along a row of desks", width: 1837, height: 1225 },
+      { src: "/images/blue-shirt-talk.jpg", alt: "A speaker in a blue shirt talking beside a projected slide", width: 2016, height: 1512 },
+      { src: "/images/full-room.jpg", alt: "A full room of members at their desks during a talk", width: 1837, height: 1225 },
+      { src: "/images/full-room-side.jpg", alt: "A full room of members at their desks, seen from the side", width: 1837, height: 1225 },
+      { src: "/images/pillar-stand.jpg", alt: "A member in a cap standing by a pillar", width: 1837, height: 1225 },
+      { src: "/images/desk-peace.jpg", alt: "Two members at their desks, one smiling and making a peace sign", width: 2016, height: 1512 },
     ],
   },
   {
     title: "Gatsby Workshop",
     when: "October 2019",
     photos: [
-      { src: "/images/gatsby-group.jpg", alt: "Everyone at the Gatsby workshop gathered for a group photo", width: 2896, height: 1448 },
+      { src: "/images/gatsby-workshop-group.jpg", alt: "Everyone at the Gatsby workshop gathered for a group photo", width: 2000, height: 1000 },
       { src: "/images/gatsby-speaker.jpg", alt: "A speaker talking to a room beside a React Cebu banner", width: 1837, height: 1225 },
       { src: "/images/gatsby-hand-up.jpg", alt: "A speaker in a Hacktoberfest shirt with a hand raised", width: 1837, height: 1225 },
       { src: "/images/gatsby-laughing.jpg", alt: "Workshop participants laughing together over their laptops", width: 1837, height: 1225 },
@@ -71,6 +99,13 @@ export const albums: Album[] = [
       { src: "/images/terminal-hands.jpg", alt: "Hands typing on a laptop with a terminal open", width: 1837, height: 1225 },
       { src: "/images/peace-wall.jpg", alt: "A member smiling and making a peace sign", width: 1837, height: 1225 },
       { src: "/images/black-tee-smile.jpg", alt: "A member in a black shirt smiling at the camera", width: 1837, height: 1225 },
+      { src: "/images/hacktoberfest-shirt.jpg", alt: "A close-up of a Hacktoberfest shirt", width: 1837, height: 1225 },
+      { src: "/images/shirt-trio.jpg", alt: "Three members holding up shirts that read Learn, Code, Play, Repeat", width: 2000, height: 1000 },
+      { src: "/images/workshop-smiles.jpg", alt: "Three members turning from their laptops to smile", width: 1837, height: 1225 },
+      { src: "/images/projector-smile.jpg", alt: "A member smiling beside a projector at the Gatsby workshop", width: 1837, height: 1225 },
+      { src: "/images/peace-window.jpg", alt: "A member making a peace sign by a window", width: 1837, height: 1225 },
+      { src: "/images/workshop-banners.jpg", alt: "Members at their laptops in front of event banners", width: 1837, height: 1225 },
+      { src: "/images/workshop-window.jpg", alt: "Members at their laptops beside a bright window", width: 1837, height: 1225 },
     ],
   },
   {
@@ -82,23 +117,21 @@ export const albums: Album[] = [
       { src: "/images/zero-to-hero-group.jpg", alt: "A large group posing together in an office", width: 1410, height: 940 },
       { src: "/images/zero-to-hero-speaker.jpg", alt: "A speaker talking with both hands raised", width: 2048, height: 1365 },
       { src: "/images/big-laugh.jpg", alt: "A member laughing at a meetup, wearing a name tag", width: 1365, height: 2048 },
-      { src: "/images/blue-wall-talk.jpg", alt: "A speaker checking a phone in front of a blue wall", width: 1378, height: 918 },
       { src: "/images/sticker-coder.jpg", alt: "A member concentrating behind a laptop covered in stickers", width: 1824, height: 1050 },
       { src: "/images/shirt-mentor.jpg", alt: "A mentor and a member working through something on a laptop", width: 2048, height: 1365 },
       { src: "/images/sticker-lid.jpg", alt: "A laptop lid covered in stickers", width: 2048, height: 1365 },
       { src: "/images/laptop-plant.jpg", alt: "Two members working at a laptop beside a plant", width: 2048, height: 1365 },
       { src: "/images/coffee-stickers.jpg", alt: "A hand holding a cup of coffee over a laptop covered in stickers", width: 2048, height: 1365 },
-      { src: "/images/focused-coders.jpg", alt: "Members concentrating on their screens", width: 1440, height: 960 },
       { src: "/images/team-huddle.jpg", alt: "A small group huddled around a laptop", width: 2048, height: 1365 },
       { src: "/images/desk-duo.jpg", alt: "Two members talking at their desks", width: 2048, height: 1365 },
       { src: "/images/denim-smile.jpg", alt: "A member in a denim jacket smiling at a laptop", width: 2048, height: 1365 },
-      { src: "/images/side-smile.jpg", alt: "A member smiling and talking to someone nearby", width: 2048, height: 1365 },
-      { src: "/images/chin-laugh.jpg", alt: "A member laughing with chin on hand", width: 2048, height: 1365 },
-      { src: "/images/desk-laugh.jpg", alt: "A member laughing at a desk", width: 2048, height: 1365 },
       { src: "/images/talking-hands.jpg", alt: "A member talking with clasped hands", width: 2048, height: 1365 },
-      { src: "/images/lanyard-smile.jpg", alt: "A member wearing a lanyard, smiling", width: 2048, height: 1365 },
       { src: "/images/glasses-smile.jpg", alt: "A member in glasses smiling at someone nearby", width: 1365, height: 2048 },
-      { src: "/images/maroon-smile.jpg", alt: "A member in a maroon shirt smiling at the camera", width: 2048, height: 1365 },
+      { src: "/images/office-group.jpg", alt: "A big group posing together in an office", width: 2048, height: 1536 },
+      { src: "/images/zero-to-hero-crowd.jpg", alt: "A big group posing together in an office", width: 1985, height: 1117 },
+      { src: "/images/whiteboard-talk.jpg", alt: "A speaker talking to a room in front of a whiteboard", width: 1371, height: 914 },
+      { src: "/images/office-crowd.jpg", alt: "A big group posing around the desks of an office", width: 2048, height: 1536 },
+      { src: "/images/denim-talk.jpg", alt: "A speaker in a denim jacket talking in front of a whiteboard", width: 1440, height: 960 },
     ],
   },
   {
@@ -107,9 +140,8 @@ export const albums: Album[] = [
     photos: [
       { src: "/images/first-meetup-group.jpg", alt: "Everyone at the first React Cebu meetup, gathered in front of the screen", width: 2016, height: 1512 },
       { src: "/images/first-meetup-room.jpg", alt: "A full hall watching a React Cebu slide at the first meetup", width: 2016, height: 1512 },
-      { src: "/images/first-meetup-speaker.jpg", alt: "A speaker beside a React Cebu slide on a big screen", width: 2016, height: 1512 },
       { src: "/images/hall-full-room.jpg", alt: "A full hall watching a talk at the first React Cebu meetup", width: 2016, height: 1512 },
-      { src: "/images/hall-speaker.jpg", alt: "A speaker at the front of a full hall, beside a projected slide", width: 2016, height: 1512 },
+      { src: "/images/talk-rendering.jpg", alt: "A speaker with a microphone beside a slide of two component trees", width: 1512, height: 945 },
     ],
   },
 ];

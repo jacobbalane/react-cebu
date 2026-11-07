@@ -35,7 +35,7 @@ export const recaps: Recap[] = [
     title: "Gatsby Workshop",
     when: "October 2019",
     note: "We built a website with Gatsby.",
-    image: "/images/gatsby-group.jpg",
+    image: "/images/gatsby-workshop-group.jpg",
     alt: "Everyone at the Gatsby workshop gathered for a group photo",
   },
   {

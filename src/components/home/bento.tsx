@@ -7,6 +7,7 @@ import Matter from "matter-js";
 import { Draggable, gsap, ScrollTrigger, useGSAP, MOTION_OK } from "@/lib/gsap";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { PersonPlaceholder } from "@/components/person-placeholder";
+import { organizers } from "@/data/people";
 import { PhotoSlides } from "@/components/photo-slides";
 import { FACEBOOK_URL, TALK_EMAIL } from "@/data/site";
 
@@ -69,7 +70,7 @@ const past = [
   { title: "REACT-IVATE 24", image: "/images/reactivate-group.jpg" },
   { title: "TypeScript Patterns, 2023", image: "/images/enspace-talk.jpg" },
   { title: "React Native series, 2020", image: "/images/native-speaker.jpg" },
-  { title: "Gatsby workshop, 2019", image: "/images/gatsby-group.jpg" },
+  { title: "Gatsby workshop, 2019", image: "/images/gatsby-workshop-group.jpg" },
   { title: "Zero to Hero, 2019", image: "/images/what-is-react-cebu.jpg" },
   { title: "The first meetup, 2019", image: "/images/first-meetup-room.jpg" },
 ];
@@ -572,7 +573,7 @@ export function Bento() {
         <LevelPicker />
 
         <MediaTile label="Hands-on workshops" className="lg:col-span-3 lg:row-span-2">
-          <PhotoSlides photos={["desk-pair", "laptop-desk", "focused-coders"]} alt="Two members coding at their desks" delay={1.2} sizes="(min-width: 1024px) 25vw, 100vw" className="absolute inset-0" />
+          <PhotoSlides photos={["screen-trio", "laptop-desk", "desk-row"]} alt="Three members leaning in to read a screen" delay={1.2} sizes="(min-width: 1024px) 25vw, 100vw" className="absolute inset-0" />
         </MediaTile>
 
         <TopicPile />
@@ -588,9 +589,10 @@ export function Bento() {
             <span className="text-[0.9375rem]">Meet the organizers</span>
           </span>
           <span className="flex shrink-0">
-            {[1, 2, 3, 4].map((n, i) => (
-              <span key={n} className={`size-12 overflow-hidden rounded-full border-2 border-react bg-[#585858] transition-[margin] duration-500 ${i ? "-ml-5 group-hover:ml-1.5" : ""}`}>
-                <PersonPlaceholder className="block size-full" />
+            {/* Reversed, as each circle lies over the one before it and this keeps the first organizer whole. */}
+            {organizers.toReversed().map((person, i) => (
+              <span key={i} className={`size-12 overflow-hidden rounded-full border-2 border-react bg-[#585858] transition-[margin] duration-500 ${i ? "-ml-5 group-hover:ml-1.5" : ""}`}>
+                {person.photo ? <Image src={person.photo.avatar} alt="" width={96} height={96} className="block size-full object-cover" /> : <PersonPlaceholder className="block size-full" />}
               </span>
             ))}
           </span>

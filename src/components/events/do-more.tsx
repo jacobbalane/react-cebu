@@ -15,16 +15,19 @@ const media = [
   [
     { src: "/images/gatsby-speaker.jpg", alt: "A speaker talking to a room beside a React Cebu banner" },
     { src: "/images/zero-to-hero-speaker.jpg", alt: "A speaker talking with both hands raised" },
-    { src: "/images/first-meetup-speaker.jpg", alt: "A speaker beside a React Cebu slide on a big screen" },
-    { src: "/images/blue-wall-talk.jpg", alt: "A speaker checking a phone in front of a blue wall" },
+    { src: "/images/blue-shirt-talk.jpg", alt: "A speaker in a blue shirt talking beside a projected slide" },
     { src: "/images/projector-speaker.jpg", alt: "A speaker pointing at a slide, lit by the projector" },
+    { src: "/images/workshop-window.jpg", alt: "Members at their laptops beside a bright window" },
   ],
   [
-    { src: "/images/desk-pair.jpg", alt: "Two members coding at their desks in a partner’s office" },
+    { src: "/images/laptop-trio.jpg", alt: "Three members working something out around a laptop" },
     { src: "/images/pizza.jpg", alt: "Boxes of pizza on a long table at a meetup" },
+    { src: "/images/pizza-bite.jpg", alt: "A member grinning with a slice of pizza in their mouth" },
     { src: "/images/the-company-group.jpg", alt: "React Cebu members together at The Company Cebu" },
     { src: "/images/enspace-group.jpg", alt: "React Cebu members around a long wooden table at enspace" },
+    { src: "/images/shirt-trio.jpg", alt: "Three members holding up shirts that read Learn, Code, Play, Repeat" },
     { src: "/images/table-laptops.jpg", alt: "Members coding around a long table in a bright office" },
+    { src: "/images/company-room.jpg", alt: "Members around a curved table in a big room at night" },
   ],
 ];
 

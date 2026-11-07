@@ -7,10 +7,12 @@ import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 const firstRow = [
   { src: "/images/thumbs-up.jpg", alt: "Three members giving a thumbs up at their desks" },
   { src: "/images/mentor-lean.jpg", alt: "A mentor leaning in to point something out on a laptop" },
-  { src: "/images/blue-wall-talk.jpg", alt: "A speaker checking a phone in front of a blue wall" },
+  { src: "/images/workshop-banners.jpg", alt: "Members at their laptops in front of event banners" },
   { src: "/images/zero-to-hero-group.jpg", alt: "A large group posing together in an office" },
-  { src: "/images/whiteboard-pair.jpg", alt: "Two members reading a screen in front of a whiteboard" },
-  { src: "/images/desk-laugh.jpg", alt: "A member laughing at a desk" },
+  { src: "/images/workshop-window.jpg", alt: "Members at their laptops beside a bright window" },
+  { src: "/images/projector-smile.jpg", alt: "A member smiling beside a projector at the Gatsby workshop" },
+  { src: "/images/desk-smiles.jpg", alt: "Two members smiling at the camera from their desks" },
+  { src: "/images/desk-peace.jpg", alt: "Two members at their desks, one smiling and making a peace sign" },
 ];
 
 const secondRow = [
@@ -20,6 +22,8 @@ const secondRow = [
   { src: "/images/sticker-coder.jpg", alt: "A member concentrating behind a laptop covered in stickers" },
   { src: "/images/talking-hands.jpg", alt: "A member talking with clasped hands" },
   { src: "/images/denim-smile.jpg", alt: "A member in a denim jacket smiling at a laptop" },
+  { src: "/images/workshop-smiles.jpg", alt: "Three members turning from their laptops to smile" },
+  { src: "/images/desks-group.jpg", alt: "A big group posing behind a row of desks" },
 ];
 
 /**
