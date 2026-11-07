@@ -262,7 +262,10 @@ export function Gallery() {
     if (!wall.current || !row.current) return;
     const box = wall.current;
     const line = row.current;
-    const trace = () => setBand(traceBand(box, line));
+    // A hidden wall measures as nothing, so it keeps the shape it has until it's back.
+    const trace = () => {
+      if (box.offsetWidth) setBand(traceBand(box, line));
+    };
     const watch = new ResizeObserver(trace);
     watch.observe(box);
     return () => watch.disconnect();
