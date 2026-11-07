@@ -74,6 +74,8 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
     if (!section) instance?.scrollTo(0, { immediate: true });
     ScrollTrigger.refresh();
+    // Lenis measures a new page a moment after it swaps in. Until then it stops at the old page's end, short of a section further down.
+    instance?.resize();
     if (!instance || !section) return;
 
     // Straight there first, which also says where the section ends up once the page's end is counted.
