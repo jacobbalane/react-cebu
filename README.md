@@ -2,7 +2,7 @@
 
 The website for React Cebu, a free React community in Cebu, Philippines, and part of JavaScript Cebu.
 
-Built with Next.js (App Router), TypeScript and Tailwind CSS v4. Animations use GSAP (ScrollTrigger, SplitText, Draggable, Inertia) with Lenis smooth scrolling.
+Built with Next.js (App Router), TypeScript and Tailwind CSS v4. Animations use GSAP (ScrollTrigger, SplitText, Draggable, Inertia) with Lenis smooth scrolling. The phone on the Events page uses three.js.
 
 ## Run it
 
@@ -15,22 +15,21 @@ Open http://localhost:3000.
 
 ## Where things live
 
-- `src/app/` holds the pages: home, events, event detail (`events/[slug]`), community, speak, partners, recaps.
-- `src/data/` holds the content: events, recaps, organizers, speakers, footer links. Edit these files to change what the site shows.
+- `src/app/` holds the pages: home, community, events, gallery and partners, plus the not found page.
+- `src/data/` holds the content: gallery photos, organizers, event recaps, and the site's links and footer. Edit these files to change what the site shows.
 - `src/components/` holds the sections, grouped by page, plus shared pieces like the header, footer and motion helpers.
 - `src/lib/gsap.ts` registers the GSAP plugins once; `src/components/smooth-scroll.tsx` wires Lenis to ScrollTrigger.
-- `public/images/` holds the photos.
+- `public/images/` holds the photos, all from React Cebu's own events.
 
-## Before launch
+## Search and AI tools
 
-- Photos are free Unsplash samples, and speaker names, organizers and future events are placeholders. Replace them in `src/data/` and `public/images/`.
-- The subscribe, talk and partner forms only show a confirmation; connect them to a mailing list or form service.
-- Add the real Facebook group link in `src/data/site.ts` (footer, "Join the Facebook group" and "Community chat" still point to `#facebook`).
-- Follow `docs/main-domain-checklist.md` when the site moves to its main domain.
+- `src/lib/page-address.ts` gives each page its canonical link and share details, including the share image.
+- `src/app/sitemap.ts` and `src/app/llms.txt/route.ts` list the pages.
+- `src/app/page.tsx` holds the structured data.
 
-## Calendar files
+## Deployment
 
-Every event has a downloadable calendar file at `/events/<slug>/calendar`, built from `start` and `end` in `src/data/events.ts`. Google Calendar, Apple Calendar and Outlook all open it.
+The site runs on Netlify, and pushing to `main` deploys it. `SITE_URL` in `src/data/site.ts` reads Netlify's `URL` when the site builds, so the links above follow the site's main address.
 
 ## Motion
 
