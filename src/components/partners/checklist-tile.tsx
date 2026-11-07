@@ -5,7 +5,7 @@ import { ways } from "@/components/partners/offer";
 import { AddPill, grain, lying, rise, shell, tileText, tileTitle, useLift } from "@/components/partners/ways-tile";
 
 const room = ways[0];
-const checks = ["Seats for 40 to 80", "Projector", "Wi-Fi", "One evening a month"];
+const checks = ["Seats for 40 to 80", "Projector", "Wi-Fi", "One evening"];
 
 /** A real checklist: the rows tick and untick when pressed, and looking at the card only lifts the paper. */
 export function ChecklistTile() {

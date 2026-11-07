@@ -538,7 +538,7 @@ function OpenMic() {
       </div>
 
       <p className={`${lead} lg:self-end`}>Five minutes, any topic, any level.</p>
-      <p className={`${detail} text-[#bdbdbd]`}>Every talk comes from a member. First-timers get a mentor.</p>
+      <p className={`${detail} text-[#bdbdbd]`}>Most talks come from members. First-timers get a mentor.</p>
 
       <a href={TALK_EMAIL} className={`${action} btn-white`}>
         Email us a talk idea

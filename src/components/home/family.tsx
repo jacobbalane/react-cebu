@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import { TransitionLink } from "@/components/page-transition";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { Draggable, gsap, useGSAP } from "@/lib/gsap";
 
@@ -54,16 +53,7 @@ const groups: { name: string; tile: string; mark: Mark; markTone: string; body: 
     mark: Atom,
     // React cyan with a third white mixed in: a soft tint on the card, as the fog marks sit on white.
     markTone: "text-[#59e6ff]",
-    body: (
-      <div className="flex flex-col items-start gap-5">
-        <p className="m-0 max-w-[30ch] text-base leading-snug">
-          One of three communities under JavaScript Cebu. We share events, speakers and a lot of pizza.
-        </p>
-        <TransitionLink href="/community#family" className="btn btn-black">
-          Meet the family
-        </TransitionLink>
-      </div>
-    ),
+    body: <p className="m-0 max-w-[30ch] text-base leading-snug">One of three communities under JavaScript Cebu. We share events, speakers and a lot of pizza.</p>,
   },
   {
     name: "Vue.js Cebu",
@@ -95,7 +85,7 @@ const SHADE = { flat: 0, over: 0.5, top: 0.7, held: 1 };
  * settles flat where it lands. React always stays on top. A card can be dragged past the panel's
  * edge, which cuts it off, and over the others; let go where less than a quarter of any card
  * would show, it eases back to the nearest place where enough does. A card resting on another
- * casts a shadow on it, so the stacking order shows. The "Meet the family" link still clicks.
+ * casts a shadow on it, so the stacking order shows.
  */
 export function Family() {
   const panel = useRef<HTMLDivElement>(null);

@@ -4,7 +4,7 @@ import { createContext, useContext, useMemo, useState } from "react";
 
 /** What a partner can give. `brings` finishes "You’ll bring…". */
 export const ways = [
-  { id: "room", title: "Host a meetup", text: "A room for 40 to 80 people, a projector and Wi-Fi, one evening a month.", brings: "the room" },
+  { id: "room", title: "Host a meetup", text: "A room for 40 to 80 people, a projector and Wi-Fi for one evening.", brings: "the room" },
   { id: "snacks", title: "Feed the room", text: "Snacks and drinks for one meetup or workshop.", brings: "the snacks" },
   { id: "prizes", title: "Prizes and swag", text: "Stickers, shirts and course credits for Hacktoberfest and code camps.", brings: "the prizes" },
   { id: "engineers", title: "Lend your engineers", text: "Send a speaker or a mentor for a workshop afternoon.", brings: "a speaker or mentor" },

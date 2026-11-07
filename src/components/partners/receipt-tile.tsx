@@ -217,7 +217,7 @@ export function ReceiptTile() {
                     <span key={i} className={i % 2 ? "bg-transparent" : "bg-ink"} style={{ width: `${width * 0.22}rem` }} />
                   ))}
                 </div>
-                <p className="m-0 text-center">Salamat, see you next month</p>
+                <p className="m-0 text-center">Salamat, see you next time</p>
               </div>
 
               {/* Light that moves with the paper: the curl at both edges and one soft crease. */}
