@@ -104,7 +104,7 @@ function Tile({ shot, onOpen }: { shot: Shot; onOpen: (shot: Shot) => void }) {
     >
       <Image
         src={shot.src}
-        alt=""
+        alt={shot.alt}
         width={shot.width}
         height={shot.height}
         sizes="(min-width: 1408px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"

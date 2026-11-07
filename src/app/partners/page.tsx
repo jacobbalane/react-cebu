@@ -7,10 +7,12 @@ import { Perks } from "@/components/partners/perks";
 import { Ways } from "@/components/partners/ways";
 import { PhotoIntro } from "@/components/photo-intro";
 import { FACEBOOK_URL, PARTNER_EMAIL } from "@/data/site";
+import { pageAddress } from "@/lib/page-address";
 
 export const metadata: Metadata = {
   title: "Partner with us",
   description: "Help keep React Cebu free: host a meetup, feed the room, sponsor prizes or lend your engineers.",
+  ...pageAddress("/partners"),
 };
 
 /**
@@ -24,7 +26,7 @@ export default function PartnersPage() {
       <PhotoIntro
         title={
           <>
-            Help keep
+            Help keep{" "}
             <br />
             React Cebu free.
           </>

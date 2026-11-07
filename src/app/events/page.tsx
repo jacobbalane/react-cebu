@@ -8,10 +8,12 @@ import { UpcomingEvents } from "@/components/events/upcoming-events";
 import { Reveal, SplitHeading } from "@/components/motion";
 import { recaps } from "@/data/recaps";
 import { CEBBY_URL, FACEBOOK_URL } from "@/data/site";
+import { pageAddress } from "@/lib/page-address";
 
 export const metadata: Metadata = {
   title: "Events",
   description: "Free React meetups, workshops and code camps around Cebu. Find the next one on Cebby, and see what we’ve run since 2019.",
+  ...pageAddress("/events"),
 };
 
 const heading = "display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]";

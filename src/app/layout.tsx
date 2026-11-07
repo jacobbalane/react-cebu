@@ -4,6 +4,8 @@ import { PageTransition } from "@/components/page-transition";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { SITE_DESCRIPTION, SITE_URL } from "@/data/site";
+import { sharedOpenGraph } from "@/lib/page-address";
 import "./globals.css";
 
 const hostGrotesk = Host_Grotesk({
@@ -12,18 +14,14 @@ const hostGrotesk = Host_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://react.jscebu.org"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "React Cebu — a free React community in Cebu",
     template: "%s — React Cebu",
   },
-  description:
-    "Free meetups, workshops and code camps for developers building with React in Cebu, Philippines. Part of JavaScript Cebu since 2019.",
-  openGraph: {
-    siteName: "React Cebu",
-    type: "website",
-    locale: "en_PH",
-  },
+  description: SITE_DESCRIPTION,
+  openGraph: sharedOpenGraph,
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

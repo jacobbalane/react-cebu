@@ -1,9 +1,16 @@
-/** The public address, used in calendar files. */
-export const SITE_URL = "https://react.jscebu.org";
+/**
+ * The public address, for anything that links to the site from outside it. Netlify sets `URL` to the
+ * site's main address when it builds, so this follows the domain without a code change.
+ */
+export const SITE_URL = process.env.URL ?? "https://react.jscebu.org";
+
+export const SITE_DESCRIPTION =
+  "Free meetups, workshops and code camps for developers building with React in Cebu, Philippines. Part of JavaScript Cebu since 2019.";
 
 /** The React Cebu Facebook page: where people join, and where events are announced and RSVPed. */
 export const FACEBOOK_URL = "https://www.facebook.com/reactcebu/";
 export const FACEBOOK_PHOTOS_URL = "https://www.facebook.com/reactcebu/photos";
+export const GITHUB_URL = "https://github.com/reactcebu";
 
 /** Talk ideas come in by email now that there's no Speak page. */
 export const TALK_EMAIL = "mailto:react@jscebu.org?subject=Talk%20idea";
@@ -51,7 +58,7 @@ export const footerColumns = [
     title: "Follow",
     links: [
       { href: FACEBOOK_URL, label: "Facebook" },
-      { href: "https://github.com/reactcebu", label: "GitHub" },
+      { href: GITHUB_URL, label: "GitHub" },
       { href: "mailto:react@jscebu.org", label: "react@jscebu.org" },
     ],
   },

@@ -10,10 +10,12 @@ import { Timeline } from "@/components/community/timeline";
 import { ClosingCard, closingButton } from "@/components/closing-card";
 import { organizers } from "@/data/people";
 import { FACEBOOK_URL, VOLUNTEER_EMAIL } from "@/data/site";
+import { pageAddress } from "@/lib/page-address";
 
 export const metadata: Metadata = {
   title: "Community",
   description: "Students, career-shifters and working engineers in Cebu learning React together since 2019.",
+  ...pageAddress("/community"),
 };
 
 const rules = [
@@ -33,7 +35,7 @@ export default function CommunityPage() {
       <PhotoIntro
         title={
           <>
-            We’re a community,
+            We’re a community,{" "}
             <br />
             not an audience.
           </>

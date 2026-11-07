@@ -4,10 +4,12 @@ import { Gallery } from "@/components/gallery/gallery";
 import { TransitionLink } from "@/components/page-transition";
 import { PhotoIntro } from "@/components/photo-intro";
 import { FACEBOOK_URL } from "@/data/site";
+import { pageAddress } from "@/lib/page-address";
 
 export const metadata: Metadata = {
   title: "Gallery",
   description: "Photos from React Cebu meetups, workshops and code camps.",
+  ...pageAddress("/gallery"),
 };
 
 export default function GalleryPage() {
@@ -16,7 +18,7 @@ export default function GalleryPage() {
       <PhotoIntro
         title={
           <>
-            Photos from
+            Photos from{" "}
             <br />
             our events.
           </>

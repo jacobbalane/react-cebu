@@ -26,7 +26,7 @@ Open http://localhost:3000.
 - Photos are free Unsplash samples, and speaker names, organizers and future events are placeholders. Replace them in `src/data/` and `public/images/`.
 - The subscribe, talk and partner forms only show a confirmation; connect them to a mailing list or form service.
 - Add the real Facebook group link in `src/data/site.ts` (footer, "Join the Facebook group" and "Community chat" still point to `#facebook`).
-- Check `SITE_URL` in `src/data/site.ts`; share links and calendar files use it.
+- Follow `docs/main-domain-checklist.md` when the site moves to its main domain.
 
 ## Calendar files
 
