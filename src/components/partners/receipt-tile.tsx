@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { teamName, useOffer, ways } from "@/components/partners/offer";
 import { AddPill, follow, grain, moves, onLight, rootSize, shell, tileText, tileTitle, useLook, zoomOf } from "@/components/partners/ways-tile";
 import { gsap, useGSAP } from "@/lib/gsap";
@@ -27,13 +27,32 @@ const tornTop = `polygon(${teeth.map((i) => `${across(i)}% ${i % 2 ? 0 : DEPTH}r
 
 const leader = ".".repeat(60);
 const bars = [2, 1, 3, 1, 1, 2, 3, 1, 2, 1, 1, 3, 2, 1, 3, 1, 2, 2, 1, 3, 1, 1, 2, 1];
-const order = [
-  ["Pizza", "8 boxes"],
-  ["Puso", "120 pcs"],
-  ["Iced tea", "60 cups"],
-  ["Coffee", "2 flasks"],
-  ["Napkins", "Plenty"],
-];
+
+type Line = [name: string, amount: (people: number) => string];
+const per = (guests: number, unit: string): Line[1] => (people) => `${Math.ceil(people / guests)} ${unit}`;
+const always = (amount: string): Line[1] => () => amount;
+
+// What a print can order. Every receipt has the same five lines, so the paper stays one length however the order changes.
+const mains: Line[] = [["Pizza", per(8, "boxes")], ["Siomai", per(0.5, "pcs")], ["Ngohiong", per(1, "pcs")], ["Bam-i", per(15, "trays")], ["Lechon", per(8, "kilos")], ["Chicken", per(10, "buckets")]];
+const sides: Line[] = [["Puso", per(0.5, "pcs")], ["Rosquillos", per(10, "packs")], ["Otap", per(10, "packs")], ["Dried mango", per(5, "packs")], ["Donuts", per(12, "boxes")]];
+const drinks: Line[] = [["Iced tea", per(1, "cups")], ["Coffee", per(30, "flasks")], ["Sikwate", per(30, "flasks")], ["Mango shake", per(1, "cups")], ["Soft drinks", per(24, "cases")], ["Water", per(1, "bottles")]];
+const extras: Line[] = [["Napkins", always("Plenty")], ["Extra rice", always("Always")], ["Seconds", always("Allowed")], ["Leftovers", always("None")]];
+const crowds = [40, 50, 60, 80, 100];
+const thanks = ["Salamat, see you next time", "Daghang salamat, partner", "Thanks for feeding us", "Kaon na, coders", "Busog na? Back to the code"];
+
+const list = (lines: Line[], people: number) => lines.map(([name, amount]) => ({ name, amount: amount(people) }));
+const other = <T,>(options: T[], last: T) => gsap.utils.random(options.filter((option) => option !== last));
+
+// The first print is always this one, so the server and the browser agree on it.
+const firstPrint = { people: 60, order: list([mains[0], sides[0], drinks[0], drinks[1], extras[0]], 60), bars, thanks: thanks[0] };
+
+/** A new order, with a different crowd and sign-off from the last so no two prints in a row match. */
+function nextPrint(last: typeof firstPrint) {
+  const people = other(crowds, last.people);
+  const [first, second] = gsap.utils.shuffle([...drinks]);
+  const lines = [gsap.utils.random(mains), gsap.utils.random(sides), first, second, gsap.utils.random(extras)];
+  return { people, order: list(lines, people), bars: gsap.utils.shuffle([...bars]), thanks: other(thanks, last.thanks) };
+}
 
 function Item({ name, amount }: { name: string; amount: string }) {
   return (
@@ -48,10 +67,12 @@ function Item({ name, amount }: { name: string; amount: string }) {
 /**
  * A receipt that can be torn off. Dragging it tears it at the slot and leaves the next strip's end
  * peeking out, so when the torn piece is let go and falls away, the printer carries straight on from
- * there. `feed` moves the strip, and hover only reaches it when nothing is being torn.
+ * there. `feed` moves the strip, and hover only reaches it when nothing is being torn. Every print is
+ * a new order: it changes while only the strip's blank end is out, so the torn piece keeps the old one.
  */
 export function ReceiptTile() {
   const { team } = useOffer();
+  const [print, setPrint] = useState(firstPrint);
   const ref = useRef<HTMLDivElement>(null);
   const feed = useRef<(open: boolean) => void>(() => {});
   const { handlers, isOpen } = useLook(ref, "snacks", (open) => feed.current(open));
@@ -71,6 +92,7 @@ export function ReceiptTile() {
       let busy = false;
       // True while the strip is sitting as a stub, waiting for the torn piece to get out of the way.
       let waiting = false;
+      let printed = firstPrint;
 
       const run = (to: number) => {
         // The strip slides out of the slot, torn end first, so the header is the last line to appear.
@@ -114,6 +136,8 @@ export function ReceiptTile() {
         layer.append(piece);
 
         gsap.set(strip, { yPercent: -100 * (1 - (STUB * rootSize()) / (box.height / zoom)) });
+        printed = nextPrint(printed);
+        setPrint(printed);
         gsap.to(light, { opacity: 0.35, duration: 0.3, overwrite: true });
         if (!still) gsap.to(piece, { scale: 1.03, duration: 0.25, ease: "power2.out" });
 
@@ -198,11 +222,11 @@ export function ReceiptTile() {
               <div className={`${grain} flex flex-col gap-2.5 px-[7cqw] pb-7 pt-6 font-mono text-[clamp(0.8125rem,5.2cqw,1rem)] leading-snug text-ink`}>
                 <div className="flex flex-col items-center gap-1 text-center">
                   <p className="m-0 text-[1.25em] font-bold tracking-[0.06em]">REACT CEBU</p>
-                  <p className="m-0">Snacks and drinks for 60</p>
+                  <p className="m-0">Snacks and drinks for {print.people}</p>
                 </div>
                 <div className="border-t border-dashed border-ink/40" />
                 <div className="flex flex-col gap-1">
-                  {order.map(([name, amount]) => (
+                  {print.order.map(({ name, amount }) => (
                     <Item key={name} name={name} amount={amount} />
                   ))}
                 </div>
@@ -213,11 +237,11 @@ export function ReceiptTile() {
                   <span>₱0.00</span>
                 </div>
                 <div aria-hidden="true" className="mt-1 flex h-9 justify-center gap-px">
-                  {bars.map((width, i) => (
+                  {print.bars.map((width, i) => (
                     <span key={i} className={i % 2 ? "bg-transparent" : "bg-ink"} style={{ width: `${width * 0.22}rem` }} />
                   ))}
                 </div>
-                <p className="m-0 text-center">Salamat, see you next time</p>
+                <p className="m-0 whitespace-nowrap text-center">{print.thanks}</p>
               </div>
 
               {/* Light that moves with the paper: the curl at both edges and one soft crease. */}
