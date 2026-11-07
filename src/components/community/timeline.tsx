@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Reveal, SplitHeading } from "@/components/motion";
 
 function Photo({ src, alt }: { src: string; alt: string }) {
-  return <Image src={src} alt={alt} fill sizes="(min-width: 1024px) 62vw, 100vw" className="object-cover" />;
+  return <Image src={src} alt={alt} fill sizes="(min-width: 1280px) 85vw, (min-width: 1024px) 105vw, (min-width: 640px) 120vw, 245vw" className="object-cover" />;
 }
 
 const stops = [

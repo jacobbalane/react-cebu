@@ -15,10 +15,8 @@ export function UpcomingEvents() {
         Upcoming events
       </SplitHeading>
       <Reveal className="grid gap-2 lg:grid-cols-12">
-        <div data-reveal className="tile group min-h-[clamp(20rem,62svh,38.75rem)] bg-fog lg:col-span-7">
-          <div className="absolute inset-0 transition-[scale] duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-105">
-            <PhotoSlides photos={photos} alt="Everyone at the first React Cebu meetup, gathered in front of the screen" direction="up" sizes="(min-width: 1024px) 58vw, 100vw" className="absolute inset-0" />
-          </div>
+        <div data-reveal className="tile min-h-[clamp(20rem,62svh,38.75rem)] bg-fog lg:col-span-7">
+          <PhotoSlides photos={photos} alt="Everyone at the first React Cebu meetup, gathered in front of the screen" direction="up" sizes="(min-width: 1280px) 70vw, (min-width: 1024px) 85vw, (min-width: 640px) 145vw, 250vw" className="absolute inset-0" />
         </div>
         <div data-reveal className="tile flex flex-col items-start justify-between gap-12 bg-black p-7 text-white sm:p-10 lg:col-span-5">
           <BlinkingSquares />

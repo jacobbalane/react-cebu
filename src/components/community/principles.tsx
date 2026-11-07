@@ -661,7 +661,7 @@ export function Principles({ rules }: { rules: string[] }) {
 
         {/* Shares the top row, so the slider doesn't run the whole width of the page. */}
         <div data-reveal className="tile min-h-[16.25rem] bg-fog sm:col-span-2 lg:col-span-5">
-          <Image src="/images/hall-full-room.jpg" alt="A full hall of people watching a talk" fill sizes="(min-width: 1024px) 42vw, 100vw" className="object-cover object-bottom" />
+          <Image src="/images/hall-full-room.jpg" alt="A full hall of people watching a talk" fill sizes="(min-width: 1280px) 42vw, (min-width: 1024px) 60vw, 100vw" className="object-cover object-bottom" />
           <span className="absolute bottom-4 left-4 rounded-lg bg-black px-3.5 py-2.5 text-base text-white">Every seat, free</span>
         </div>
 

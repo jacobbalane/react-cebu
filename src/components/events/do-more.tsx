@@ -171,7 +171,7 @@ export function DoMore() {
       </SplitHeading>
       <Reveal className="grid gap-2 lg:h-[clamp(30rem,66svh,38rem)] lg:grid-cols-12 lg:grid-rows-2">
         <div data-reveal className="tile min-h-[20rem] bg-black lg:col-span-5 lg:row-span-2 lg:min-h-0">
-          <PhotoRotation sets={media} active={active} sizes="(min-width: 1024px) 42vw, 100vw" />
+          <PhotoRotation sets={media} active={active} sizes="(min-width: 1280px) 84vw, (min-width: 1024px) 105vw, 180vw" />
         </div>
 
         <div data-reveal data-tile className={`tile flex min-h-[16rem] flex-col justify-between gap-6 bg-react text-ink sm:flex-row lg:col-span-7 lg:min-h-0 ${tilePadding}`}>

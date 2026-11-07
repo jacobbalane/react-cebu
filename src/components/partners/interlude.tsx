@@ -57,7 +57,7 @@ export function Interlude() {
     <div data-row className="flex w-max gap-2 px-2">
       {items.map((item, i) => (
         <div key={i} data-frame className="tile aspect-[3/2] h-[max(11rem,21vw)] shrink-0 bg-black motion-safe:grayscale">
-          <Image src={item.src} alt={item.alt} fill sizes="(min-width: 1024px) 32vw, 70vw" className="object-cover" />
+          <Image src={item.src} alt={item.alt} fill sizes="(min-width: 1024px) 38vw, 85vw" className="object-cover" />
         </div>
       ))}
     </div>

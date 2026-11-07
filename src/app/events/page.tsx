@@ -32,7 +32,7 @@ export default function EventsPage() {
         <Reveal className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {recaps.map((recap) => (
             <div key={recap.title} data-reveal className="tile aspect-[16/10] bg-fog">
-              <Image src={recap.image} alt={recap.alt} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
+              <Image src={recap.image} alt={recap.alt} fill sizes="(min-width: 1024px) 42vw, (min-width: 640px) 60vw, 120vw" className="object-cover" />
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/25 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-5 text-white">
                 <span className="text-base">{recap.when}</span>

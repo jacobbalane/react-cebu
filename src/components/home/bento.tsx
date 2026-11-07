@@ -106,7 +106,8 @@ function PastStrip() {
       <ul ref={strip} aria-label="Past events" className="flex w-max cursor-grab gap-2 active:cursor-grabbing">
         {past.map((item) => (
           <li key={item.title} className="relative h-[12.5rem] w-[11.25rem] shrink-0 overflow-hidden rounded-lg bg-black text-white lg:h-[18.125rem] lg:w-[15rem]">
-            <Image src={item.image} alt="" fill sizes="240px" draggable={false} className="pointer-events-none object-cover" />
+            {/* A wide photo fills this tall card by its height, so it's drawn about twice the card's width. */}
+            <Image src={item.image} alt="" fill sizes="(min-width: 1024px) 860px, 540px" draggable={false} className="pointer-events-none object-cover" />
             {/* Darkens the bottom of the photo so the title reads on any of them. */}
             <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-3/5 bg-linear-to-t from-black/85 via-black/40 to-transparent" />
             <span className="absolute inset-x-3 bottom-3 select-none text-[1.375rem] leading-[1.05] tracking-[-0.03em]">{item.title}</span>
@@ -573,7 +574,7 @@ export function Bento() {
         <LevelPicker />
 
         <MediaTile label="Hands-on workshops" className="lg:col-span-3 lg:row-span-2">
-          <PhotoSlides photos={["screen-trio", "laptop-desk", "desk-row"]} alt="Three members leaning in to read a screen" delay={1.2} sizes="(min-width: 1024px) 25vw, 100vw" className="absolute inset-0" />
+          <PhotoSlides photos={["screen-trio", "laptop-desk", "desk-row"]} alt="Three members leaning in to read a screen" delay={1.2} sizes="(min-width: 1280px) 40vw, (min-width: 1024px) 50vw, 100vw" className="absolute inset-0" />
         </MediaTile>
 
         <TopicPile />
@@ -605,7 +606,7 @@ export function Bento() {
             alt="Students coding together at a code camp"
             direction="up"
             delay={1.8}
-            sizes="(min-width: 1024px) 33vw, 100vw"
+            sizes="(min-width: 1280px) 55vw, (min-width: 1024px) 76vw, 100vw"
             className="absolute inset-0"
           />
         </MediaTile>
@@ -661,7 +662,7 @@ export function Bento() {
         </div>
 
         <MediaTile label="Hacktoberfest" className="lg:col-span-5 lg:row-span-4">
-          <PhotoSlides photos={["shirt-mentor", "iced-coffee-coder", "projector-speaker"]} alt="A mentor and a member working through something on a laptop" delay={2.4} sizes="(min-width: 1024px) 42vw, 100vw" className="absolute inset-0" />
+          <PhotoSlides photos={["shirt-mentor", "hacktoberfest-shirt", "projector-speaker"]} alt="A mentor and a member working through something on a laptop" delay={2.4} sizes="(min-width: 1280px) 80vw, 100vw" className="absolute inset-0" />
         </MediaTile>
 
         {/* React cyan carries ink, never white; the button goes ink so it still stands out. */}
