@@ -125,7 +125,10 @@ function MoreBand({ path }: { path: string }) {
       <svg aria-hidden="true" className="pointer-events-none absolute inset-0 size-full overflow-visible">
         {path && <path d={path} className="fill-react" />}
       </svg>
-      <div id="more-photos" className="absolute bottom-0 left-0 flex max-w-[31rem] flex-col items-start gap-5 p-6 text-ink sm:p-10">
+      {/* Under the columns in the flow on phones, so the shape is exactly as tall as its words; from
+          768px up it sits in the space the wall keeps for it. On phones the top padding also covers the
+          gap above the shape, so the words sit as far from its top edge as from its bottom. */}
+      <div id="more-photos" className="absolute bottom-0 left-0 flex max-w-[31rem] flex-col items-start gap-5 p-6 text-ink max-md:relative max-sm:pt-8 sm:p-10 sm:max-md:pt-12">
         <div className="flex flex-col gap-2">
           <h3 className="title m-0 text-[clamp(1.75rem,3vw,2.5rem)]">There’s plenty more on Facebook</h3>
           <p className="m-0 text-lg leading-normal">Hundreds of photos from our events, all on the React Cebu page.</p>
@@ -283,8 +286,8 @@ export function Gallery() {
     <section id="photos" aria-labelledby="photos-title" className="scroll-mt-24 px-2 pb-32 max-md:pb-20 pt-28 max-md:pt-20">
       <SplitHeading id="photos-title" className="display m-0 mb-10 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">A look back at our events</SplitHeading>
 
-      {/* The space under the columns is where the cyan shape's words sit. */}
-      <div ref={wall} className="relative pb-[21rem] sm:pb-[19rem]">
+      {/* The space under the columns is where the cyan shape's words sit, from 768px up. */}
+      <div ref={wall} className="relative md:pb-[19rem]">
         {/* Each column reveals on its own, so a fast scroll doesn't leave the last column waiting for the others. */}
         <div ref={row} className="flex items-start gap-2">
           {columns.map((column, i) => (
