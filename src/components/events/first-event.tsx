@@ -170,7 +170,10 @@ export function FirstEvent() {
   );
 
   return (
-    <section aria-labelledby="expect-title" className="pb-32 max-md:pb-20">
+    // Pulled up by the stage's 6rem top padding, which is there to clear the nav while pinned and
+    // otherwise added to the gap above: the panel now sits one normal section gap below the recaps.
+    // Pinning starts when the stage's top reaches the screen's, so it still starts at the same point.
+    <section aria-labelledby="expect-title" className="-mt-24 pb-32 max-md:pb-20">
       <div ref={ref} className="flex min-h-[40rem] flex-col px-2 pb-2 pt-24 motion-safe:h-svh">
         <div className="flex min-h-0 flex-1 flex-col items-center overflow-hidden rounded-[0.75rem] bg-fog p-2">
           <SplitHeading id="expect-title" className="display m-0 p-4 text-center text-[clamp(2.5rem,4.2vw,3.75rem)] sm:p-6">

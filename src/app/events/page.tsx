@@ -35,8 +35,9 @@ export default function EventsPage() {
           {recaps.map((recap) => (
             <div key={recap.title} data-reveal className="tile aspect-[16/10] bg-fog">
               <Image src={recap.image} alt={recap.alt} fill sizes="(min-width: 1024px) 42vw, (min-width: 640px) 60vw, 120vw" className="object-cover" />
-              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/25 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-5 text-white">
+              {/* The caption carries its own gradient, deep behind the date, title and note and fading
+                  out 6rem above them, so a long caption on a narrow card is as readable as a short one. */}
+              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 bg-linear-to-t from-black/95 via-black/80 via-60% to-transparent p-5 pt-24 text-white">
                 <span className="text-base">{recap.when}</span>
                 <h3 className="m-0 text-[1.75rem] font-normal leading-[1.1] tracking-[-0.03em]">{recap.title}</h3>
                 <p className="m-0 text-base leading-normal">{recap.note}</p>
