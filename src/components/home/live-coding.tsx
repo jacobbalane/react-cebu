@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "@/lib/gsap";
 import { SplitHeading } from "@/components/motion";
+import { TransitionLink } from "@/components/page-transition";
 
 type Tone = "keyword" | "string" | "tag" | "attr" | "fn" | "number";
 type Token = { text: string; tone?: Tone };
@@ -10,20 +11,20 @@ type CodeLine = { indent: number; tokens: Token[] };
 
 const t = (text: string, tone?: Tone): Token => ({ text, tone });
 
-// The component typed into the editor.
+// The component typed into the editor: the card in the preview, whose button really goes to the
+// events page. About as long as before, so the editor keeps its size.
 const code: CodeLine[] = [
-  { indent: 0, tokens: [t("import", "keyword"), t(" { useState } "), t("from", "keyword"), t(" "), t('"react"', "string"), t(";")] },
+  { indent: 0, tokens: [t("import", "keyword"), t(" Link "), t("from", "keyword"), t(" "), t('"next/link"', "string"), t(";")] },
   { indent: 0, tokens: [t("import", "keyword"), t(" Card "), t("from", "keyword"), t(" "), t('"./Card"', "string"), t(";")] },
   { indent: 0, tokens: [] },
   { indent: 0, tokens: [t("export default function", "keyword"), t(" "), t("Meetup", "fn"), t("() {")] },
-  { indent: 2, tokens: [t("const", "keyword"), t(" [rsvps, setRsvps] = "), t("useState", "fn"), t("("), t("41", "number"), t(");")] },
-  { indent: 2, tokens: [t("const", "keyword"), t(" rsvp = () => "), t("setRsvps", "fn"), t("(rsvps + "), t("1", "number"), t(");")] },
+  { indent: 2, tokens: [t("const", "keyword"), t(" city = "), t('"Cebu"', "string"), t(";")] },
   { indent: 0, tokens: [] },
   { indent: 2, tokens: [t("return", "keyword"), t(" (")] },
-  { indent: 4, tokens: [t("<"), t("Card", "tag"), t(" "), t("title", "attr"), t("="), t('"Hello, Cebu!"', "string"), t(">")] },
-  { indent: 6, tokens: [t("<"), t("button", "tag"), t(" "), t("onClick", "attr"), t("={rsvp}>")] },
-  { indent: 8, tokens: [t("RSVPs {rsvps}")] },
-  { indent: 6, tokens: [t("</"), t("button", "tag"), t(">")] },
+  { indent: 4, tokens: [t("<"), t("Card", "tag"), t(" "), t("title", "attr"), t("={"), t("`Hello, ${city}!`", "string"), t("}>")] },
+  { indent: 6, tokens: [t("<"), t("Link", "tag"), t(" "), t("href", "attr"), t("="), t('"/events"', "string"), t(">")] },
+  { indent: 8, tokens: [t("See upcoming events")] },
+  { indent: 6, tokens: [t("</"), t("Link", "tag"), t(">")] },
   { indent: 4, tokens: [t("</"), t("Card", "tag"), t(">")] },
   { indent: 2, tokens: [t(");")] },
   { indent: 0, tokens: [t("}")] },
@@ -81,8 +82,8 @@ function Folder() {
 /**
  * The demo section pins while you scroll. A clean dark editor sits on a light grid:
  * scrolling types a component into it line by line, then its preview pane renders the
- * result and someone presses RSVP. Grid squares light up under the mouse, and now and
- * then on their own.
+ * result: a card whose button really opens the events page. Grid squares light up under the
+ * mouse, and now and then on their own.
  */
 export function LiveCoding() {
   const ref = useRef<HTMLElement>(null);
@@ -143,7 +144,9 @@ export function LiveCoding() {
       section.addEventListener("pointerleave", untrace);
 
       const mm = gsap.matchMedia();
-      mm.add(MOTION_OK, () => {
+      mm.add({ motion: MOTION_OK, small: "(max-width: 767px)" }, (context) => {
+        const { motion, small } = context.conditions as { motion: boolean; small: boolean };
+        if (!motion) return;
         const tl = gsap.timeline({
           scrollTrigger: { trigger: ref.current, start: "top top", end: "+=1800", pin: true, scrub: 0.6 },
         });
@@ -160,15 +163,14 @@ export function LiveCoding() {
           else tl.to({}, { duration: 0.1 });
           if (!last) tl.set(row, { backgroundColor: "rgba(255,255,255,0)" }).set(line, { borderRightColor: "transparent" });
         });
+        // On phones the preview waits as a tab along the editor's bottom edge, and once the code is
+        // in, scrolling pulls it up over the code like a drawer, before the page renders in it.
+        if (small) tl.to("[data-preview]", { height: "100%", duration: 0.7, ease: "power2.inOut" });
         tl.to("[data-status='compiling']", { autoAlpha: 0, duration: 0.2 })
           .to("[data-status='ready']", { autoAlpha: 1, duration: 0.2 }, "<")
           .to("[data-preview-empty]", { autoAlpha: 0, duration: 0.3 }, "<")
           .from("[data-card]", { y: 20, autoAlpha: 0, scale: 0.97, duration: 0.6, ease: "power3.out" })
-          .to("[data-button]", { scale: 0.93, duration: 0.15 })
-          .to("[data-button]", { scale: 1, duration: 0.15 })
-          .to("[data-count='41']", { autoAlpha: 0, duration: 0.01 }, "<")
-          .to("[data-count='42']", { autoAlpha: 1, duration: 0.01 }, "<")
-          .to({}, { duration: 0.6 });
+          .to({}, { duration: 0.9 });
 
         // The editor leans a few degrees toward the mouse, the side nearest it easing back,
         // and settles flat again when the mouse leaves the section.
@@ -238,8 +240,9 @@ export function LiveCoding() {
     <section
       ref={ref}
       aria-labelledby="demo-title"
-      // Top padding clears the fixed nav, so the heading never slides under it.
-      className="relative flex h-svh min-h-[680px] flex-col items-center justify-center gap-4 overflow-hidden bg-white px-4 pb-6 pt-16 md:gap-6 md:pt-20"
+      // Top padding clears the fixed nav, so the heading never slides under it. On phones the
+      // heading starts a clear gap under the nav, and the editor fills the screen below it.
+      className="relative flex h-svh min-h-[680px] flex-col items-center justify-center gap-4 overflow-hidden bg-white px-4 pb-6 pt-16 max-md:justify-start max-md:pt-24 md:gap-6 md:pt-20"
     >
       {/* The grid behind everything. The mouse trail and the twinkles light its squares. */}
       <svg
@@ -274,7 +277,7 @@ export function LiveCoding() {
       {/* The editor window, as tall as its code. It leans a little toward the mouse. */}
       <div
         data-editor
-        className="relative flex w-full max-w-[80rem] flex-col overflow-hidden rounded-[1rem] border-[3px] border-[#333333] bg-[#222222] text-[#e6e6e6] shadow-[0_40px_100px_rgba(0,0,0,0.25)]"
+        className="relative flex w-full max-w-[80rem] flex-col overflow-hidden rounded-[1rem] max-md:min-h-0 max-md:flex-1 border-[3px] border-[#333333] bg-[#222222] text-[#e6e6e6] shadow-[0_40px_100px_rgba(0,0,0,0.25)]"
       >
         {/* Title bar */}
         <div className="flex h-12 shrink-0 items-center gap-3 border-b border-[#333333] px-4 text-[0.8125rem] lg:text-[0.875rem]">
@@ -305,7 +308,7 @@ export function LiveCoding() {
         </div>
 
         {/* Sidebar, code and preview side by side; on phones the preview sits under the code. */}
-        <div className="flex min-h-0 flex-1 flex-col md:flex-row">
+        <div className="flex min-h-0 flex-1 flex-col max-md:relative md:flex-row">
           {/* Sidebar */}
           <div aria-hidden="true" className="hidden w-[14.375rem] shrink-0 flex-col gap-0.5 border-r border-[#333333] bg-[#1b1b1b] p-3 text-[0.875rem] lg:flex">
             {files.map((file) => (
@@ -320,8 +323,8 @@ export function LiveCoding() {
             ))}
           </div>
 
-          {/* Code */}
-          <div className="flex min-w-0 flex-1 flex-col">
+          {/* Code. On phones it leaves room at the bottom for the preview's tab. */}
+          <div className="flex min-w-0 flex-1 flex-col max-md:motion-safe:pb-[2.375rem]">
             <div aria-hidden="true" className="flex h-[2.375rem] shrink-0 items-stretch border-b border-[#333333] text-[0.75rem] lg:h-[2.625rem] lg:text-[0.8125rem]">
               <span className="flex items-center gap-2 border-r border-[#333333] bg-[#222222] px-4 text-white shadow-[inset_0_2px_0_#00d8ff]">
                 <Atom className="size-3.5" /> Meetup.jsx
@@ -335,7 +338,7 @@ export function LiveCoding() {
               <span className="flex-1 bg-[#1b1b1b]" />
             </div>
             <pre
-              aria-label="A Meetup component with an RSVP counter"
+              aria-label="A Meetup component with a link to the events page"
               // On desktop the code grows with the screen's height (13px to 17px), so the pinned
               // editor always fits.
               className="m-0 min-h-0 flex-1 overflow-hidden py-3 font-mono text-[0.6875rem] leading-[1.6] sm:text-[0.8125rem] lg:py-3.5 lg:text-[clamp(0.8125rem,1.85vh,1.0625rem)]"
@@ -367,9 +370,13 @@ export function LiveCoding() {
             </pre>
           </div>
 
-          {/* Preview, inside the editor */}
-          <div aria-hidden="true" className="flex shrink-0 flex-col border-t border-[#333333] md:w-[min(25rem,38%)] md:border-l md:border-t-0">
-            <div className="flex h-[2.375rem] shrink-0 items-center gap-2 border-b border-[#333333] bg-[#1b1b1b] px-3 text-[0.75rem] text-[#8b8e94] lg:h-[2.625rem] lg:text-[0.8125rem]">
+          {/* Preview, inside the editor. On phones it starts as just its tab along the bottom edge,
+              and the timeline pulls it up to fill the editor. Reduced motion keeps it under the code. */}
+          <div
+            data-preview
+            className="flex shrink-0 flex-col border-t border-[#333333] max-md:motion-safe:absolute max-md:motion-safe:inset-x-0 max-md:motion-safe:bottom-0 max-md:motion-safe:h-[2.375rem] max-md:motion-safe:overflow-hidden max-md:motion-safe:bg-[#f4f5f7] max-md:motion-safe:shadow-[0_-16px_40px_rgba(0,0,0,0.35)] md:w-[min(25rem,38%)] md:border-l md:border-t-0"
+          >
+            <div aria-hidden="true" className="flex h-[2.375rem] shrink-0 items-center gap-2 border-b border-[#333333] bg-[#1b1b1b] px-3 text-[0.75rem] text-[#8b8e94] lg:h-[2.625rem] lg:text-[0.8125rem]">
               <span>Preview</span>
               <span className="ml-auto truncate rounded-md bg-[#2e2e2e] px-2.5 py-1 text-[#b4b7bd]">localhost:3000</span>
               <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -377,17 +384,16 @@ export function LiveCoding() {
               </svg>
             </div>
             <div className="relative flex flex-1 items-center justify-center bg-[#f4f5f7] p-4 text-black md:p-6">
-              <span data-preview-empty className="absolute text-[0.8125rem] text-[#8b8e94]">Waiting for changes…</span>
+              <span data-preview-empty aria-hidden="true" className="absolute text-[0.8125rem] text-[#8b8e94]">Waiting for changes…</span>
               <div data-card className="flex w-full max-w-[18.75rem] flex-col gap-4 rounded-[0.75rem] border border-[#e3e3e3] bg-white p-5 shadow-[0_8px_24px_rgba(0,0,0,0.06)] md:gap-5 md:p-6">
-                <span className="text-[1.75rem] leading-none tracking-[-0.04em] md:text-[2.125rem] lg:text-[2.375rem]">Hello, Cebu!</span>
-                <span data-button className="inline-flex min-h-11 items-center gap-2.5 self-start rounded-full bg-react px-5 text-[0.9375rem] font-medium text-ink lg:min-h-12 lg:text-[1rem]">
-                  RSVPs
-                  <span className="relative inline-block w-[2ch]">
-                    <span data-count="41" className="absolute left-0">41</span>
-                    <span data-count="42" className="invisible absolute left-0">42</span>
-                    &nbsp;
-                  </span>
+                <span aria-hidden="true" className="text-[1.75rem] leading-none tracking-[-0.04em] md:text-[2.125rem] lg:text-[2.375rem]">
+                  Hello, Cebu!
                 </span>
+                {/* A real link: the card the code builds works. It can't be reached until the card
+                    has rendered, as it's hidden until then. */}
+                <TransitionLink href="/events" className="btn btn-primary self-start">
+                  See upcoming events
+                </TransitionLink>
               </div>
             </div>
           </div>
