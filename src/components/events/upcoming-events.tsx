@@ -15,7 +15,8 @@ export function UpcomingEvents() {
         Upcoming events
       </SplitHeading>
       <Reveal className="grid gap-2 lg:grid-cols-12">
-        <div data-reveal className="tile min-h-[clamp(20rem,62svh,38.75rem)] bg-fog lg:col-span-7">
+        {/* Phones go straight to the Cebby card; the photos only show from 768px up. */}
+        <div data-reveal className="tile min-h-[clamp(20rem,62svh,38.75rem)] bg-fog max-md:hidden lg:col-span-7">
           <PhotoSlides photos={photos} alt="Everyone at the first React Cebu meetup, gathered in front of the screen" direction="up" sizes="(min-width: 1280px) 70vw, (min-width: 1024px) 85vw, (min-width: 640px) 145vw, 250vw" className="absolute inset-0" />
         </div>
         <div data-reveal className="tile flex flex-col items-start justify-between gap-12 bg-black p-7 text-white sm:p-10 lg:col-span-5">
@@ -29,7 +30,13 @@ export function UpcomingEvents() {
               </h3>
               <p className="m-0 max-w-[46ch] text-balance text-lg leading-normal">It lists the rest of Cebu’s tech events too.</p>
             </div>
-            <a href={CEBBY_URL} target="_blank" rel="noopener noreferrer" className="btn btn-white min-h-14 whitespace-nowrap px-5 text-base sm:px-7 sm:text-lg">
+            {/* In Cebby's own purple, with white text (5:1); on black it turns white under the pointer, as cyan does. */}
+            <a
+              href={CEBBY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn min-h-14 whitespace-nowrap bg-[#9333EA] px-5 text-base text-white hover:bg-white hover:text-ink sm:px-7 sm:text-lg"
+            >
               See upcoming events on Cebby
             </a>
           </div>
