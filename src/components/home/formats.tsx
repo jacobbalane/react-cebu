@@ -17,14 +17,18 @@ export function Formats() {
       <SplitHeading id="formats-title" className="display mb-10 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">
         What happens at React Cebu
       </SplitHeading>
-      <Reveal className="grid gap-x-2 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-        {formats.map((format) => (
+      {/* Phones stack the cards, so they sit closer: 28px still keeps each caption with its own photo. */}
+      <Reveal className="grid gap-x-2 gap-y-10 max-md:gap-y-7 sm:grid-cols-2 lg:grid-cols-3">
+        {formats.map((format, i) => (
           <div key={format.name} data-reveal className="flex flex-col gap-3.5">
             <PhotoSlides
               photos={[...format.photos]}
               alt={format.alt}
               direction={format.swipe}
               delay={format.delay}
+              // On phones every card swipes from right to left, top card first and each next one
+              // just after it, so the change runs down the stack.
+              phone={{ direction: "left", delay: i * 0.15 }}
               sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             />
             <p className="px-2 text-[1.3125rem] leading-[1.3] tracking-[-0.015em]">

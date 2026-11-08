@@ -18,6 +18,7 @@ export function PhotoSlides({
   delay = 0,
   sizes,
   className = "aspect-[16/10]",
+  phone,
 }: {
   photos: string[];
   alt: string;
@@ -27,18 +28,22 @@ export function PhotoSlides({
   sizes: string;
   /** Sizing for the frame: a 16:10 card by default, or e.g. `absolute inset-0` to fill a grid tile. */
   className?: string;
+  /** A different direction or delay below 768px, where cards often stack in one column. */
+  phone?: { direction?: "left" | "up"; delay?: number };
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
       const slides = gsap.utils.toArray<HTMLElement>("img", ref.current);
-      const axis = direction === "up" ? "yPercent" : "xPercent";
       const mm = gsap.matchMedia();
-      mm.add(MOTION_OK, () => {
+      mm.add({ motion: MOTION_OK, small: "(max-width: 767px)" }, (context) => {
+        if (!context.conditions?.motion) return;
+        const onPhone = Boolean(context.conditions.small && phone);
+        const axis = (onPhone ? (phone?.direction ?? direction) : direction) === "up" ? "yPercent" : "xPercent";
         gsap.set(slides, { [axis]: (i: number) => (i === 0 ? 0 : 100), opacity: 1 });
         const swipe = { duration: 1, ease: "power3.inOut", immediateRender: false };
-        const tl = gsap.timeline({ repeat: -1, delay });
+        const tl = gsap.timeline({ repeat: -1, delay: onPhone ? (phone?.delay ?? delay) : delay });
         slides.forEach((slide, i) => {
           const next = slides[(i + 1) % slides.length];
           tl.to({}, { duration: 2.6 })
