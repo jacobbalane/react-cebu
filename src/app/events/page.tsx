@@ -54,7 +54,7 @@ export default function EventsPage() {
         <a href={CEBBY_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-primary hover:bg-white hover:text-ink`}>
           See upcoming events on Cebby
         </a>
-        <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-white`}>
+        <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-black`}>
           Join the Facebook page
         </a>
       </ClosingCard>

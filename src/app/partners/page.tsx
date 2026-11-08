@@ -37,7 +37,7 @@ export default function PartnersPage() {
         position="50% 100%"
       >
         <a href="#ways" className="btn btn-primary hover:bg-white hover:text-ink">See ways to help</a>
-        <a href={PARTNER_EMAIL} className="btn btn-white">Email us</a>
+        <a href={PARTNER_EMAIL} className="btn btn-black">Email us</a>
       </PhotoIntro>
 
       <Ways />
@@ -54,7 +54,7 @@ export default function PartnersPage() {
         <a href={PARTNER_EMAIL} className={`${closingButton} btn-primary hover:bg-white hover:text-ink`}>
           Email us about partnering
         </a>
-        <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-white`}>
+        <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-black`}>
           Join the Facebook page
         </a>
       </ClosingCard>

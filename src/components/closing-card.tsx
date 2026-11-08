@@ -9,7 +9,8 @@ export const closingButton = "btn min-h-14 px-7 text-lg";
  * run the card's full width in two lines; below it, the reason sits on the left and the two ways
  * in on the right, so the card reads edge to edge. Behind them, a stream of cyan glyph tiles
  * pours after the cursor and splashes outward on click. On black, a cyan button should turn
- * white under the pointer instead of the usual ink.
+ * white under the pointer instead of the usual ink. The second button is `btn-black`, as on the
+ * homepage hero.
  */
 export function ClosingCard({
   id,

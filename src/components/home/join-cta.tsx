@@ -13,7 +13,7 @@ export function JoinCta() {
       <TransitionLink href="/events" className={`${closingButton} btn-primary hover:bg-white hover:text-ink`}>
         View events
       </TransitionLink>
-      <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-white`}>
+      <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-black`}>
         Join the Facebook page
       </a>
     </ClosingCard>

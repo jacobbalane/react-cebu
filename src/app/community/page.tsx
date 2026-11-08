@@ -93,7 +93,7 @@ export default function CommunityPage() {
         <a href={VOLUNTEER_EMAIL} className={`${closingButton} btn-primary hover:bg-white hover:text-ink`}>
           Email us to volunteer
         </a>
-        <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-white`}>
+        <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-black`}>
           Join the Facebook page
         </a>
       </ClosingCard>

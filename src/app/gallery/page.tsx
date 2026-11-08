@@ -35,7 +35,7 @@ export default function GalleryPage() {
         <TransitionLink href="/events#upcoming" className={`${closingButton} btn-primary hover:bg-white hover:text-ink`}>
           See upcoming events
         </TransitionLink>
-        <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-white`}>
+        <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-black`}>
           Join the Facebook page
         </a>
       </ClosingCard>
