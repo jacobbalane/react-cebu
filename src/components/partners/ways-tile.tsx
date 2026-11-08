@@ -66,6 +66,8 @@ export function useLook(tile: RefObject<HTMLDivElement | null>, id: WayId, show:
   const over = useRef(false);
   const focused = useRef(false);
   const kept = useRef(on);
+  // On phones an object opens as its card arrives and stays open: with no hover, that's the only way to see it.
+  const always = useRef(false);
   const shown = useRef(show);
 
   useEffect(() => {
@@ -76,16 +78,22 @@ export function useLook(tile: RefObject<HTMLDivElement | null>, id: WayId, show:
     () => {
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
-        // Touch screens have no hover, so each object shows what it does once, as it arrives.
+        // Phones have no hover, so each object opens as its card arrives and stays open. Bigger touch
+        // screens show what it does once, as it arrives.
         const arrive = ScrollTrigger.create({
           trigger: tile.current,
           start: "top 65%",
           once: true,
           onEnter: () => {
+            if (window.matchMedia("(max-width: 767px)").matches) {
+              always.current = true;
+              shown.current(true);
+              return;
+            }
             if (window.matchMedia("(hover: hover)").matches) return;
             shown.current(true);
             gsap.delayedCall(3, () => {
-              if (!kept.current) shown.current(false);
+              if (!kept.current && !always.current) shown.current(false);
             });
           },
         });
@@ -99,10 +107,10 @@ export function useLook(tile: RefObject<HTMLDivElement | null>, id: WayId, show:
   // Ways can also change from the form further down, so the tiles follow the offer itself.
   useEffect(() => {
     kept.current = on;
-    shown.current(on || over.current || focused.current);
+    shown.current(on || over.current || focused.current || always.current);
   }, [on]);
 
-  const isOpen = () => over.current || focused.current || kept.current;
+  const isOpen = () => over.current || focused.current || kept.current || always.current;
   const point = (now: boolean) => {
     over.current = now;
     shown.current(isOpen());

@@ -40,7 +40,7 @@ export function Ways() {
 
   return (
     <section id="ways" aria-labelledby="ways-title" className="scroll-mt-24 px-2 pb-32 max-md:pb-20 pt-28 max-md:pt-20">
-      <SplitHeading id="ways-title" className="display m-0 mb-10 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">Five ways to keep the next event free</SplitHeading>
+      <SplitHeading id="ways-title" className="display m-0 mb-10 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">Some ways to keep the next event free</SplitHeading>
 
       {/*
         The two rows split at different points, so four card corners never meet at one spot.
