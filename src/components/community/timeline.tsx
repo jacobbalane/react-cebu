@@ -35,7 +35,8 @@ const stops = [
     year: 2026,
     title: "A new home online",
     text: "The site you’re looking at, built by members with Next.js.",
-    media: <Photo src="/images/enspace-group.jpg" alt="React Cebu members around a long wooden table at enspace" />,
+    // The new site itself, on a laptop: a mockup the user made, at its full 1618px.
+    media: <Photo src="/images/new-home-mockup.jpg" alt="The new React Cebu homepage open on a laptop" />,
   },
 ];
 
