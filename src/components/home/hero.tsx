@@ -42,8 +42,9 @@ export function Hero() {
       mm.add(MOTION_OK, () => {
         // As you scroll away, the wall sinks slower than the page while the copy scrolls
         // normally. The wall grows more than it moves, so its top edge never comes into view.
+        // Touch screens skip the growing, as rescaling a wall this big is heavy for a phone.
         gsap.to("[data-hero-wall]", {
-          scale: 1.2,
+          scale: window.matchMedia("(pointer: coarse)").matches ? 1 : 1.2,
           yPercent: 8,
           ease: "none",
           scrollTrigger: { trigger: ref.current, start: "top top", end: "bottom top", scrub: true },
@@ -74,18 +75,24 @@ export function Hero() {
           Blend layers rather than a backdrop filter, which Chrome redraws in bands while scrolling. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[#808080] mix-blend-saturation [mask-image:radial-gradient(ellipse_36%_50%_at_74%_34%,transparent_40%,black_100%)]"
+        className="pointer-events-none absolute inset-0 bg-[#808080] mix-blend-saturation [@media(pointer:coarse)]:hidden [mask-image:radial-gradient(ellipse_36%_50%_at_74%_34%,transparent_40%,black_100%)]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-black/55 [mask-image:radial-gradient(ellipse_36%_50%_at_74%_34%,transparent_40%,black_100%)]"
+        className="pointer-events-none absolute inset-0 bg-black/55 [@media(pointer:coarse)]:hidden [mask-image:radial-gradient(ellipse_36%_50%_at_74%_34%,transparent_40%,black_100%)]"
+      />
+      {/* Touch screens get the same darkness as one still layer, as blending and masking over a
+          moving 3D wall means redrawing it every frame. The photos keep their colour under it. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 hidden bg-[radial-gradient(ellipse_36%_50%_at_74%_34%,transparent_40%,rgba(0,0,0,0.72)_100%)] [@media(pointer:coarse)]:block"
       />
       {/* Darkens steadily with distance from the colour window, deepest in the far corner. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_74%_34%,transparent_18%,rgba(0,0,0,0.35)_42%,rgba(0,0,0,0.7)_72%,rgba(0,0,0,0.9)_100%)]"
       />
-      <div aria-hidden="true" className="grain opacity-20" />
+      <div aria-hidden="true" className="grain opacity-20 [@media(pointer:coarse)]:hidden" />
       {/* Darkens the corner behind the copy so white text stays readable over bright photos. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_0%_100%,rgba(0,0,0,0.75),transparent_70%)]" />
 
