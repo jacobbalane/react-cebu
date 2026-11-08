@@ -101,16 +101,26 @@ export function DoMore() {
           else roll.stop();
         };
 
-        // Touch screens have no hover: the clock runs once as the tiles arrive and resets after, and the words roll while on screen.
-        const touch = !window.matchMedia("(hover: hover)").matches;
-        const arrive = ScrollTrigger.create({
-          trigger: box,
-          start: "top 65%",
-          once: true,
-          onEnter: () => {
-            if (!touch) return;
-            wake(0, true);
-            gsap.delayedCall(7.5, () => wake(0, false));
+        // Phones and touch screens have no hover, so both tiles play by themselves while they're on
+        // screen: the clock counts down its five minutes, holds at 0:00, eases back to 5:00 and goes
+        // again, and the words keep rolling. Off screen, both stop and the clock resets.
+        const auto = !window.matchMedia("(hover: hover)").matches || window.matchMedia("(max-width: 767px)").matches;
+        const countdown = gsap
+          .timeline({ repeat: -1, paused: true })
+          .to(time, { left: 0, duration: 6, ease: "none", onUpdate: show })
+          .to(time, { left: 300, duration: 0.9, ease: "power3.out", onUpdate: show }, "+=1.2")
+          .to({}, { duration: 0.8 });
+        const clockOnScreen = ScrollTrigger.create({
+          trigger: clock,
+          start: "top bottom",
+          end: "bottom top",
+          onToggle: ({ isActive }) => {
+            if (!auto) return;
+            if (isActive) countdown.play();
+            else {
+              countdown.pause(0);
+              show();
+            }
           },
         });
         const onScreen = ScrollTrigger.create({
@@ -119,11 +129,12 @@ export function DoMore() {
           end: "bottom top",
           onToggle: ({ isActive }) => {
             if (!isActive) wake(1, false);
-            else if (touch) wake(1, true);
+            else if (auto) wake(1, true);
           },
         });
         return () => {
-          arrive.kill();
+          countdown.kill();
+          clockOnScreen.kill();
           onScreen.kill();
           roll.stop();
           wake = () => {};
@@ -167,20 +178,21 @@ export function DoMore() {
   return (
     <section ref={ref} aria-labelledby="involved-title" className="px-2 pb-32 max-md:pb-20">
       <SplitHeading id="involved-title" className="display m-0 mb-10 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">
-        Want to do more?
+        Want to do more than come along?
       </SplitHeading>
       <Reveal className="grid gap-2 lg:h-[clamp(30rem,66svh,38rem)] lg:grid-cols-12 lg:grid-rows-2">
         <div data-reveal className="tile min-h-[20rem] bg-black lg:col-span-5 lg:row-span-2 lg:min-h-0">
           <PhotoRotation sets={media} active={active} sizes="(min-width: 1280px) 84vw, (min-width: 1024px) 105vw, 180vw" />
         </div>
 
-        <div data-reveal data-tile className={`tile flex min-h-[16rem] flex-col justify-between gap-6 bg-react text-ink sm:flex-row lg:col-span-7 lg:min-h-0 ${tilePadding}`}>
+        {/* Black, the user's choice, with the cyan button that turns white on black. */}
+        <div data-reveal data-tile className={`tile flex min-h-[16rem] flex-col justify-between gap-6 bg-black text-white sm:flex-row lg:col-span-7 lg:min-h-0 ${tilePadding}`}>
           <div className="flex flex-col items-start justify-between gap-6">
             <div className="flex flex-col gap-2">
               <h3 className={tileTitle}>Give a talk</h3>
               <p className="m-0 max-w-[24ch] text-lg leading-normal">Five minutes, any topic, any level.</p>
             </div>
-            <a href={TALK_EMAIL} className="btn btn-black">
+            <a href={TALK_EMAIL} className="btn btn-primary hover:bg-white hover:text-ink">
               Email us a talk idea
             </a>
           </div>
@@ -189,20 +201,21 @@ export function DoMore() {
           </span>
         </div>
 
-        <div data-reveal data-tile className={`tile flex min-h-[16rem] flex-col justify-between gap-6 bg-azure text-white sm:flex-row lg:col-span-7 lg:min-h-0 ${tilePadding}`}>
+        {/* Cyan with ink: the button is black, and the rolling pill white with ink words so it isn't mistaken for the button. */}
+        <div data-reveal data-tile className={`tile flex min-h-[16rem] flex-col justify-between gap-6 bg-react text-ink sm:flex-row lg:col-span-7 lg:min-h-0 ${tilePadding}`}>
           {/* Holds its width, so a long word grows the pill into the space beside the button instead of reflowing the text. */}
           <div className="flex shrink-0 flex-col items-start justify-between gap-6 lg:gap-3">
             <div className="flex flex-col gap-2">
               <h3 className={tileTitle}>Partner with us</h3>
               <p className="m-0 max-w-[36ch] text-lg leading-normal">Every event runs on a borrowed room, donated snacks and volunteer time.</p>
             </div>
-            <TransitionLink href="/partners#ways" className="btn btn-white">
+            <TransitionLink href="/partners#ways" className="btn btn-black">
               See ways to help
             </TransitionLink>
           </div>
           <span aria-hidden="true" className="title flex min-w-0 flex-col items-end gap-1 self-end text-[clamp(2.25rem,4.4vw,4.5rem)] leading-none">
             <span>Your</span>
-            <span data-pill className="block h-[1.4em] overflow-hidden rounded-full bg-react px-[0.42em] text-ink">
+            <span data-pill className="block h-[1.4em] overflow-hidden rounded-full bg-white px-[0.42em] text-ink">
               <span data-reel className="flex flex-col items-end">
                 {offers.map((offer, i) => (
                   <span key={i} data-offer className="block h-[1.4em] leading-[1.4em]">
