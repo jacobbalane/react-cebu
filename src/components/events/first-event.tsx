@@ -59,8 +59,9 @@ export function FirstEvent() {
         const stops = [0];
         drafts.forEach((draft, i) => {
           const at = 0.1 + i * 1.75;
-          // Three snaps per exchange: the question is typed, it sends, then the dots and the answer.
-          stops.push(at + 0.46, at + 0.82, at + 1.65);
+          // Two snaps per exchange: the question is typed into the box; then it sends, the typing dots
+          // show for a beat and the answer comes in, all in one go.
+          stops.push(at + 0.46, at + 1.65);
           chat
             .to("[data-placeholder]", { autoAlpha: 0, duration: 0.05 }, at)
             .fromTo(draft, { clipPath: "inset(0 100% 0 0)", autoAlpha: 1 }, { clipPath: "inset(0 0% 0 0)", duration: 0.45, ease: "steps(16)" }, at)
@@ -173,7 +174,8 @@ export function FirstEvent() {
     // Pulled up by the stage's 6rem top padding, which is there to clear the nav while pinned and
     // otherwise added to the gap above: the panel now sits one normal section gap below the recaps.
     // Pinning starts when the stage's top reaches the screen's, so it still starts at the same point.
-    <section aria-labelledby="expect-title" className="-mt-24 pb-32 max-md:pb-20">
+    // Likewise the bottom gap is a normal one less the stage's 0.5rem bottom padding.
+    <section aria-labelledby="expect-title" className="-mt-24 pb-30 max-md:pb-18">
       <div ref={ref} className="flex min-h-[40rem] flex-col px-2 pb-2 pt-24 motion-safe:h-svh">
         <div className="flex min-h-0 flex-1 flex-col items-center overflow-hidden rounded-[0.75rem] bg-fog p-2">
           <SplitHeading id="expect-title" className="display m-0 p-4 text-center text-[clamp(2.5rem,4.2vw,3.75rem)] sm:p-6">
