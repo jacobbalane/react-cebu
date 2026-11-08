@@ -55,7 +55,12 @@ export function CodeOfConduct({ rules }: { rules: string[] }) {
         {/* Spread over the column, so the first rule lines up with the heading and the last with the button. */}
         <ul ref={rows} className="m-0 flex list-none flex-col justify-between gap-5 p-0">
           {rules.map((rule) => (
-            <li key={rule} data-rule className="text-[clamp(1.5rem,2.2vw,2rem)] leading-[1.15] tracking-[-0.03em]">
+            // On phones each rule wraps onto two lines, so a faint line between them keeps them apart.
+            <li
+              key={rule}
+              data-rule
+              className="text-[clamp(1.5rem,2.2vw,2rem)] leading-[1.15] tracking-[-0.03em] max-md:border-t max-md:border-line max-md:pt-5 max-md:first:border-t-0 max-md:first:pt-0"
+            >
               {rule}
             </li>
           ))}
