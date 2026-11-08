@@ -80,17 +80,18 @@ export function Friends({ title = "Every meetup is a team effort with these frie
 
       {/* Each name stays on one line beside its logo. The longest pairs need about 10em, so a
           column only gets that narrow from three across at 1024px, two from 640px; with an odd
-          count, the last of two across spans both columns. */}
+          count, the last of two across spans both columns. Below 640px they're two across too,
+          each logo over its name, which may wrap, with the logo kept about as big as before. */}
       <Reveal>
-        <ul className="mx-auto grid max-w-[75rem] grid-cols-1 gap-y-10 px-4 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-14 lg:grid-cols-3">
+        <ul className="mx-auto grid max-w-[75rem] grid-cols-2 gap-x-4 gap-y-10 px-4 sm:gap-x-8 sm:gap-y-14 lg:grid-cols-3">
           {partners.map(({ name, logo }) => (
             <li
               key={name}
               data-reveal
-              className="flex items-center justify-center gap-[0.35em] text-[clamp(1.5rem,2.4vw,2.125rem)] leading-[1.1] tracking-[-0.035em] text-ink sm:last:col-span-2 lg:last:col-span-1"
+              className="flex items-center justify-center gap-[0.35em] text-[clamp(1.5rem,2.4vw,2.125rem)] leading-[1.1] tracking-[-0.035em] text-ink last:col-span-2 max-sm:flex-col max-sm:gap-2.5 max-sm:text-center max-sm:text-[1.1875rem] lg:last:col-span-1"
             >
-              <span className="flex shrink-0 items-center">{logo}</span>
-              <span className="whitespace-nowrap">{name}</span>
+              <span className="flex shrink-0 items-center max-sm:text-[1.875rem]">{logo}</span>
+              <span className="whitespace-nowrap max-sm:whitespace-normal max-sm:text-balance">{name}</span>
             </li>
           ))}
         </ul>
