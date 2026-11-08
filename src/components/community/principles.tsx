@@ -671,7 +671,12 @@ export function Principles({ rules }: { rules: string[] }) {
     <section aria-labelledby="values-title" className="px-2 pb-32 max-md:pb-20 pt-28 max-md:pt-20">
       <div className="mb-10 flex flex-col items-center gap-3 px-4 text-center">
         <SplitHeading id="values-title" className="display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]">How we run things</SplitHeading>
-        <p className="m-0 text-base text-muted">Four things that never change. Go on, test them.</p>
+        {/* On phones the dare gets a line of its own. */}
+        <p className="m-0 text-base text-muted">
+          Four things that never change.{" "}
+          <br className="md:hidden" />
+          Go on, test them.
+        </p>
       </div>
 
       <Reveal className="grid gap-2 lg:grid-cols-12">
