@@ -39,13 +39,21 @@ const Vee: Mark = ({ className }) => (
   </svg>
 );
 
-const groups: { name: string; tile: string; mark: Mark; markTone: string; body: React.ReactNode }[] = [
+// On phones the cards are small and stacked down a diagonal, each lying over the last: Angular top
+// left, Vue in the middle and React in front at the bottom right, the only one with its description.
+// A card is 56% of the row wide and 4:3 tall, and each steps down 30% of a card (22.4% of the row's
+// width, as a margin's % is of the width), which leaves every name clear. Each casts a shadow on the
+// card under it.
+const groups: { name: string; tile: string; mark: Mark; markTone: string; body: React.ReactNode; phone: string; shade: string; phoneBody: string }[] = [
   {
     name: "Angular Cebu",
     tile: "bg-white text-ink",
     mark: Shield,
     markTone: "text-fog",
     body: <p className="m-0 max-w-[22ch] text-base leading-snug">Angular developers in Cebu</p>,
+    phone: "max-md:justify-self-start",
+    shade: "",
+    phoneBody: "max-md:hidden",
   },
   {
     name: "React Cebu",
@@ -53,7 +61,10 @@ const groups: { name: string; tile: string; mark: Mark; markTone: string; body: 
     mark: Atom,
     // React cyan with a third white mixed in: a soft tint on the card, as the fog marks sit on white.
     markTone: "text-[#59e6ff]",
-    body: <p className="m-0 max-w-[30ch] text-base leading-snug">One of three communities under JavaScript Cebu. We share events, speakers and a lot of pizza.</p>,
+    body: <p className="m-0 max-w-[30ch] text-base leading-snug max-md:text-[0.8125rem]">One of three communities under JavaScript Cebu. We share events, speakers and a lot of pizza.</p>,
+    phone: "max-md:z-10 max-md:justify-self-end max-md:mt-[44.8%]",
+    shade: "max-md:opacity-60",
+    phoneBody: "",
   },
   {
     name: "Vue.js Cebu",
@@ -61,6 +72,9 @@ const groups: { name: string; tile: string; mark: Mark; markTone: string; body: 
     mark: Vee,
     markTone: "text-fog",
     body: <p className="m-0 max-w-[22ch] text-base leading-snug">Vue.js developers in Cebu</p>,
+    phone: "max-md:justify-self-center max-md:mt-[22.4%]",
+    shade: "max-md:opacity-60",
+    phoneBody: "max-md:hidden",
   },
 ];
 
@@ -295,27 +309,29 @@ export function Family() {
         </SplitHeading>
 
         {/* Cards of one fixed size, 380 by 507, centred in a row; they share the row evenly when it
-            is narrower than three of them, and stack on phones. */}
-        <Reveal className="flex flex-col items-center gap-2 pb-12 lg:flex-row lg:justify-center lg:pb-16">
-          {groups.map(({ name, tile, mark: Mark, markTone, body }) => (
+            is narrower than three of them, and stack on tablets. On phones they share one grid cell,
+            small, down a diagonal (see groups). */}
+        <Reveal className="flex flex-col items-center gap-2 pb-12 max-md:grid max-md:grid-cols-1 max-md:items-start max-md:px-2 lg:flex-row lg:justify-center lg:pb-16">
+          {groups.map(({ name, tile, mark: Mark, markTone, body, phone, shade, phoneBody }) => (
             <div
               key={name}
               data-reveal
               data-drag={name === "React Cebu" ? "front" : ""}
-              className="relative aspect-[3/4] w-full max-w-[23.75rem] lg:w-[calc((100%-1rem)/3)]"
+              className={`relative aspect-[3/4] w-full max-w-[23.75rem] max-md:col-start-1 max-md:row-start-1 max-md:w-[56%] ${phone} lg:w-[calc((100%-1rem)/3)]`}
             >
               {/* The card's shadow, drawn once and faded in and out to show how the cards stack. */}
               <span
                 data-shade
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 rounded-[0.625rem] opacity-0 shadow-[0_4px_8px_rgba(0,0,0,0.1),0_24px_48px_rgba(0,0,0,0.16)] will-change-[opacity]"
+                className={`pointer-events-none absolute inset-0 rounded-[0.625rem] opacity-0 shadow-[0_4px_8px_rgba(0,0,0,0.1),0_24px_48px_rgba(0,0,0,0.16)] will-change-[opacity] ${shade}`}
               />
-              <div className={`tile flex h-full flex-col justify-between gap-6 p-6 sm:p-7 ${tile}`}>
+              <div className={`tile flex h-full flex-col justify-between gap-6 p-6 max-md:p-4 sm:p-7 ${tile}`}>
                 <span aria-hidden="true" className="pointer-events-none absolute -bottom-[8%] -right-[10%] block w-[66%]">
                   <Mark className={`block w-full ${markTone}`} />
                 </span>
-                <h3 className="relative m-0 text-[clamp(1.75rem,3vw,2.5rem)] font-normal leading-[1.02] tracking-[-0.04em]">{name}</h3>
-                <div className="relative">{body}</div>
+                <h3 className="relative m-0 text-[clamp(1.75rem,3vw,2.5rem)] font-normal leading-[1.02] tracking-[-0.04em] max-md:text-[1.375rem]">{name}</h3>
+                {/* Phones show only React's description. */}
+                <div className={`relative ${phoneBody}`}>{body}</div>
               </div>
             </div>
           ))}
