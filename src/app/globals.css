@@ -140,6 +140,19 @@ body {
 
 @keyframes reel-2 { 0% { opacity: 0 } 33% { opacity: 1 } 66% { opacity: 0 } }
 @keyframes reel-3 { 0% { opacity: 0 } 66% { opacity: 1 } 100% { opacity: 1 } }
+/*
+ * The hero's copy waits hidden until its entrance starts. Otherwise the page shows it as soon as
+ * it arrives, and the script then snaps it out of view to rise in. If the script never runs, it
+ * appears after 3s anyway.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  [data-hero-copy] {
+    visibility: hidden;
+    animation: show-anyway 0s 3s forwards;
+  }
+}
+@keyframes show-anyway { to { visibility: visible } }
+
 @keyframes grain {
   0% { transform: translate(0, 0) }
   17% { transform: translate(-7%, 4%) }

@@ -80,12 +80,12 @@ export function TiltedTiles({ tiles, columns = 13, perColumn = 10, duration = 80
     () => {
       const mm = gsap.matchMedia();
       mm.add(`(min-width: 768px) and ${MOTION_OK}`, () => {
+        // Every loop starts where the page drew it: a column moving down starts one copy up, which
+        // shows exactly the same photos, so nothing jumps as the motion takes over.
         const loops = gsap.utils.toArray<HTMLElement>("[data-tt-track]").map((track, i) => {
           const up = i % 2 === 0;
           const step = 100 / COPIES;
-          return gsap
-            .fromTo(track, { yPercent: up ? 0 : -step }, { yPercent: up ? -step : 0, duration, ease: "none", repeat: -1 })
-            .progress((i * 0.37) % 1);
+          return gsap.fromTo(track, { yPercent: up ? 0 : -step }, { yPercent: up ? -step : 0, duration, ease: "none", repeat: -1 });
         });
 
         ScrollTrigger.create({
@@ -144,7 +144,10 @@ export function TiltedTiles({ tiles, columns = 13, perColumn = 10, duration = 80
         <div className="absolute left-1/2 top-1/2 flex h-[240%] w-[520%] gap-2.5 [transform:translate(-50%,-50%)_rotateZ(23.5deg)_rotateX(42.6deg)_rotateZ(-38deg)_translate(22%,-5%)] md:w-[330%] lg:w-[240%]">
           {Array.from({ length: columns }, (_, column) => (
             <div key={column} className="h-full min-w-0 flex-1 overflow-hidden">
-              <div data-tt-track className="flex flex-col gap-2">
+              {/* Each column starts a different part of a tile higher, so the photos never line up
+                  in rows, even before the motion starts. A margin's % is of the column's width, and
+                  a tile is three quarters of that tall, plus its 0.5rem gap. */}
+              <div data-tt-track className="flex flex-col gap-2" style={{ marginTop: `calc((75% + 0.5rem) * -${((column * 0.37) % 1).toFixed(2)})` }}>
                 {Array.from({ length: COPIES }, (_, copy) =>
                   Array.from({ length: perColumn }, (_, row) => {
                     const tile = tileAt(column, row);

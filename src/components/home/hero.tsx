@@ -57,6 +57,9 @@ export function Hero() {
         // The headline rises line by line, then the rest follows it in. Lines start 150% down:
         // the mask keeps room under each line for descenders, and at 105% the tops of tall
         // letters peeked through that gap while waiting.
+        // The copy waits hidden until now (see globals.css), so it doesn't show and then jump back
+        // to rise in.
+        gsap.set("[data-hero-copy]", { visibility: "visible" });
         gsap.from("[data-hero-line]", { yPercent: 150, duration: 1, ease: "power4.out", stagger: 0.08 });
         gsap.from("[data-hero-fade]", { y: 30, autoAlpha: 0, duration: 1, ease: "power3.out", stagger: 0.1, delay: 0.45 });
       });
@@ -108,7 +111,7 @@ export function Hero() {
       </div>
       <HeroMarquee />
 
-      <div className="absolute inset-x-4 bottom-6 flex flex-col items-start gap-6 text-white md:inset-x-10 md:bottom-10 md:gap-8">
+      <div data-hero-copy className="absolute inset-x-4 bottom-6 flex flex-col items-start gap-6 text-white md:inset-x-10 md:bottom-10 md:gap-8">
         {/* Broken by phrase rather than by width, so no line ends mid-thought. */}
         <h1 id="hero-title" className="display m-0 text-[clamp(3rem,8.4vw,8.75rem)] leading-[0.92]">
           <Line>Build the web</Line>{" "}

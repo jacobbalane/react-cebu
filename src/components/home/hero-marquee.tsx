@@ -18,6 +18,8 @@ export const marqueePhotos = [
 const PHONE = "(max-width: 767px)";
 // Wider screens show the tilted wall instead, so they take this transparent pixel and download nothing.
 const NOTHING = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+// How far each row starts to the left, as a share of a tile's width.
+const SHIFTS = [0.2, 0.65, 0.4, 0.9];
 
 /**
  * The homepage hero's background on phones, in place of the tilted wall, which was more than a
@@ -40,11 +42,11 @@ export function HeroMarquee() {
           scrollTrigger: { trigger: section, start: "top top", end: "bottom top", scrub: true },
         });
 
+        // Every loop starts where the page drew it: a row moving right starts one copy along, which
+        // shows exactly the same photos, so nothing jumps as the motion takes over.
         const loops = gsap.utils.toArray<HTMLElement>("[data-marquee-track]", ref.current).map((track, i) => {
           const left = i % 2 === 0;
-          return gsap
-            .fromTo(track, { xPercent: left ? 0 : -50 }, { xPercent: left ? -50 : 0, duration: 60, ease: "none", repeat: -1 })
-            .progress((i * 0.29) % 1);
+          return gsap.fromTo(track, { xPercent: left ? 0 : -50 }, { xPercent: left ? -50 : 0, duration: 60, ease: "none", repeat: -1 });
         });
         ScrollTrigger.create({
           trigger: section,
@@ -73,8 +75,14 @@ export function HeroMarquee() {
       <div ref={ref} aria-hidden="true" className="absolute inset-0 flex flex-col gap-2 overflow-hidden py-2 md:hidden">
         {rows.map((row, r) => (
           <div key={r} className="min-h-0 flex-1">
-            {/* Two copies, so moving by one copy's width loops without a gap. */}
-            <div data-marquee-track className="flex h-full w-max gap-2">
+            {/* Two copies, so moving by one copy's width loops without a gap. Each row starts a
+                different part of a tile to the left, so the photos never line up in columns, even
+                before the motion starts. A tile is a third of the hero's height less its gaps. */}
+            <div
+              data-marquee-track
+              className="flex h-full w-max gap-2"
+              style={{ marginLeft: `calc((max(520px, 100svh) - 2.5rem) / 3 * -${SHIFTS[r]})` }}
+            >
               {[0, 1].map((copy) =>
                 row.map((name) => {
                   const base = `/images/wall/${name}`;
