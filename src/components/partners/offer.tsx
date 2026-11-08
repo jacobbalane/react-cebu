@@ -24,8 +24,8 @@ type Offer = {
 const OfferContext = createContext<Offer | null>(null);
 
 /**
- * The offer a visitor builds as they read: the ways they pick and their team's name. The name stays
- * "Your team" while the form is off the page, as the form is the only place to type it.
+ * The offer a visitor builds as they read: the ways they pick and their team's name, typed into the
+ * box under "Your team" at the end of the friends list.
  */
 export function OfferProvider({ children }: { children: React.ReactNode }) {
   const [team, setTeam] = useState("");
@@ -80,13 +80,34 @@ export function TeamMark({ team, className }: { team: string; className: string 
   );
 }
 
-/** Takes the empty place at the end of the list of friends, under the visitor's own name. */
+/**
+ * Takes the empty place at the end of the list of friends, under the visitor's own name, with a box to
+ * type it in. The mark reshapes as they type, and the offer's sentence uses the name too. On phones it
+ * sits like the names above it, its mark over its name.
+ */
 export function YourTeam() {
-  const { team } = useOffer();
+  const { team, setTeam } = useOffer();
   return (
-    <p className="m-0 flex items-center justify-center gap-[0.35em] text-[clamp(1.5rem,2.4vw,2.125rem)] leading-[1.1] tracking-[-0.035em] text-ink">
-      <TeamMark team={team} className="size-[1.2em] text-azure" />
-      <span>{teamName(team)}</span>
-    </p>
+    <div className="flex flex-col items-center gap-5">
+      <p className="m-0 flex items-center justify-center gap-[0.35em] text-[clamp(1.5rem,2.4vw,2.125rem)] leading-[1.1] tracking-[-0.035em] text-ink max-sm:flex-col max-sm:gap-2.5 max-sm:text-center max-sm:text-[1.1875rem]">
+        <TeamMark team={team} className="size-[1.2em] text-azure max-sm:size-[1.875rem]" />
+        <span className="max-w-full break-words">{teamName(team)}</span>
+      </p>
+      <label className="w-full max-w-[18rem]">
+        <span className="sr-only">Your team’s name</span>
+        {/* Focus shows as its own azure edge, in place of the site's cyan ring, so there's one outline, not two. The
+            ring is set outside Tailwind's layers, so only an inline style takes it off. */}
+        <input
+          type="text"
+          value={team}
+          onChange={(event) => setTeam(event.target.value)}
+          maxLength={40}
+          autoComplete="organization"
+          style={{ outline: "none" }}
+          placeholder="Type your team’s name"
+          className="h-12 w-full rounded-full bg-fog px-5 text-center text-base text-ink transition-colors duration-200 placeholder:text-muted hover:bg-[#e2e2e2] focus:bg-white focus:shadow-[inset_0_0_0_1.5px_var(--color-azure)]"
+        />
+      </label>
+    </div>
   );
 }
