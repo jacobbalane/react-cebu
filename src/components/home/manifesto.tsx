@@ -24,9 +24,16 @@ const pieces: Piece[] = [
 // the stroke lands on it.
 const linked = ["where", "developers", "learn", "share", "build", "app"];
 
-/** A run of the sentence as words that sharpen one by one. A linked word gets a span of its own, without its punctuation, for the line to find. */
-function Words({ text }: { text: string }) {
-  return text.split(" ").map((token, j) => {
+/**
+ * A run of the sentence as words that sharpen one by one. A linked word gets a span of its own,
+ * without its punctuation, for the line to find. On phones the last `together` words never break
+ * apart: there are too many lines for text-wrap: balance, and at some widths "app." was left alone
+ * on the last line.
+ */
+function Words({ text, together = 0 }: { text: string; together?: number }) {
+  const tokens = text.split(" ");
+  const cut = tokens.length - together;
+  const words = tokens.map((token, j) => {
     const word = token.replace(/\W+$/, "");
     return (
       <span key={j}>
@@ -45,6 +52,13 @@ function Words({ text }: { text: string }) {
       </span>
     );
   });
+  if (!together) return words;
+  return (
+    <>
+      {words.slice(0, cut)}
+      <span className="max-md:whitespace-nowrap">{words.slice(cut)}</span>
+    </>
+  );
 }
 
 /**
@@ -449,7 +463,7 @@ export function Manifesto() {
               </span>{" "}
             </span>
           ) : (
-            <Words key={i} text={piece} />
+            <Words key={i} text={piece} together={i === pieces.length - 1 ? 2 : 0} />
           ),
         )}
       </p>
