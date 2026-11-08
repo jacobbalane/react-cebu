@@ -75,7 +75,11 @@ const past = [
   { title: "The first meetup, 2019", image: "/images/first-meetup-room.jpg" },
 ];
 
-/** Past events in a strip you drag sideways: it glides to a stop after a flick and resists at either end. */
+/**
+ * Past events in a strip you drag sideways: it glides to a stop after a flick, resists at either
+ * end, and always comes to rest with a card's left edge on the strip's left edge (or, at the far
+ * end, with the last card flush right).
+ */
 function PastStrip() {
   const frame = useRef<HTMLDivElement>(null);
   const strip = useRef<HTMLUListElement>(null);
@@ -85,15 +89,27 @@ function PastStrip() {
       const frameEl = frame.current;
       const stripEl = strip.current;
       if (!frameEl || !stripEl) return;
+      const cards = gsap.utils.toArray<HTMLElement>("li", stripEl);
       // Recomputed on each press, so a resize since the last drag still stops at the true ends.
       const ends = () => ({ minX: Math.min(0, frameEl.clientWidth - stripEl.scrollWidth), maxX: 0 });
+      // Where the strip may rest: each card's left edge at the frame's left edge, kept within the ends.
+      let stops: number[] = [];
+      const measure = () => {
+        const { minX } = ends();
+        stops = [...new Set(cards.map((card) => Math.max(minX, -card.offsetLeft)))];
+      };
+      measure();
+      const nearest = (x: number) => stops.reduce((best, stop) => (Math.abs(stop - x) < Math.abs(best - x) ? stop : best), stops[0] ?? 0);
       const [drag] = Draggable.create(stripEl, {
         type: "x",
         bounds: ends(),
         inertia: true,
         edgeResistance: 0.85,
+        // A flick still glides, but where it would stop is moved to the nearest card.
+        snap: { x: nearest },
         onPress() {
           this.applyBounds(ends());
+          measure();
         },
       });
       return () => drag.kill();
@@ -494,32 +510,57 @@ function TalkTile() {
   );
 }
 
-/** Pick a level and the tile shows what React Cebu has for you there; the old answer eases out before the new one eases in. */
+/**
+ * Pick a level and the tile shows what React Cebu has for you there; the old answer eases out
+ * before the new one eases in. On phones the tile is as tall as its answer, so it eases to the new
+ * answer's height as that comes in, instead of jumping.
+ */
 function LevelPicker() {
   const [current, setCurrent] = useState(0);
+  const tile = useRef<HTMLDivElement>(null);
   const body = useRef<HTMLDivElement>(null);
   const changed = useRef(false);
+  // The tile's height just before the answer changed, on phones.
+  const heightBefore = useRef<number | null>(null);
   const level = levels[current];
 
   const choose = (next: number) => {
     if (next === current) return;
     changed.current = true;
     gsap.killTweensOf(body.current);
+    // Only the height: the tile's own reveal may still be running.
+    gsap.killTweensOf(tile.current, "height");
     if (!window.matchMedia(MOTION_OK).matches) return setCurrent(next);
-    gsap.to(body.current, { autoAlpha: 0, y: -12, duration: 0.2, ease: "power2.in", onComplete: () => setCurrent(next) });
+    gsap.to(body.current, {
+      autoAlpha: 0,
+      y: -12,
+      duration: 0.2,
+      ease: "power2.in",
+      onComplete: () => {
+        heightBefore.current = window.matchMedia("(max-width: 767px)").matches ? (tile.current?.offsetHeight ?? null) : null;
+        setCurrent(next);
+      },
+    });
   };
 
   // Ease the new answer in, but only after a choice: on first view the tile's own reveal runs.
   useGSAP(
     () => {
       if (!changed.current || !window.matchMedia(MOTION_OK).matches) return;
-      gsap.fromTo(body.current, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power3.out" });
+      const from = heightBefore.current;
+      heightBefore.current = null;
+      // The new answer is already laid out, so the tile is at its new height: start it at the old one.
+      const to = tile.current?.offsetHeight ?? 0;
+      if (from !== null && from !== to) {
+        gsap.fromTo(tile.current, { height: from }, { height: to, duration: 0.5, ease: "power3.inOut", clearProps: "height" });
+      }
+      gsap.fromTo(body.current, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power3.out", delay: from !== null && from !== to ? 0.1 : 0 });
     },
-    { dependencies: [current], scope: body },
+    { dependencies: [current], scope: tile },
   );
 
   return (
-    <div data-reveal className="tile col-span-2 flex flex-col gap-8 bg-azure p-6 text-white sm:p-8 lg:col-span-6 lg:row-span-4">
+    <div ref={tile} data-reveal className="tile col-span-2 flex flex-col gap-8 bg-azure p-6 text-white sm:p-8 lg:col-span-6 lg:row-span-4">
       <div className="flex flex-col gap-5">
         <h3 className="text-[clamp(2rem,3vw,2.75rem)] font-normal leading-none tracking-[-0.04em]">Start where you are</h3>
         <div role="group" aria-label="Your experience with React" className="flex flex-wrap gap-1.5">
@@ -579,7 +620,14 @@ export function Bento() {
 
         <TopicPile />
 
-        <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" data-reveal className="tile col-span-2 flex items-end justify-between gap-4 bg-fog p-5 lg:col-span-6">
+        {/* On phones it's set like the mentors tile below: centred, with the line under the title. */}
+        <a
+          href={FACEBOOK_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-reveal
+          className="tile col-span-2 flex items-end justify-between gap-4 bg-fog p-5 max-md:flex-col max-md:items-start max-md:justify-center max-md:gap-1 lg:col-span-6"
+        >
           <span className="text-[1.75rem] leading-none tracking-[-0.035em]">No question is too basic</span>
           <span className="text-[0.9375rem] text-[#555]">Ask in the Facebook group</span>
         </a>
@@ -651,7 +699,8 @@ export function Bento() {
         {/* Rows 8–11: recaps over what it costs, with a tall clip on the right */}
         {/* Not a link as a whole: dragging the strip would otherwise count as a click. */}
         <div data-reveal className="tile col-span-2 flex flex-col justify-between gap-4 bg-black p-5 text-white lg:col-span-7 lg:row-span-3">
-          <div className="flex items-start justify-between gap-3">
+          {/* On phones the button goes under the description, as beside it squeezed both. */}
+          <div className="flex items-start justify-between gap-3 max-md:flex-col max-md:gap-4">
             <span className="flex flex-col gap-1.5">
               <span className="text-4xl leading-none tracking-[-0.035em]">Missed one?</span>
               <span className="text-[0.9375rem] text-[#bdbdbd]">Drag to look back through past events</span>
