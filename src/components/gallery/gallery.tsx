@@ -280,7 +280,7 @@ export function Gallery() {
   };
 
   return (
-    <section id="photos" aria-labelledby="photos-title" className="scroll-mt-24 px-2 pb-32 pt-28">
+    <section id="photos" aria-labelledby="photos-title" className="scroll-mt-24 px-2 pb-32 max-md:pb-20 pt-28 max-md:pt-20">
       <SplitHeading id="photos-title" className="display m-0 mb-10 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">A look back at our events</SplitHeading>
 
       {/* The space under the columns is where the cyan shape's words sit. */}

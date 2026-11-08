@@ -170,7 +170,7 @@ export function FirstEvent() {
   );
 
   return (
-    <section aria-labelledby="expect-title" className="pb-32">
+    <section aria-labelledby="expect-title" className="pb-32 max-md:pb-20">
       <div ref={ref} className="flex min-h-[40rem] flex-col px-2 pb-2 pt-24 motion-safe:h-svh">
         <div className="flex min-h-0 flex-1 flex-col items-center overflow-hidden rounded-[0.75rem] bg-fog p-2">
           <SplitHeading id="expect-title" className="display m-0 p-4 text-center text-[clamp(2.5rem,4.2vw,3.75rem)] sm:p-6">

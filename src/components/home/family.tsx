@@ -286,7 +286,7 @@ export function Family() {
   );
 
   return (
-    <section aria-labelledby="family-title" className="px-2 pb-32">
+    <section aria-labelledby="family-title" className="px-2 pb-32 max-md:pb-20">
       {/* A fog panel holding the heading and the cards, so the family reads as one group. It clips
           any card dragged past its edge. The heading is inset to line up with the cards' text. */}
       <div ref={panel} className="relative overflow-hidden rounded-[0.75rem] bg-fog p-2">

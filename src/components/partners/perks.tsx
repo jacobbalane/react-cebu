@@ -54,7 +54,7 @@ export function Perks() {
   );
 
   return (
-    <section id="perks" aria-labelledby="perks-title" className="scroll-mt-24 px-2 pb-32">
+    <section id="perks" aria-labelledby="perks-title" className="scroll-mt-24 px-2 pb-32 max-md:pb-20">
       <div className="grid rounded-[0.75rem] bg-fog lg:min-h-[36rem] lg:grid-cols-2">
         {/* The answers alone set the panel's height. This side fills it, or the screen when the answers run longer than that. */}
         <div className="relative">

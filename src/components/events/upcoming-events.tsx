@@ -10,7 +10,7 @@ const photos = ["first-meetup-group", "big-group", "the-company-group", "office-
 /** Upcoming dates live on Cebby, so this section points there: a real room beside the way in. */
 export function UpcomingEvents() {
   return (
-    <section id="upcoming" aria-labelledby="upcoming-title" className="scroll-mt-24 px-2 pb-32 pt-28">
+    <section id="upcoming" aria-labelledby="upcoming-title" className="scroll-mt-24 px-2 pb-32 max-md:pb-20 pt-28 max-md:pt-20">
       <SplitHeading id="upcoming-title" className="display m-0 mb-10 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">
         Upcoming events
       </SplitHeading>

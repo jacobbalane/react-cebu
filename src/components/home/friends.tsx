@@ -70,7 +70,7 @@ const partners: { name: string; logo: React.ReactNode }[] = [
  */
 export function Friends({ title = "Every meetup is a team effort with these friends", children }: { title?: string; children?: React.ReactNode }) {
   return (
-    <section aria-labelledby="friends-title" className="px-2 pb-32">
+    <section aria-labelledby="friends-title" className="px-2 pb-32 max-md:pb-20">
       <div className="mb-16 flex flex-col items-center gap-3 px-4 text-center">
         <SplitHeading id="friends-title" className="display max-w-[56.25rem] text-[clamp(2.5rem,4.2vw,3.75rem)]">
           {title}

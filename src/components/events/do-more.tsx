@@ -165,7 +165,7 @@ export function DoMore() {
   );
 
   return (
-    <section ref={ref} aria-labelledby="involved-title" className="px-2 pb-32">
+    <section ref={ref} aria-labelledby="involved-title" className="px-2 pb-32 max-md:pb-20">
       <SplitHeading id="involved-title" className="display m-0 mb-10 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">
         Want to do more?
       </SplitHeading>

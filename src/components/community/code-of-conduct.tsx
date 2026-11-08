@@ -37,7 +37,7 @@ export function CodeOfConduct({ rules }: { rules: string[] }) {
   );
 
   return (
-    <section id="code-of-conduct" aria-labelledby="coc-title" className="scroll-mt-16 px-2 pb-32">
+    <section id="code-of-conduct" aria-labelledby="coc-title" className="scroll-mt-16 px-2 pb-32 max-md:pb-20">
       <div className="grid gap-10 rounded-[0.75rem] bg-fog p-6 sm:p-10 lg:grid-cols-2 lg:p-14">
         <div className="flex flex-col gap-6">
           <SplitHeading id="coc-title" className="display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]">Code of conduct</SplitHeading>

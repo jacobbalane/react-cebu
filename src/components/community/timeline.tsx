@@ -50,7 +50,7 @@ export function Timeline() {
   const [active, setActive] = useState(0);
 
   return (
-    <section aria-labelledby="history-title" className="px-2 pb-32">
+    <section aria-labelledby="history-title" className="px-2 pb-32 max-md:pb-20">
       {/* The whole journey in a line, ahead of the milestones. */}
       <div className="mb-10 flex flex-col gap-3 px-4">
         <SplitHeading id="history-title" className="display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]">How we got here</SplitHeading>

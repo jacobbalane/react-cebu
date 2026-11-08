@@ -29,7 +29,7 @@ export default function EventsPage() {
 
       <UpcomingEvents />
 
-      <section id="recaps" aria-labelledby="recaps-title" className="scroll-mt-24 px-2 pb-32">
+      <section id="recaps" aria-labelledby="recaps-title" className="scroll-mt-24 px-2 pb-32 max-md:pb-20">
         <SplitHeading id="recaps-title" className={`${heading} mb-10 px-4`}>Some of the events we’ve run since 2019</SplitHeading>
         <Reveal className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {recaps.map((recap) => (

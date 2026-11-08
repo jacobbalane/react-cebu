@@ -122,7 +122,7 @@ export function PhotoFan() {
   );
 
   return (
-    <section aria-label="Photos from React Cebu events" className="overflow-hidden pb-32">
+    <section aria-label="Photos from React Cebu events" className="overflow-hidden pb-32 max-md:pb-20">
       {/* As tall as a card plus the room its lean and drop need. */}
       <div ref={stage} className="grid h-[calc(clamp(9.375rem,26vw,28.75rem)*1.25+4rem)] place-items-center">
         {photos.map((photo, i) => (

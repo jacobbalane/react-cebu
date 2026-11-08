@@ -50,7 +50,7 @@ export default function CommunityPage() {
 
       <Timeline />
 
-      <section id="organizers" aria-labelledby="org-title" className="scroll-mt-24 px-2 pb-32">
+      <section id="organizers" aria-labelledby="org-title" className="scroll-mt-24 px-2 pb-32 max-md:pb-20">
         <div className="mb-10 flex flex-col items-center gap-3 px-4 text-center">
           <SplitHeading id="org-title" className="display m-0 text-[clamp(2.5rem,4.2vw,3.75rem)]">The people leading React Cebu</SplitHeading>
           <p className="m-0 text-base text-muted">Organizers, speakers and mentors</p>

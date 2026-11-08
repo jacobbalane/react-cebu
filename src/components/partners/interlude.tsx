@@ -64,7 +64,7 @@ export function Interlude() {
   );
 
   return (
-    <section aria-label="Photos and film from past events" className="pb-32">
+    <section aria-label="Photos and film from past events" className="pb-32 max-md:pb-20">
       <div ref={ref} className="flex flex-col gap-2 overflow-hidden">
         {row(firstRow)}
         {row(secondRow)}

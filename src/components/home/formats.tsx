@@ -13,7 +13,7 @@ const formats = [
 
 export function Formats() {
   return (
-    <section id="learn" aria-labelledby="formats-title" className="px-2 pb-32 pt-28">
+    <section id="learn" aria-labelledby="formats-title" className="px-2 pb-32 max-md:pb-20 pt-28 max-md:pt-20">
       <SplitHeading id="formats-title" className="display mb-10 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">
         What happens at React Cebu
       </SplitHeading>

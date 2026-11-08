@@ -562,7 +562,7 @@ export function Bento() {
   const allOn = rules.every((rule) => on[rule.id]);
 
   return (
-    <section aria-labelledby="grow-title" className="px-2 pb-32 pt-28">
+    <section aria-labelledby="grow-title" className="px-2 pb-32 max-md:pb-20 pt-28 max-md:pt-20">
       <SplitHeading id="grow-title" className="display mb-10 px-4 text-[clamp(2.5rem,4.2vw,3.75rem)]">
         Everything you need to grow as a React developer
       </SplitHeading>
