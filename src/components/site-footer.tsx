@@ -19,8 +19,10 @@ export function SiteFooter() {
     <footer className="bg-black px-6 pb-7 pt-14 text-white">
       <div className="grid grid-cols-2 gap-8 text-[0.9375rem] md:grid-cols-4">
         {footerColumns.map((column) => (
-          <nav key={column.title} aria-label={column.title} className="flex flex-col gap-2.5">
-            <span className="font-medium">{column.title}</span>
+          // On phones each link gets 10px above and below, so it's about 44px tall to tap, with the gap taken
+          // up by that padding instead.
+          <nav key={column.title} aria-label={column.title} className="flex flex-col gap-2.5 max-md:gap-0">
+            <span className="font-medium max-md:pb-1">{column.title}</span>
             {column.links.map((link) => {
               // Other sites open in a new tab so the visitor keeps their place here.
               const external = link.href.startsWith("http");
@@ -30,7 +32,7 @@ export function SiteFooter() {
                   href={link.href}
                   target={external ? "_blank" : undefined}
                   rel={external ? "noopener noreferrer" : undefined}
-                  className="text-[#bdbdbd] hover:text-white"
+                  className="text-[#bdbdbd] hover:text-white max-md:py-2.5"
                 >
                   {link.label}
                 </TransitionLink>
@@ -55,7 +57,7 @@ export function SiteFooter() {
           />
         </TransitionLink>
         <span>
-          © <CurrentYear /> React Cebu, a JavaScript Cebu community
+          © <CurrentYear /> React Cebu
         </span>
       </div>
     </footer>

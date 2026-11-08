@@ -54,7 +54,9 @@ export function PhotoIntro({
     <section
       ref={ref}
       aria-labelledby="page-title"
-      className="relative flex h-[max(640px,100svh)] touch-pan-y flex-col justify-end overflow-hidden bg-black px-4 pb-6 text-white md:px-10 md:pb-10"
+      // Phones get a lower floor, as on the homepage: 640px is taller than a small phone's screen in
+      // Safari, which left the buttons below it.
+      className="relative flex h-[max(640px,100svh)] touch-pan-y flex-col justify-end overflow-hidden bg-black px-4 pb-6 text-white max-md:h-[max(520px,100svh)] md:px-10 md:pb-10"
     >
       <div data-intro-photo className="absolute inset-0">
         <Image src={src} alt={alt} fill preload sizes="(max-width: 767px) 400vw, (max-width: 1023px) 240vw, (max-width: 1279px) 140vw, 100vw" style={{ objectPosition: position }} className="object-cover motion-safe:brightness-[.45] motion-safe:grayscale" />

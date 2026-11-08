@@ -10,7 +10,8 @@ export function EventsIntro() {
   return (
     <section
       aria-labelledby="page-title"
-      className="relative flex h-[max(640px,100svh)] touch-pan-y flex-col items-center justify-end gap-5 overflow-hidden bg-black px-4 pb-20 text-center text-white md:pb-24"
+      // Phones get a lower floor, as on the homepage, so the words fit a small phone's screen.
+      className="relative flex h-[max(640px,100svh)] touch-pan-y flex-col items-center justify-end gap-5 overflow-hidden bg-black px-4 pb-20 text-center text-white max-md:h-[max(520px,100svh)] md:pb-24"
     >
       <div className="absolute inset-0">
         <Image src="/images/hall-full-room.jpg" alt="A full hall watching a talk at the first React Cebu meetup" fill preload sizes="(max-width: 767px) 400vw, (max-width: 1023px) 240vw, (max-width: 1279px) 140vw, 100vw" className="object-cover object-bottom motion-safe:brightness-[.45] motion-safe:grayscale" />
