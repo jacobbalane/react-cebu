@@ -26,6 +26,14 @@ const GAP = 8;
 
 const layer = (i: number) => photos.length - Math.abs(i - MIDDLE);
 
+// Phones show three cards, bigger: the front one at 55% of the screen's width and each one behind it
+// 88% of its size. A card behind is centred in the space between the front card and the screen's
+// edge, so it runs off the edge and the middle of its photo is what shows. The two outer photos
+// stay off phones, as five cards that big can't all show on a phone.
+const PHONE = "(max-width: 767px)";
+const PHONE_BEHIND = 0.88;
+const onPhone = () => window.matchMedia(PHONE).matches;
+
 /**
  * A pile of photos that fans out as it comes up the screen, the middle cards first, and closes
  * again on the way back. Hover a card and it rises, straightens and slides out from under the one
@@ -42,15 +50,22 @@ export function PhotoFan() {
   useGSAP(
     () => {
       const cards = gsap.utils.toArray<HTMLElement>("[data-card]", stage.current);
+      // The front card's width: the outer cards are hidden on phones, so they can't be measured there.
+      const front = () => cards[Math.round(MIDDLE)].offsetWidth;
       // Close enough that all of them fit on a phone, and never so far apart that they stop overlapping.
+      // On phones a card behind sits halfway between the front card's edge and the screen's edge.
       const spread = () => {
-        const width = cards[0].offsetWidth;
+        const width = front();
+        if (onPhone()) return (width / 2 + (stage.current?.clientWidth ?? window.innerWidth) / 2) / 2;
         return Math.min(width * SHOWING, (window.innerWidth - width - 16) / (photos.length - 1));
       };
+      // Smaller the further a card is behind, on phones only.
+      const size = (i: number) => (onPhone() ? PHONE_BEHIND ** Math.abs(i - MIDDLE) : 1);
       const fanned = (i: number) => ({
         x: () => (i - MIDDLE) * spread(),
         y: Math.abs(i - MIDDLE) * DROP,
         rotation: (i - MIDDLE) * LEAN,
+        scale: () => size(i),
       });
 
       const mm = gsap.matchMedia();
@@ -61,7 +76,7 @@ export function PhotoFan() {
         cards.forEach((card, i) => {
           opening.fromTo(
             card,
-            { x: 0, y: 40, rotation: (i - MIDDLE) * 1.5 },
+            { x: 0, y: 40, rotation: (i - MIDDLE) * 1.5, scale: () => size(i) },
             { ...fanned(i), duration: 1, ease: "power2.out" },
             Math.abs(i - MIDDLE) * 0.08,
           );
@@ -72,7 +87,7 @@ export function PhotoFan() {
         const faces = cards.map((card) => card.querySelector<HTMLElement>("[data-face]"));
         // Far enough to clear the card covering this one, counting how far that card's corner leans out.
         const slideOut = (i: number) => {
-          const { offsetWidth: width, offsetHeight: height } = cards[0];
+          const { offsetWidth: width, offsetHeight: height } = cards[Math.round(MIDDLE)];
           const coveringLean = ((Math.abs(i - MIDDLE) - 1) * LEAN * Math.PI) / 180;
           return Math.sign(i - MIDDLE) * ((width * (1 + GROW)) / 2 - spread() + (height / 2) * Math.sin(coveringLean) + GAP);
         };
@@ -99,10 +114,11 @@ export function PhotoFan() {
 
         const track = (event: PointerEvent) => {
           if (event.pointerType !== "mouse") return;
+          if (onPhone()) return;
           const { left, width } = box.getBoundingClientRect();
           const fromMiddle = event.clientX - (left + width / 2);
           const gap = spread();
-          const pastTheEnds = Math.abs(fromMiddle) > MIDDLE * gap + cards[0].offsetWidth / 2;
+          const pastTheEnds = Math.abs(fromMiddle) > MIDDLE * gap + front() / 2;
           pick(pastTheEnds ? null : gsap.utils.clamp(0, photos.length - 1, Math.round(fromMiddle / gap + MIDDLE)));
         };
         const leave = () => pick(null);
@@ -124,13 +140,18 @@ export function PhotoFan() {
   return (
     <section aria-label="Photos from React Cebu events" className="overflow-hidden pb-32 max-md:pb-20">
       {/* As tall as a card plus the room its lean and drop need. */}
-      <div ref={stage} className="grid h-[calc(clamp(9.375rem,26vw,28.75rem)*1.25+4rem)] place-items-center">
+      <div ref={stage} className="grid h-[calc(clamp(9.375rem,26vw,28.75rem)*1.25+4rem)] place-items-center max-md:h-[calc(55vw*1.25+4rem)]">
         {photos.map((photo, i) => (
-          <div key={photo.src} data-card style={{ zIndex: layer(i) }} className="relative col-start-1 row-start-1 aspect-[4/5] w-[clamp(9.375rem,26vw,28.75rem)]">
+          <div
+            key={photo.src}
+            data-card
+            style={{ zIndex: layer(i) }}
+            className={`relative col-start-1 row-start-1 aspect-[4/5] w-[clamp(9.375rem,26vw,28.75rem)] max-md:w-[55vw] ${Math.abs(i - MIDDLE) > 1 ? "max-md:hidden" : ""}`}
+          >
             {/* The shadow only shows where the cards lie over each other. A landscape photo fills
                 the portrait card by its height, so it's drawn about twice the card's width. */}
             <div data-face className="tile size-full bg-fog shadow-[0_4px_8px_rgba(0,0,0,0.1),0_24px_48px_rgba(0,0,0,0.16)]">
-              <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1770px) 920px, (min-width: 577px) 52vw, 300px" className="object-cover" style={{ objectPosition: photo.position }} />
+              <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1770px) 920px, (min-width: 768px) 52vw, 104vw" className="object-cover" style={{ objectPosition: photo.position }} />
             </div>
           </div>
         ))}
