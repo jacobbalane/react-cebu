@@ -37,7 +37,7 @@ export function UpcomingEvents() {
               rel="noopener noreferrer"
               className="btn min-h-14 whitespace-nowrap bg-[#9333EA] px-5 text-base text-white hover:bg-white hover:text-ink sm:px-7 sm:text-lg"
             >
-              See upcoming events on Cebby
+              See events on Cebby
             </a>
           </div>
         </div>

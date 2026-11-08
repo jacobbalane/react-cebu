@@ -53,7 +53,7 @@ export default function EventsPage() {
 
       <ClosingCard id="next-one" title="See you at the next one." description="Find the next event on Cebby, and join the Facebook page to keep up with the community.">
         <a href={CEBBY_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-primary hover:bg-white hover:text-ink`}>
-          See upcoming events on Cebby
+          See events on Cebby
         </a>
         <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className={`${closingButton} btn-black`}>
           Join the Facebook page
