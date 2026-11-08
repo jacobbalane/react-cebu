@@ -20,6 +20,7 @@ type Dab = { x: number; y: number; born: number };
  * Leaves a trail of the photo's colour behind the pointer, which narrows and closes up again, so
  * the room is back to grey soon after the pointer stops. Without a pointer, one trail crosses the
  * photo as the page opens to show there's colour under the grey, and a sideways drag makes more.
+ * Phones (below 768px) get no trail at all; their photo stays grey.
  * Sits beside the photo's <img>, which it paints from. It only runs while there's a trail to draw,
  * and with reduced motion there's nothing to run, as the photo stays in colour.
  */
@@ -37,6 +38,8 @@ export function ColourTrail() {
     const pen = brush.getContext("2d");
     if (!canvas || !host || !stage || !photo || !ctx || !pen) return;
     if (!window.matchMedia(MOTION_OK).matches) return;
+    // Phones keep the photo grey with no trail: none on arrival and none from touch.
+    if (window.matchMedia("(max-width: 767px)").matches) return;
 
     let radius = 0;
     const resize = () => {
@@ -147,5 +150,5 @@ export function ColourTrail() {
     };
   }, []);
 
-  return <canvas ref={ref} aria-hidden="true" className="pointer-events-none absolute inset-0 size-full" />;
+  return <canvas ref={ref} aria-hidden="true" className="pointer-events-none absolute inset-0 size-full max-md:hidden" />;
 }
