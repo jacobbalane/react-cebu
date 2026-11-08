@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { useMemo, useRef } from "react";
 import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "@/lib/gsap";
 
@@ -23,9 +23,29 @@ type TiltedTilesProps = {
 
 // Columns hold three identical copies and move by one copy, so the loop is seamless.
 const COPIES = 3;
-/** What a phone held upright draws of the wall. */
-const PHONE_COLUMNS = 6;
-const PHONE_ROWS = 6;
+// Phones show the homepage marquee instead of the wall, so they don't draw it, move it or download
+// its photos. A tile takes this transparent pixel there: eager images load even when hidden.
+const PHONE = "(max-width: 767px)";
+const NOTHING = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+
+/** A wall photo, through next/image, inside <picture> so phones can skip it. */
+function TilePhoto({ src }: { src: string }) {
+  // Eager: lazy loading never fires reliably for transformed tiles.
+  const { props } = getImageProps({
+    src,
+    alt: "",
+    fill: true,
+    sizes: "(min-width: 1024px) 24vw, (min-width: 768px) 32vw, (orientation: portrait) 64vw, 50vw",
+    loading: "eager",
+    className: "object-cover",
+  });
+  return (
+    <picture>
+      <source media={PHONE} srcSet={NOTHING} />
+      <img {...props} alt="" />
+    </picture>
+  );
+}
 
 /**
  * Shuffles a copy of `items` with a seeded generator (mulberry32), so the server
@@ -59,7 +79,7 @@ export function TiltedTiles({ tiles, columns = 13, perColumn = 10, duration = 80
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      mm.add(MOTION_OK, () => {
+      mm.add(`(min-width: 768px) and ${MOTION_OK}`, () => {
         const loops = gsap.utils.toArray<HTMLElement>("[data-tt-track]").map((track, i) => {
           const up = i % 2 === 0;
           const step = 100 / COPIES;
@@ -121,20 +141,17 @@ export function TiltedTiles({ tiles, columns = 13, perColumn = 10, duration = 80
         {/* The wall recedes toward the top right with columns leaning left, measured from the
             reference. It is shifted toward the far side, which needs the most wall to fill the corners,
             with enough spare that the mouse tilt never shows an edge. */}
-        <div className="absolute left-1/2 top-1/2 flex h-[240%] w-[520%] gap-2.5 max-md:portrait:w-[360%] [transform:translate(-50%,-50%)_rotateZ(23.5deg)_rotateX(42.6deg)_rotateZ(-38deg)_translate(22%,-5%)] md:w-[330%] lg:w-[240%]">
+        <div className="absolute left-1/2 top-1/2 flex h-[240%] w-[520%] gap-2.5 [transform:translate(-50%,-50%)_rotateZ(23.5deg)_rotateX(42.6deg)_rotateZ(-38deg)_translate(22%,-5%)] md:w-[330%] lg:w-[240%]">
           {Array.from({ length: columns }, (_, column) => (
-            // A phone held upright gets fewer, bigger columns, as many tall columns moving in 3D are
-            // more than it can redraw. Each copy loses the same rows, so the loop still lines up.
-            <div key={column} className={`h-full min-w-0 flex-1 overflow-hidden ${column >= PHONE_COLUMNS ? "max-md:portrait:hidden" : ""}`}>
+            <div key={column} className="h-full min-w-0 flex-1 overflow-hidden">
               <div data-tt-track className="flex flex-col gap-2">
                 {Array.from({ length: COPIES }, (_, copy) =>
                   Array.from({ length: perColumn }, (_, row) => {
                     const tile = tileAt(column, row);
                     return (
-                      <div key={`${copy}-${row}`} className={`@container relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#111] ${row >= PHONE_ROWS ? "max-md:portrait:hidden" : ""}`}>
+                      <div key={`${copy}-${row}`} className="@container relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-[#111]">
                         {tile.kind === "photo" ? (
-                          // Eager: lazy loading never fires reliably for transformed tiles.
-                          <Image src={tile.src} alt="" fill sizes="(min-width: 1024px) 24vw, (min-width: 768px) 32vw, (orientation: portrait) 64vw, 50vw" loading="eager" className="object-cover" />
+                          <TilePhoto src={tile.src} />
                         ) : (
                           <div className={`flex h-full flex-col justify-between p-[8%] ${tile.className}`}>{tile.content}</div>
                         )}

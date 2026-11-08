@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 import { TiltedTiles, type Tile } from "@/components/tilted-tiles";
 import { FACEBOOK_URL } from "@/data/site";
+import { HeroMarquee } from "@/components/home/hero-marquee";
 
 const photo = (name: string): Tile => ({ kind: "photo", src: `/images/${name}.jpg` });
 
@@ -15,7 +16,10 @@ const photo = (name: string): Tile => ({ kind: "photo", src: `/images/${name}.jp
  */
 function Line({ children, inline = false }: { children: React.ReactNode; inline?: boolean }) {
   return (
-    <span className={`split-line-mask block overflow-clip ${inline ? "md:inline-block md:align-top" : ""}`}>
+    // With the tight tracking, a line's last letter pokes past its box, and the mask cut it: on phones
+    // the widest line is "Build the web", and the mask cut the side off its "b". A little room on the
+    // right keeps it whole. It needs ! as .split-line-mask sets its padding outside the layers.
+    <span className={`split-line-mask block overflow-clip max-md:!pr-[0.12em] ${inline ? "md:inline-block md:align-top" : ""}`}>
       <span data-hero-line className="block">
         {children}
       </span>
@@ -62,16 +66,21 @@ export function Hero() {
   );
 
   return (
+    // Phones get a lower floor: 720px is taller than an iPhone SE, which pushed the buttons below
+    // the screen. The copy and buttons need about 500px with the header, so 520px still holds them.
     <section
       ref={ref}
       aria-labelledby="hero-title"
-      className="relative h-[max(720px,100svh)] overflow-hidden bg-black"
+      className="relative h-[max(720px,100svh)] overflow-hidden bg-black max-md:h-[max(520px,100svh)]"
     >
+      {/* The tilted wall and its shading, from tablets up. Phones get the marquee below instead: the
+          wall was more than a phone could redraw, and flickered. */}
+      <div className="contents max-md:hidden">
       <div data-hero-wall className="absolute inset-0">
         <TiltedTiles tiles={tiles} />
       </div>
-      {/* Mutes the wall to gray texture everywhere except a soft window on the right,
-          where photos drifting through regain their colour and fade back as they leave.
+      {/* Mutes the wall to gray texture everywhere except a soft window on the right, where photos
+          drifting through regain their colour and fade back as they leave.
           Blend layers rather than a backdrop filter, which Chrome redraws in bands while scrolling. */}
       <div
         aria-hidden="true"
@@ -87,14 +96,17 @@ export function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 hidden bg-[radial-gradient(ellipse_36%_50%_at_74%_34%,transparent_40%,rgba(0,0,0,0.72)_100%)] [@media(pointer:coarse)]:block"
       />
-      {/* Darkens steadily with distance from the colour window, deepest in the far corner. */}
+      {/* Darkens steadily with distance from the colour window, deepest in the far corner. Desktop
+          goes darker away from the window, as the user asked. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_74%_34%,transparent_18%,rgba(0,0,0,0.35)_42%,rgba(0,0,0,0.7)_72%,rgba(0,0,0,0.9)_100%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_74%_34%,transparent_18%,rgba(0,0,0,0.35)_42%,rgba(0,0,0,0.7)_72%,rgba(0,0,0,0.9)_100%)] lg:bg-[radial-gradient(ellipse_at_74%_34%,transparent_18%,rgba(0,0,0,0.42)_42%,rgba(0,0,0,0.82)_72%,rgba(0,0,0,0.96)_100%)]"
       />
       <div aria-hidden="true" className="grain opacity-20 [@media(pointer:coarse)]:hidden" />
       {/* Darkens the corner behind the copy so white text stays readable over bright photos. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_0%_100%,rgba(0,0,0,0.75),transparent_70%)]" />
+      </div>
+      <HeroMarquee />
 
       <div className="absolute inset-x-4 bottom-6 flex flex-col items-start gap-6 text-white md:inset-x-10 md:bottom-10 md:gap-8">
         {/* Broken by phrase rather than by width, so no line ends mid-thought. */}
@@ -111,7 +123,10 @@ export function Hero() {
         </p>
         <div data-hero-fade className="flex flex-wrap gap-1.5">
           <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Join React Cebu</a>
-          <TransitionLink href="/events" className="btn btn-quiet">See upcoming events</TransitionLink>
+          {/* Black, picked over fog, azure and greys. */}
+          <TransitionLink href="/events" className="btn btn-black">
+            See upcoming events
+          </TransitionLink>
         </div>
       </div>
     </section>
