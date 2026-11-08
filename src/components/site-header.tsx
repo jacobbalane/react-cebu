@@ -2,15 +2,24 @@
 
 import { TransitionLink } from "@/components/page-transition";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FACEBOOK_URL, navLinks } from "@/data/site";
 import { useLenis } from "@/components/smooth-scroll";
 import { Logo } from "@/components/logo";
+import { isActive as activeOn, MobileMenu } from "@/components/mobile-menu";
 
 export function SiteHeader() {
   const pathname = usePathname();
   const lenis = useLenis();
   const [open, setOpen] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
+
+  // A new page closes the menu, however it was reached.
+  const [shownPath, setShownPath] = useState(pathname);
+  if (shownPath !== pathname) {
+    setShownPath(pathname);
+    setOpen(false);
+  }
 
   // Pause smooth scrolling behind the open menu.
   useEffect(() => {
@@ -18,13 +27,43 @@ export function SiteHeader() {
     else lenis.current?.start();
   }, [open, lenis]);
 
-  // Every path starts with "/", so Home only counts as current on the home page itself.
-  const isActive = (href: string) => !href.includes("#") && (href === "/" ? pathname === "/" : pathname.startsWith(href));
+  // While the menu is open the page behind it can't scroll or take focus. Escape closes it, and so
+  // does widening the screen to where the menu isn't used.
+  useEffect(() => {
+    if (!open) return;
+    const page = document.querySelectorAll<HTMLElement>("main, main ~ footer");
+    page.forEach((el) => (el.inert = true));
+    const html = document.documentElement;
+    const overflow = html.style.overflow;
+    html.style.overflow = "hidden";
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      toggle.current?.focus();
+    };
+    const wide = window.matchMedia("(min-width: 64rem)");
+    const onWide = () => {
+      if (wide.matches) setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    wide.addEventListener("change", onWide);
+    return () => {
+      page.forEach((el) => (el.inert = false));
+      html.style.overflow = overflow;
+      document.removeEventListener("keydown", onKey);
+      wide.removeEventListener("change", onWide);
+    };
+  }, [open]);
+
+  const isActive = (href: string) => activeOn(pathname, href);
+  // Over an open menu the header keeps only the logo and the close button; the menu has the rest.
+  // They come back once the closing menu has shrunk out of their way.
+  const tucked = open ?"max-lg:pointer-events-none max-lg:opacity-0" : "max-lg:[transition-delay:200ms,0s,0s]";
 
   return (
     <>
       <header className="pointer-events-none fixed inset-x-0 top-0 z-40 grid grid-cols-[1fr_auto_1fr] items-center gap-3 px-3 py-3 sm:px-4">
-        <TransitionLink href="/" aria-label="React Cebu home" className="pointer-events-auto justify-self-start">
+        <TransitionLink href="/" aria-label="React Cebu home" className="pointer-events-auto justify-self-start" onClick={() => setOpen(false)}>
           <Logo />
         </TransitionLink>
         <nav aria-label="Main" className="pointer-events-auto hidden gap-1 lg:flex">
@@ -43,7 +82,7 @@ export function SiteHeader() {
         <div className="pointer-events-auto col-start-3 flex gap-1 justify-self-end">
           <TransitionLink
             href="/partners"
-            className="navpill hidden sm:inline-flex"
+            className={`navpill hidden max-lg:transition-[opacity,background-color,color] max-lg:duration-300 sm:inline-flex ${tucked}`}
             aria-current={isActive("/partners") ? "page" : undefined}
           >
             Partner with us
@@ -52,69 +91,33 @@ export function SiteHeader() {
             href={FACEBOOK_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="navpill !bg-react !text-ink hover:!bg-ink hover:!text-react"
+            className={`navpill !bg-react !text-ink hover:!bg-ink hover:!text-react max-lg:transition-[opacity,background-color,color] max-lg:duration-300 ${tucked}`}
           >
             Join
           </a>
           <button
+            ref={toggle}
             type="button"
-            className="navpill w-10 justify-center !px-0 lg:hidden"
-            aria-label="Open menu"
+            className="navpill w-10 justify-center !px-0 aria-expanded:bg-ink aria-expanded:text-white lg:hidden"
+            aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            onClick={() => setOpen(true)}
+            onClick={() => setOpen((was) => !was)}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-              <path d="M4 8h16M4 16h16" />
-            </svg>
+            {/* Two lines that meet in the middle and turn into a cross, and back. */}
+            <span aria-hidden="true" className="flex size-[1.125rem] flex-col items-center justify-center gap-[4.5px]">
+              <span
+                className={`h-[1.5px] w-3 rounded-full bg-current transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:duration-200 ${open ? "translate-y-[3px] rotate-45" : ""}`}
+              />
+              <span
+                className={`h-[1.5px] w-3 rounded-full bg-current transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:duration-200 ${open ? "-translate-y-[3px] -rotate-45" : ""}`}
+              />
+            </span>
           </button>
         </div>
       </header>
 
-      {open && (
-        <div
-          id="mobile-menu"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Menu"
-          className="fixed inset-0 z-50 flex flex-col gap-6 overflow-y-auto bg-white px-3 pb-6 pt-3 lg:hidden"
-        >
-          <div className="flex items-center justify-between">
-            <Logo />
-            <button
-              type="button"
-              className="inline-flex size-11 items-center justify-center rounded-full bg-ink text-white"
-              aria-label="Close menu"
-              onClick={() => setOpen(false)}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                <path d="M6 6l12 12M18 6L6 18" />
-              </svg>
-            </button>
-          </div>
-          <nav aria-label="Main" className="flex flex-col border-t border-black">
-            {[...navLinks, { href: "/partners", label: "Partner with us" }].map((link) => (
-              <TransitionLink
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="border-b border-line px-1 py-4 text-[2.5rem] tracking-[-0.04em]"
-              >
-                {link.label}
-              </TransitionLink>
-            ))}
-          </nav>
-          <a
-            href={FACEBOOK_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
-            className="btn btn-primary self-start"
-          >
-            Join React Cebu
-          </a>
-        </div>
-      )}
+      <MobileMenu open={open} pathname={pathname} onClose={() => setOpen(false)} toggle={toggle} />
     </>
   );
 }
