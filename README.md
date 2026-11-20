@@ -1,10 +1,17 @@
 # React Cebu
 
-The website for React Cebu, a free React community in Cebu, Philippines, and part of JavaScript Cebu.
+![The React Cebu homepage: a wall of photos from past meetups behind the headline "Build the web with React, right here in Cebu."](public/images/share-card.jpg)
 
-Built with Next.js (App Router), TypeScript and Tailwind CSS v4. Animations use GSAP (ScrollTrigger, SplitText, Draggable, Inertia) with Lenis smooth scrolling. The phone on the Events page uses three.js.
+The 2026 version of the website for React Cebu, a free community for developers learning React together in Cebu, Philippines. React Cebu is part of JavaScript Cebu.
+
+- **Live preview:** https://react-cebu-2026-preview.netlify.app/
+- **Community:** [React Cebu on Facebook](https://www.facebook.com/reactcebu/)
+
+Built with Next.js (App Router), React, TypeScript and Tailwind CSS v4. Animations use GSAP (ScrollTrigger, SplitText, Draggable, Inertia) with Lenis smooth scrolling. The phone on the Events page uses three.js.
 
 ## Run it
+
+You need Node.js 20.9 or later.
 
 ```bash
 npm install
@@ -12,6 +19,14 @@ npm run dev
 ```
 
 Open http://localhost:3000.
+
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Starts the site locally, reloading as you edit. |
+| `npm run build` | Builds the site for production. Stop the dev server first. |
+| `npm run start` | Serves the production build. |
+| `npm run lint` | Checks the code with ESLint. |
+| `npx tsc --noEmit` | Checks the types. |
 
 ## Where things live
 
@@ -34,3 +49,13 @@ The site runs on Netlify, and pushing to `main` deploys it. `SITE_URL` in `src/d
 ## Motion
 
 Every animation goes through `gsap.matchMedia`, so visitors who prefer reduced motion get a still page with everything in place, and Lenis stays off for them.
+
+## Contributing
+
+Spotted a typo, a broken link or something that looks off? Open an issue or a pull request. Before opening a pull request, run `npm run lint` and `npx tsc --noEmit`.
+
+Every photo on the site was taken at a React Cebu event, so please don't add stock photos.
+
+## Credits
+
+Photos are from React Cebu's own events. Partner and community logos belong to their owners.
